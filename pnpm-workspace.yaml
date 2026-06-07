@@ -1,0 +1,4 @@
+# esbuild (pulled in by tsup) needs its build script approved. Mirrors the
+# allow-list pattern used in ai-scheduling-frontend.
+allowBuilds:
+  esbuild: true

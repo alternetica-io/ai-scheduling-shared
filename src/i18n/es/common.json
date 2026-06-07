@@ -1,0 +1,182 @@
+{
+  "app": {
+    "title": "Planificador IA",
+    "scenario": "Resumen Escenario 6",
+    "managerView": "Vista de Gestor"
+  },
+  "languageSwitcher": {
+    "toggleTo": "Cambiar a {{lang}}"
+  },
+  "theme": {
+    "switchToLight": "Cambiar a tema claro",
+    "switchToDark": "Cambiar a tema oscuro"
+  },
+  "notifications": {
+    "title": "Notificaciones",
+    "empty": "Sin pendientes.",
+    "summary_one": "{{count}} ítem requiere tu atención",
+    "summary_other": "{{count}} ítems requieren tu atención",
+    "countLabel_one": "{{count}} notificación pendiente",
+    "countLabel_other": "{{count}} notificaciones pendientes",
+    "sections": {
+      "swaps": "Cambios de turno",
+      "dayoffs": "Días libres",
+      "incidents": "Incidencias",
+      "absences": "Ausencias recientes"
+    },
+    "swapBetween": "Cambio: {{a}} ↔ {{b}}",
+    "dayOff": "{{employee}} el {{date}}",
+    "incident": "Incidencia para revisar",
+    "absence": "Ausencia reportada",
+    "justNow": "ahora",
+    "minutesAgo_one": "hace {{count}} min",
+    "minutesAgo_other": "hace {{count}} min",
+    "hoursAgo_one": "hace {{count}} h",
+    "hoursAgo_other": "hace {{count}} h",
+    "approved": "Aprobado",
+    "rejected": "Rechazado"
+  },
+  "trialBanner": {
+    "active_one": "Prueba gratis · {{count}} día restante",
+    "active_other": "Prueba gratis · {{count}} días restantes",
+    "endingSoon_one": "La prueba termina mañana",
+    "endingSoon_other": "La prueba termina en {{count}} días",
+    "expired": "Tu prueba terminó. Suscribite para seguir usando la app.",
+    "canceled": "Suscripción cancelada. Renová para continuar.",
+    "cta": "Actualizar"
+  },
+  "billingEnforcer": {
+    "expiredTitle": "Prueba expirada",
+    "expiredBody": "Tu prueba gratuita terminó. Elegí un plan para seguir usando la app.",
+    "canceledTitle": "Suscripción cancelada",
+    "canceledBody": "Tu suscripción fue cancelada. Volvé a suscribirte para seguir usando la app.",
+    "cta": "Elegir plan",
+    "logout": "Cerrar sesión"
+  },
+  "billing": {
+    "tierPicker": {
+      "title": "Elegí tu plan",
+      "subtitle": "Te vamos a redirigir a Stripe para completar el pago. Podés cambiar o cancelar cuando quieras desde tu configuración de billing.",
+      "select": "Elegir este plan",
+      "redirecting": "Redirigiendo a Stripe…",
+      "trust": "Checkout seguro por Stripe · Cancelás cuando quieras"
+    },
+    "portal": {
+      "openLabel": "Administrar suscripción",
+      "redirecting": "Abriendo portal de billing…"
+    },
+    "errors": {
+      "noCustomer": "Completá un checkout primero para administrar la suscripción."
+    }
+  },
+  "actions": {
+    "create": "Crear",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "deleting": "Eliminando…",
+    "saving": "Guardando…",
+    "close": "Cerrar",
+    "back": "Volver",
+    "confirm": "Confirmar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "clear": "Limpiar",
+    "retry": "Reintentar",
+    "loading": "Cargando…",
+    "understood": "Entendido",
+    "yes": "Sí",
+    "no": "No"
+  },
+  "states": {
+    "active": "Activo",
+    "inactive": "Inactivo",
+    "loading": "Cargando…",
+    "empty": "Sin elementos todavía.",
+    "error": "Algo salió mal.",
+    "none": "—"
+  },
+  "table": {
+    "rowsPerPage": "Filas por página",
+    "rowsLabel": "Filas:",
+    "page": "Página {{current}} de {{total}}",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "previousAria": "Página anterior",
+    "nextAria": "Página siguiente",
+    "noResults": "Sin resultados.",
+    "results_one": "{{count}} resultado",
+    "results_other": "{{count}} resultados",
+    "showingOf": "Mostrando {{shown}} de {{total}}",
+    "sortByAria": "Ordenar por {{column}}"
+  },
+  "managerFilter": {
+    "label": "Manager",
+    "all": "Todos los managers",
+    "valueScopedSuffix": "(sus departamentos + sin asignar)"
+  },
+  "scheduleJobBanner": {
+    "queued": "📅 Generación en cola para la semana del {{weekStart}}",
+    "active": "⚙️ Generando horario para la semana del {{weekStart}}",
+    "multi_one": "{{count}} generación de horario en curso",
+    "multi_other": "{{count}} generaciones de horario en curso",
+    "viewLink": "Ver →",
+    "cancel": "Cancelar",
+    "cancelling": "Cancelando…",
+    "cancelSuccess": "Cancelación solicitada",
+    "cancelError": "No se pudo cancelar"
+  },
+  "scheduleToast": {
+    "successTitle": "Horario generado",
+    "successBody": "La semana del {{weekStart}} está lista. La grilla se actualizó.",
+    "failTitle": "No pudimos generar el horario",
+    "failBody": "Falló la generación para la semana del {{weekStart}}. Revisá las reglas y volvé a intentarlo."
+  },
+  "llmJobs": {
+    "banner": {
+      "in_flight": "Procesando con IA…",
+      "in_flight_one": "Procesando {{count}} tarea con IA…",
+      "in_flight_other": "Procesando {{count}} tareas con IA…",
+      "success": "Listo",
+      "error": "Falló"
+    },
+    "create_rule": {
+      "label": "Creando regla",
+      "successTitle": "Regla creada",
+      "successBody": "La nueva regla semántica fue agregada.",
+      "failTitle": "No se pudo crear la regla",
+      "failBody": "Falló el procesamiento con IA. Intentá de nuevo."
+    },
+    "update_rule_text": {
+      "label": "Actualizando regla",
+      "successTitle": "Regla actualizada",
+      "successBody": "La regla fue re-procesada.",
+      "failTitle": "No se pudo actualizar la regla",
+      "failBody": "Falló el procesamiento con IA. Intentá de nuevo."
+    },
+    "create_policy": {
+      "successTitle": "Política creada",
+      "successBody": "La política ya está activa y se aplicará la próxima vez que generes un horario.",
+      "failTitle": "No se pudo crear la política",
+      "failBody": "Intentá de nuevo o revisá el texto de la política."
+    },
+    "imports_extract": {
+      "label": "Extrayendo datos del archivo",
+      "successTitle": "Datos extraídos",
+      "successBody": "Listo. Revisá la preview y confirmá la importación.",
+      "failTitle": "No se pudieron extraer los datos",
+      "failBody": "El modelo de visión falló. Probá con otro archivo o revisá la integración de IA."
+    }
+  },
+  "history": {
+    "title": "Historial",
+    "button": "Historial",
+    "empty": "Sin historial todavía para este ítem.",
+    "action": {
+      "create": "Creado",
+      "update": "Actualizado",
+      "delete": "Eliminado"
+    }
+  }
+}
