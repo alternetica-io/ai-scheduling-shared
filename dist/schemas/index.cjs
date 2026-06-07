@@ -45,7 +45,21 @@ var createClockEventInputSchema = zod.z.object({
   type: clockEventTypeSchema,
   occurredAt: zod.z.string(),
   shiftAssignmentId: zod.z.string().optional(),
+  /** Location to validate the geofence against (Locations feature). */
+  locationId: zod.z.string().optional(),
   gps: clockGpsSchema
+});
+var geoLocationSchema = zod.z.object({
+  id: zod.z.string(),
+  branchId: zod.z.string(),
+  name: zod.z.string(),
+  geofenceLat: zod.z.number(),
+  geofenceLng: zod.z.number(),
+  geofenceRadiusM: zod.z.number()
+});
+var myLocationsSchema = zod.z.object({
+  mode: zod.z.enum(["fixed", "rotate"]),
+  locations: zod.z.array(geoLocationSchema)
 });
 var clockValidationStatusSchema = zod.z.enum(["valid", "pending_review", "disputed"]);
 var clockEventSchema = zod.z.object({
@@ -70,6 +84,8 @@ exports.clockEventsSchema = clockEventsSchema;
 exports.clockGpsSchema = clockGpsSchema;
 exports.clockValidationStatusSchema = clockValidationStatusSchema;
 exports.createClockEventInputSchema = createClockEventInputSchema;
+exports.geoLocationSchema = geoLocationSchema;
+exports.myLocationsSchema = myLocationsSchema;
 exports.myProfileSchema = myProfileSchema;
 exports.scheduleAssignmentBreakSchema = scheduleAssignmentBreakSchema;
 exports.scheduleAssignmentSchema = scheduleAssignmentSchema;

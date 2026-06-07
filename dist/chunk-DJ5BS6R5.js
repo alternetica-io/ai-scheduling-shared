@@ -43,7 +43,21 @@ var createClockEventInputSchema = z.object({
   type: clockEventTypeSchema,
   occurredAt: z.string(),
   shiftAssignmentId: z.string().optional(),
+  /** Location to validate the geofence against (Locations feature). */
+  locationId: z.string().optional(),
   gps: clockGpsSchema
+});
+var geoLocationSchema = z.object({
+  id: z.string(),
+  branchId: z.string(),
+  name: z.string(),
+  geofenceLat: z.number(),
+  geofenceLng: z.number(),
+  geofenceRadiusM: z.number()
+});
+var myLocationsSchema = z.object({
+  mode: z.enum(["fixed", "rotate"]),
+  locations: z.array(geoLocationSchema)
 });
 var clockValidationStatusSchema = z.enum(["valid", "pending_review", "disputed"]);
 var clockEventSchema = z.object({
@@ -62,6 +76,6 @@ var clockEventSchema = z.object({
 });
 var clockEventsSchema = z.array(clockEventSchema);
 
-export { clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, myProfileSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema };
-//# sourceMappingURL=chunk-XDMNBBV5.js.map
-//# sourceMappingURL=chunk-XDMNBBV5.js.map
+export { clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema };
+//# sourceMappingURL=chunk-DJ5BS6R5.js.map
+//# sourceMappingURL=chunk-DJ5BS6R5.js.map

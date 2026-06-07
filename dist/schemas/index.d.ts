@@ -94,6 +94,7 @@ declare const createClockEventInputSchema: z.ZodObject<{
     }>;
     occurredAt: z.ZodString;
     shiftAssignmentId: z.ZodOptional<z.ZodString>;
+    locationId: z.ZodOptional<z.ZodString>;
     gps: z.ZodObject<{
         lat: z.ZodNumber;
         lng: z.ZodNumber;
@@ -102,6 +103,32 @@ declare const createClockEventInputSchema: z.ZodObject<{
     }, z.core.$strip>;
 }, z.core.$strip>;
 type CreateClockEventInput = z.infer<typeof createClockEventInputSchema>;
+/** A location with its geofence (GET /employees/me/locations items). */
+declare const geoLocationSchema: z.ZodObject<{
+    id: z.ZodString;
+    branchId: z.ZodString;
+    name: z.ZodString;
+    geofenceLat: z.ZodNumber;
+    geofenceLng: z.ZodNumber;
+    geofenceRadiusM: z.ZodNumber;
+}, z.core.$strip>;
+type GeoLocation = z.infer<typeof geoLocationSchema>;
+/** GET /employees/me/locations — the employee's allowed locations + mode. */
+declare const myLocationsSchema: z.ZodObject<{
+    mode: z.ZodEnum<{
+        fixed: "fixed";
+        rotate: "rotate";
+    }>;
+    locations: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        branchId: z.ZodString;
+        name: z.ZodString;
+        geofenceLat: z.ZodNumber;
+        geofenceLng: z.ZodNumber;
+        geofenceRadiusM: z.ZodNumber;
+    }, z.core.$strip>>;
+}, z.core.$strip>;
+type MyLocations = z.infer<typeof myLocationsSchema>;
 declare const clockValidationStatusSchema: z.ZodEnum<{
     valid: "valid";
     pending_review: "pending_review";
@@ -157,4 +184,4 @@ declare const clockEventsSchema: z.ZodArray<z.ZodObject<{
 }, z.core.$strip>>;
 type ClockEvent = z.infer<typeof clockEventSchema>;
 
-export { type ClockEvent, type ClockEventType, type ClockValidationStatus, type CreateClockEventInput, type MyProfile, type ScheduleAssignment, type ScheduleAssignmentBreak, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, myProfileSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema };
+export { type ClockEvent, type ClockEventType, type ClockValidationStatus, type CreateClockEventInput, type GeoLocation, type MyLocations, type MyProfile, type ScheduleAssignment, type ScheduleAssignmentBreak, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema };
