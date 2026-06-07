@@ -50,6 +50,8 @@ export interface CreateEmployeePayload {
   phone: string;
   experienceMonths: number;
   externalId?: string;
+  /** Departamento asignado (define la sucursal vía department→branch). */
+  departmentId?: string | null;
 }
 
 /** Body de PATCH /employees/:id (todos opcionales — partial update). */
