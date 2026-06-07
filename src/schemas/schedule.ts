@@ -40,6 +40,8 @@ export const myProfileSchema = z.object({
   departmentId: z.string().nullable(),
   email: z.string().nullable(),
   companyName: z.string().nullable(),
+  /** IANA tz of the employee's branch (e.g. "America/Argentina/Buenos_Aires"). */
+  timezone: z.string().nullable(),
 });
 
 export type MyProfile = z.infer<typeof myProfileSchema>;
