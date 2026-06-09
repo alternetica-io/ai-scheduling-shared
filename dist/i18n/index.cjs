@@ -112,7 +112,9 @@ var common_default = {
     results_one: "{{count}} result",
     results_other: "{{count}} results",
     showingOf: "Showing {{shown}} of {{total}}",
-    sortByAria: "Sort by {{column}}"
+    sortByAria: "Sort by {{column}}",
+    selectAll: "Select all",
+    selectRow: "Select row"
   },
   managerFilter: {
     label: "Manager scope",
@@ -313,7 +315,9 @@ var common_default2 = {
     results_one: "{{count}} resultado",
     results_other: "{{count}} resultados",
     showingOf: "Mostrando {{shown}} de {{total}}",
-    sortByAria: "Ordenar por {{column}}"
+    sortByAria: "Ordenar por {{column}}",
+    selectAll: "Seleccionar todo",
+    selectRow: "Seleccionar fila"
   },
   managerFilter: {
     label: "Manager",

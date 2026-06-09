@@ -109,7 +109,9 @@
     "results_one": "{{count}} result",
     "results_other": "{{count}} results",
     "showingOf": "Showing {{shown}} of {{total}}",
-    "sortByAria": "Sort by {{column}}"
+    "sortByAria": "Sort by {{column}}",
+    "selectAll": "Select all",
+    "selectRow": "Select row"
   },
   "managerFilter": {
     "label": "Manager scope",

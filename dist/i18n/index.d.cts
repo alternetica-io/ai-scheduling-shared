@@ -118,6 +118,8 @@ declare const sharedResources: {
                 results_other: string;
                 showingOf: string;
                 sortByAria: string;
+                selectAll: string;
+                selectRow: string;
             };
             managerFilter: {
                 label: string;
@@ -317,6 +319,8 @@ declare const sharedResources: {
                 results_other: string;
                 showingOf: string;
                 sortByAria: string;
+                selectAll: string;
+                selectRow: string;
             };
             managerFilter: {
                 label: string;

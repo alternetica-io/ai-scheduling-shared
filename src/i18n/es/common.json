@@ -109,7 +109,9 @@
     "results_one": "{{count}} resultado",
     "results_other": "{{count}} resultados",
     "showingOf": "Mostrando {{shown}} de {{total}}",
-    "sortByAria": "Ordenar por {{column}}"
+    "sortByAria": "Ordenar por {{column}}",
+    "selectAll": "Seleccionar todo",
+    "selectRow": "Seleccionar fila"
   },
   "managerFilter": {
     "label": "Manager",
