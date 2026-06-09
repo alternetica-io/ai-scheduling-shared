@@ -117,7 +117,12 @@ var chatMessageCreatedEventSchema = z.object({
   roomId: z.string(),
   message: chatMessageSchema
 });
+var chatTypingEventSchema = z.object({
+  roomId: z.string(),
+  employeeId: z.string(),
+  name: z.string()
+});
 
-export { chatContactSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatRoomSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
-//# sourceMappingURL=chunk-CNB2B7WY.js.map
-//# sourceMappingURL=chunk-CNB2B7WY.js.map
+export { chatContactSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
+//# sourceMappingURL=chunk-ESMFZHW3.js.map
+//# sourceMappingURL=chunk-ESMFZHW3.js.map

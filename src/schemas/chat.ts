@@ -61,3 +61,11 @@ export const chatMessageCreatedEventSchema = z.object({
   message: chatMessageSchema,
 });
 export type ChatMessageCreatedEvent = z.infer<typeof chatMessageCreatedEventSchema>;
+
+/** Socket payload for the 'ChatTyping' event. */
+export const chatTypingEventSchema = z.object({
+  roomId: z.string(),
+  employeeId: z.string(),
+  name: z.string(),
+});
+export type ChatTypingEvent = z.infer<typeof chatTypingEventSchema>;

@@ -185,6 +185,11 @@ var chatMessageCreatedEventSchema = zod.z.object({
   roomId: zod.z.string(),
   message: chatMessageSchema
 });
+var chatTypingEventSchema = zod.z.object({
+  roomId: zod.z.string(),
+  employeeId: zod.z.string(),
+  name: zod.z.string()
+});
 
 // src/i18n/en/common.json
 var common_default = {
@@ -606,6 +611,7 @@ exports.chatContactSchema = chatContactSchema;
 exports.chatMessageCreatedEventSchema = chatMessageCreatedEventSchema;
 exports.chatMessageSchema = chatMessageSchema;
 exports.chatRoomSchema = chatRoomSchema;
+exports.chatTypingEventSchema = chatTypingEventSchema;
 exports.clockEventSchema = clockEventSchema;
 exports.clockEventTypeSchema = clockEventTypeSchema;
 exports.clockEventsSchema = clockEventsSchema;

@@ -1,3 +1,3 @@
-export { chatContactSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatRoomSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema } from '../chunk-CNB2B7WY.js';
+export { chatContactSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema } from '../chunk-ESMFZHW3.js';
 //# sourceMappingURL=index.js.map
 //# sourceMappingURL=index.js.map

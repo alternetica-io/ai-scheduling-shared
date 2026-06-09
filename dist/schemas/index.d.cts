@@ -266,5 +266,12 @@ declare const chatMessageCreatedEventSchema: z.ZodObject<{
     }, z.core.$strip>;
 }, z.core.$strip>;
 type ChatMessageCreatedEvent = z.infer<typeof chatMessageCreatedEventSchema>;
+/** Socket payload for the 'ChatTyping' event. */
+declare const chatTypingEventSchema: z.ZodObject<{
+    roomId: z.ZodString;
+    employeeId: z.ZodString;
+    name: z.ZodString;
+}, z.core.$strip>;
+type ChatTypingEvent = z.infer<typeof chatTypingEventSchema>;
 
-export { type ChatContact, type ChatMessage, type ChatMessageCreatedEvent, type ChatRoom, type ClockEvent, type ClockEventType, type ClockValidationStatus, type CreateClockEventInput, type CreateRoomInput, type GeoLocation, type MyLocations, type MyProfile, type ScheduleAssignment, type ScheduleAssignmentBreak, type SendMessageInput, chatContactSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatRoomSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
+export { type ChatContact, type ChatMessage, type ChatMessageCreatedEvent, type ChatRoom, type ChatTypingEvent, type ClockEvent, type ClockEventType, type ClockValidationStatus, type CreateClockEventInput, type CreateRoomInput, type GeoLocation, type MyLocations, type MyProfile, type ScheduleAssignment, type ScheduleAssignmentBreak, type SendMessageInput, chatContactSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
