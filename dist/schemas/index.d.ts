@@ -206,6 +206,16 @@ declare const chatContactSchema: z.ZodObject<{
     name: z.ZodString;
 }, z.core.$strip>;
 type ChatContact = z.infer<typeof chatContactSchema>;
+/** A group member (GET /chat/rooms/:id/members). */
+declare const chatMemberSchema: z.ZodObject<{
+    id: z.ZodString;
+    name: z.ZodString;
+    role: z.ZodEnum<{
+        member: "member";
+        admin: "admin";
+    }>;
+}, z.core.$strip>;
+type ChatMember = z.infer<typeof chatMemberSchema>;
 /** A room in the user's chat list (GET /chat/rooms). */
 declare const chatRoomSchema: z.ZodObject<{
     id: z.ZodString;
@@ -274,4 +284,4 @@ declare const chatTypingEventSchema: z.ZodObject<{
 }, z.core.$strip>;
 type ChatTypingEvent = z.infer<typeof chatTypingEventSchema>;
 
-export { type ChatContact, type ChatMessage, type ChatMessageCreatedEvent, type ChatRoom, type ChatTypingEvent, type ClockEvent, type ClockEventType, type ClockValidationStatus, type CreateClockEventInput, type CreateRoomInput, type GeoLocation, type MyLocations, type MyProfile, type ScheduleAssignment, type ScheduleAssignmentBreak, type SendMessageInput, chatContactSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
+export { type ChatContact, type ChatMember, type ChatMessage, type ChatMessageCreatedEvent, type ChatRoom, type ChatTypingEvent, type ClockEvent, type ClockEventType, type ClockValidationStatus, type CreateClockEventInput, type CreateRoomInput, type GeoLocation, type MyLocations, type MyProfile, type ScheduleAssignment, type ScheduleAssignmentBreak, type SendMessageInput, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };

@@ -18,6 +18,14 @@ export type ChatMessage = z.infer<typeof chatMessageSchema>;
 export const chatContactSchema = z.object({ id: z.string(), name: z.string() });
 export type ChatContact = z.infer<typeof chatContactSchema>;
 
+/** A group member (GET /chat/rooms/:id/members). */
+export const chatMemberSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  role: z.enum(['member', 'admin']),
+});
+export type ChatMember = z.infer<typeof chatMemberSchema>;
+
 /** A room in the user's chat list (GET /chat/rooms). */
 export const chatRoomSchema = z.object({
   id: z.string(),

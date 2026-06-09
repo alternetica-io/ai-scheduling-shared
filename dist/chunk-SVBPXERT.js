@@ -87,6 +87,11 @@ var chatMessageSchema = z.object({
   attachmentName: z.string().nullable().default(null)
 });
 var chatContactSchema = z.object({ id: z.string(), name: z.string() });
+var chatMemberSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  role: z.enum(["member", "admin"])
+});
 var chatRoomSchema = z.object({
   id: z.string(),
   type: z.enum(["dm", "group"]),
@@ -123,6 +128,6 @@ var chatTypingEventSchema = z.object({
   name: z.string()
 });
 
-export { chatContactSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
-//# sourceMappingURL=chunk-ESMFZHW3.js.map
-//# sourceMappingURL=chunk-ESMFZHW3.js.map
+export { chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
+//# sourceMappingURL=chunk-SVBPXERT.js.map
+//# sourceMappingURL=chunk-SVBPXERT.js.map

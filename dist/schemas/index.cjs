@@ -89,6 +89,11 @@ var chatMessageSchema = zod.z.object({
   attachmentName: zod.z.string().nullable().default(null)
 });
 var chatContactSchema = zod.z.object({ id: zod.z.string(), name: zod.z.string() });
+var chatMemberSchema = zod.z.object({
+  id: zod.z.string(),
+  name: zod.z.string(),
+  role: zod.z.enum(["member", "admin"])
+});
 var chatRoomSchema = zod.z.object({
   id: zod.z.string(),
   type: zod.z.enum(["dm", "group"]),
@@ -126,6 +131,7 @@ var chatTypingEventSchema = zod.z.object({
 });
 
 exports.chatContactSchema = chatContactSchema;
+exports.chatMemberSchema = chatMemberSchema;
 exports.chatMessageCreatedEventSchema = chatMessageCreatedEventSchema;
 exports.chatMessageSchema = chatMessageSchema;
 exports.chatRoomSchema = chatRoomSchema;
