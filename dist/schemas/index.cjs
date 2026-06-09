@@ -19,7 +19,9 @@ var scheduleAssignmentSchema = zod.z.object({
   actualEndTime: zod.z.string(),
   origin: zod.z.enum(["membership", "override", "exception"]),
   breaks: zod.z.array(scheduleAssignmentBreakSchema),
-  confirmedAt: zod.z.string().nullable()
+  confirmedAt: zod.z.string().nullable(),
+  locationId: zod.z.string().nullable().default(null),
+  locationName: zod.z.string().nullable().default(null)
 });
 var scheduleAssignmentsSchema = zod.z.array(scheduleAssignmentSchema);
 var myProfileSchema = zod.z.object({

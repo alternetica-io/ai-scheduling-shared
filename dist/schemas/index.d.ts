@@ -32,6 +32,8 @@ declare const scheduleAssignmentSchema: z.ZodObject<{
         isPaid: z.ZodBoolean;
     }, z.core.$strip>>;
     confirmedAt: z.ZodNullable<z.ZodString>;
+    locationId: z.ZodDefault<z.ZodNullable<z.ZodString>>;
+    locationName: z.ZodDefault<z.ZodNullable<z.ZodString>>;
 }, z.core.$strip>;
 declare const scheduleAssignmentsSchema: z.ZodArray<z.ZodObject<{
     id: z.ZodString;
@@ -53,6 +55,8 @@ declare const scheduleAssignmentsSchema: z.ZodArray<z.ZodObject<{
         isPaid: z.ZodBoolean;
     }, z.core.$strip>>;
     confirmedAt: z.ZodNullable<z.ZodString>;
+    locationId: z.ZodDefault<z.ZodNullable<z.ZodString>>;
+    locationName: z.ZodDefault<z.ZodNullable<z.ZodString>>;
 }, z.core.$strip>>;
 type ScheduleAssignmentBreak = z.infer<typeof scheduleAssignmentBreakSchema>;
 type ScheduleAssignment = z.infer<typeof scheduleAssignmentSchema>;

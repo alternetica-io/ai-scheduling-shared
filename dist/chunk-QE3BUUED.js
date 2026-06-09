@@ -17,7 +17,9 @@ var scheduleAssignmentSchema = z.object({
   actualEndTime: z.string(),
   origin: z.enum(["membership", "override", "exception"]),
   breaks: z.array(scheduleAssignmentBreakSchema),
-  confirmedAt: z.string().nullable()
+  confirmedAt: z.string().nullable(),
+  locationId: z.string().nullable().default(null),
+  locationName: z.string().nullable().default(null)
 });
 var scheduleAssignmentsSchema = z.array(scheduleAssignmentSchema);
 var myProfileSchema = z.object({
@@ -133,5 +135,5 @@ var registerDeviceInputSchema = z.object({
 });
 
 export { chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
-//# sourceMappingURL=chunk-HUWYBHPI.js.map
-//# sourceMappingURL=chunk-HUWYBHPI.js.map
+//# sourceMappingURL=chunk-QE3BUUED.js.map
+//# sourceMappingURL=chunk-QE3BUUED.js.map

@@ -24,6 +24,8 @@ export const scheduleAssignmentSchema = z.object({
   origin: z.enum(['membership', 'override', 'exception']),
   breaks: z.array(scheduleAssignmentBreakSchema),
   confirmedAt: z.string().nullable(),
+  locationId: z.string().nullable().default(null),
+  locationName: z.string().nullable().default(null),
 });
 
 export const scheduleAssignmentsSchema = z.array(scheduleAssignmentSchema);
