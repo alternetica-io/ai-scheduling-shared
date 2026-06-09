@@ -192,8 +192,20 @@ declare const chatMessageSchema: z.ZodObject<{
     senderName: z.ZodNullable<z.ZodString>;
     content: z.ZodString;
     createdAt: z.ZodString;
+    attachmentUrl: z.ZodDefault<z.ZodNullable<z.ZodString>>;
+    attachmentType: z.ZodDefault<z.ZodNullable<z.ZodEnum<{
+        file: "file";
+        image: "image";
+    }>>>;
+    attachmentName: z.ZodDefault<z.ZodNullable<z.ZodString>>;
 }, z.core.$strip>;
 type ChatMessage = z.infer<typeof chatMessageSchema>;
+/** A coworker to start a chat with (GET /chat/contacts). */
+declare const chatContactSchema: z.ZodObject<{
+    id: z.ZodString;
+    name: z.ZodString;
+}, z.core.$strip>;
+type ChatContact = z.infer<typeof chatContactSchema>;
 /** A room in the user's chat list (GET /chat/rooms). */
 declare const chatRoomSchema: z.ZodObject<{
     id: z.ZodString;
@@ -214,8 +226,14 @@ declare const chatRoomSchema: z.ZodObject<{
 type ChatRoom = z.infer<typeof chatRoomSchema>;
 /** POST /chat/rooms/:id/messages body. */
 declare const sendMessageInputSchema: z.ZodObject<{
-    content: z.ZodString;
+    content: z.ZodOptional<z.ZodString>;
     clientUuid: z.ZodOptional<z.ZodString>;
+    attachmentPath: z.ZodOptional<z.ZodString>;
+    attachmentType: z.ZodOptional<z.ZodEnum<{
+        file: "file";
+        image: "image";
+    }>>;
+    attachmentName: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 type SendMessageInput = z.infer<typeof sendMessageInputSchema>;
 /** POST /chat/rooms body — create a group or ensure a dm. */
@@ -239,8 +257,14 @@ declare const chatMessageCreatedEventSchema: z.ZodObject<{
         senderName: z.ZodNullable<z.ZodString>;
         content: z.ZodString;
         createdAt: z.ZodString;
+        attachmentUrl: z.ZodDefault<z.ZodNullable<z.ZodString>>;
+        attachmentType: z.ZodDefault<z.ZodNullable<z.ZodEnum<{
+            file: "file";
+            image: "image";
+        }>>>;
+        attachmentName: z.ZodDefault<z.ZodNullable<z.ZodString>>;
     }, z.core.$strip>;
 }, z.core.$strip>;
 type ChatMessageCreatedEvent = z.infer<typeof chatMessageCreatedEventSchema>;
 
-export { type ChatMessage, type ChatMessageCreatedEvent, type ChatRoom, type ClockEvent, type ClockEventType, type ClockValidationStatus, type CreateClockEventInput, type CreateRoomInput, type GeoLocation, type MyLocations, type MyProfile, type ScheduleAssignment, type ScheduleAssignmentBreak, type SendMessageInput, chatMessageCreatedEventSchema, chatMessageSchema, chatRoomSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
+export { type ChatContact, type ChatMessage, type ChatMessageCreatedEvent, type ChatRoom, type ClockEvent, type ClockEventType, type ClockValidationStatus, type CreateClockEventInput, type CreateRoomInput, type GeoLocation, type MyLocations, type MyProfile, type ScheduleAssignment, type ScheduleAssignmentBreak, type SendMessageInput, chatContactSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatRoomSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };

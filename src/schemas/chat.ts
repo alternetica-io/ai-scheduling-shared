@@ -8,8 +8,15 @@ export const chatMessageSchema = z.object({
   senderName: z.string().nullable(),
   content: z.string(),
   createdAt: z.string(),
+  attachmentUrl: z.string().nullable().default(null),
+  attachmentType: z.enum(['image', 'file']).nullable().default(null),
+  attachmentName: z.string().nullable().default(null),
 });
 export type ChatMessage = z.infer<typeof chatMessageSchema>;
+
+/** A coworker to start a chat with (GET /chat/contacts). */
+export const chatContactSchema = z.object({ id: z.string(), name: z.string() });
+export type ChatContact = z.infer<typeof chatContactSchema>;
 
 /** A room in the user's chat list (GET /chat/rooms). */
 export const chatRoomSchema = z.object({
@@ -31,8 +38,11 @@ export type ChatRoom = z.infer<typeof chatRoomSchema>;
 
 /** POST /chat/rooms/:id/messages body. */
 export const sendMessageInputSchema = z.object({
-  content: z.string().min(1).max(4000),
+  content: z.string().max(4000).optional(),
   clientUuid: z.string().optional(),
+  attachmentPath: z.string().optional(),
+  attachmentType: z.enum(['image', 'file']).optional(),
+  attachmentName: z.string().optional(),
 });
 export type SendMessageInput = z.infer<typeof sendMessageInputSchema>;
 

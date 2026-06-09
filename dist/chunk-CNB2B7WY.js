@@ -81,8 +81,12 @@ var chatMessageSchema = z.object({
   senderId: z.string().nullable(),
   senderName: z.string().nullable(),
   content: z.string(),
-  createdAt: z.string()
+  createdAt: z.string(),
+  attachmentUrl: z.string().nullable().default(null),
+  attachmentType: z.enum(["image", "file"]).nullable().default(null),
+  attachmentName: z.string().nullable().default(null)
 });
+var chatContactSchema = z.object({ id: z.string(), name: z.string() });
 var chatRoomSchema = z.object({
   id: z.string(),
   type: z.enum(["dm", "group"]),
@@ -97,8 +101,11 @@ var chatRoomSchema = z.object({
   updatedAt: z.string()
 });
 var sendMessageInputSchema = z.object({
-  content: z.string().min(1).max(4e3),
-  clientUuid: z.string().optional()
+  content: z.string().max(4e3).optional(),
+  clientUuid: z.string().optional(),
+  attachmentPath: z.string().optional(),
+  attachmentType: z.enum(["image", "file"]).optional(),
+  attachmentName: z.string().optional()
 });
 var createRoomInputSchema = z.object({
   type: z.enum(["dm", "group"]),
@@ -111,6 +118,6 @@ var chatMessageCreatedEventSchema = z.object({
   message: chatMessageSchema
 });
 
-export { chatMessageCreatedEventSchema, chatMessageSchema, chatRoomSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
-//# sourceMappingURL=chunk-3PKAGNOX.js.map
-//# sourceMappingURL=chunk-3PKAGNOX.js.map
+export { chatContactSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatRoomSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
+//# sourceMappingURL=chunk-CNB2B7WY.js.map
+//# sourceMappingURL=chunk-CNB2B7WY.js.map

@@ -83,8 +83,12 @@ var chatMessageSchema = zod.z.object({
   senderId: zod.z.string().nullable(),
   senderName: zod.z.string().nullable(),
   content: zod.z.string(),
-  createdAt: zod.z.string()
+  createdAt: zod.z.string(),
+  attachmentUrl: zod.z.string().nullable().default(null),
+  attachmentType: zod.z.enum(["image", "file"]).nullable().default(null),
+  attachmentName: zod.z.string().nullable().default(null)
 });
+var chatContactSchema = zod.z.object({ id: zod.z.string(), name: zod.z.string() });
 var chatRoomSchema = zod.z.object({
   id: zod.z.string(),
   type: zod.z.enum(["dm", "group"]),
@@ -99,8 +103,11 @@ var chatRoomSchema = zod.z.object({
   updatedAt: zod.z.string()
 });
 var sendMessageInputSchema = zod.z.object({
-  content: zod.z.string().min(1).max(4e3),
-  clientUuid: zod.z.string().optional()
+  content: zod.z.string().max(4e3).optional(),
+  clientUuid: zod.z.string().optional(),
+  attachmentPath: zod.z.string().optional(),
+  attachmentType: zod.z.enum(["image", "file"]).optional(),
+  attachmentName: zod.z.string().optional()
 });
 var createRoomInputSchema = zod.z.object({
   type: zod.z.enum(["dm", "group"]),
@@ -113,6 +120,7 @@ var chatMessageCreatedEventSchema = zod.z.object({
   message: chatMessageSchema
 });
 
+exports.chatContactSchema = chatContactSchema;
 exports.chatMessageCreatedEventSchema = chatMessageCreatedEventSchema;
 exports.chatMessageSchema = chatMessageSchema;
 exports.chatRoomSchema = chatRoomSchema;
