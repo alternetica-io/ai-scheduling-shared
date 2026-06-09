@@ -184,4 +184,63 @@ declare const clockEventsSchema: z.ZodArray<z.ZodObject<{
 }, z.core.$strip>>;
 type ClockEvent = z.infer<typeof clockEventSchema>;
 
-export { type ClockEvent, type ClockEventType, type ClockValidationStatus, type CreateClockEventInput, type GeoLocation, type MyLocations, type MyProfile, type ScheduleAssignment, type ScheduleAssignmentBreak, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema };
+/** A chat message (GET /chat/rooms/:id/messages items, POST send response). */
+declare const chatMessageSchema: z.ZodObject<{
+    id: z.ZodString;
+    roomId: z.ZodString;
+    senderId: z.ZodNullable<z.ZodString>;
+    senderName: z.ZodNullable<z.ZodString>;
+    content: z.ZodString;
+    createdAt: z.ZodString;
+}, z.core.$strip>;
+type ChatMessage = z.infer<typeof chatMessageSchema>;
+/** A room in the user's chat list (GET /chat/rooms). */
+declare const chatRoomSchema: z.ZodObject<{
+    id: z.ZodString;
+    type: z.ZodEnum<{
+        dm: "dm";
+        group: "group";
+    }>;
+    title: z.ZodString;
+    memberCount: z.ZodNumber;
+    lastMessage: z.ZodNullable<z.ZodObject<{
+        content: z.ZodString;
+        createdAt: z.ZodString;
+        senderName: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>>;
+    unreadCount: z.ZodNumber;
+    updatedAt: z.ZodString;
+}, z.core.$strip>;
+type ChatRoom = z.infer<typeof chatRoomSchema>;
+/** POST /chat/rooms/:id/messages body. */
+declare const sendMessageInputSchema: z.ZodObject<{
+    content: z.ZodString;
+    clientUuid: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>;
+type SendMessageInput = z.infer<typeof sendMessageInputSchema>;
+/** POST /chat/rooms body — create a group or ensure a dm. */
+declare const createRoomInputSchema: z.ZodObject<{
+    type: z.ZodEnum<{
+        dm: "dm";
+        group: "group";
+    }>;
+    memberId: z.ZodOptional<z.ZodString>;
+    name: z.ZodOptional<z.ZodString>;
+    memberIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
+}, z.core.$strip>;
+type CreateRoomInput = z.infer<typeof createRoomInputSchema>;
+/** Socket payload for the 'ChatMessageCreated' event. */
+declare const chatMessageCreatedEventSchema: z.ZodObject<{
+    roomId: z.ZodString;
+    message: z.ZodObject<{
+        id: z.ZodString;
+        roomId: z.ZodString;
+        senderId: z.ZodNullable<z.ZodString>;
+        senderName: z.ZodNullable<z.ZodString>;
+        content: z.ZodString;
+        createdAt: z.ZodString;
+    }, z.core.$strip>;
+}, z.core.$strip>;
+type ChatMessageCreatedEvent = z.infer<typeof chatMessageCreatedEventSchema>;
+
+export { type ChatMessage, type ChatMessageCreatedEvent, type ChatRoom, type ClockEvent, type ClockEventType, type ClockValidationStatus, type CreateClockEventInput, type CreateRoomInput, type GeoLocation, type MyLocations, type MyProfile, type ScheduleAssignment, type ScheduleAssignmentBreak, type SendMessageInput, chatMessageCreatedEventSchema, chatMessageSchema, chatRoomSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };

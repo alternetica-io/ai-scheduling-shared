@@ -75,7 +75,42 @@ var clockEventSchema = z.object({
   photoUrl: z.string().nullable()
 });
 var clockEventsSchema = z.array(clockEventSchema);
+var chatMessageSchema = z.object({
+  id: z.string(),
+  roomId: z.string(),
+  senderId: z.string().nullable(),
+  senderName: z.string().nullable(),
+  content: z.string(),
+  createdAt: z.string()
+});
+var chatRoomSchema = z.object({
+  id: z.string(),
+  type: z.enum(["dm", "group"]),
+  title: z.string(),
+  memberCount: z.number(),
+  lastMessage: z.object({
+    content: z.string(),
+    createdAt: z.string(),
+    senderName: z.string().nullable()
+  }).nullable(),
+  unreadCount: z.number(),
+  updatedAt: z.string()
+});
+var sendMessageInputSchema = z.object({
+  content: z.string().min(1).max(4e3),
+  clientUuid: z.string().optional()
+});
+var createRoomInputSchema = z.object({
+  type: z.enum(["dm", "group"]),
+  memberId: z.string().optional(),
+  name: z.string().max(120).optional(),
+  memberIds: z.array(z.string()).optional()
+});
+var chatMessageCreatedEventSchema = z.object({
+  roomId: z.string(),
+  message: chatMessageSchema
+});
 
-export { clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema };
-//# sourceMappingURL=chunk-DJ5BS6R5.js.map
-//# sourceMappingURL=chunk-DJ5BS6R5.js.map
+export { chatMessageCreatedEventSchema, chatMessageSchema, chatRoomSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
+//# sourceMappingURL=chunk-3PKAGNOX.js.map
+//# sourceMappingURL=chunk-3PKAGNOX.js.map

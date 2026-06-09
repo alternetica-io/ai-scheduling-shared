@@ -6,3 +6,4 @@
  */
 export * from './schedule';
 export * from './timeclock';
+export * from './chat';

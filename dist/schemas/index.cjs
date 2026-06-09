@@ -77,18 +77,58 @@ var clockEventSchema = zod.z.object({
   photoUrl: zod.z.string().nullable()
 });
 var clockEventsSchema = zod.z.array(clockEventSchema);
+var chatMessageSchema = zod.z.object({
+  id: zod.z.string(),
+  roomId: zod.z.string(),
+  senderId: zod.z.string().nullable(),
+  senderName: zod.z.string().nullable(),
+  content: zod.z.string(),
+  createdAt: zod.z.string()
+});
+var chatRoomSchema = zod.z.object({
+  id: zod.z.string(),
+  type: zod.z.enum(["dm", "group"]),
+  title: zod.z.string(),
+  memberCount: zod.z.number(),
+  lastMessage: zod.z.object({
+    content: zod.z.string(),
+    createdAt: zod.z.string(),
+    senderName: zod.z.string().nullable()
+  }).nullable(),
+  unreadCount: zod.z.number(),
+  updatedAt: zod.z.string()
+});
+var sendMessageInputSchema = zod.z.object({
+  content: zod.z.string().min(1).max(4e3),
+  clientUuid: zod.z.string().optional()
+});
+var createRoomInputSchema = zod.z.object({
+  type: zod.z.enum(["dm", "group"]),
+  memberId: zod.z.string().optional(),
+  name: zod.z.string().max(120).optional(),
+  memberIds: zod.z.array(zod.z.string()).optional()
+});
+var chatMessageCreatedEventSchema = zod.z.object({
+  roomId: zod.z.string(),
+  message: chatMessageSchema
+});
 
+exports.chatMessageCreatedEventSchema = chatMessageCreatedEventSchema;
+exports.chatMessageSchema = chatMessageSchema;
+exports.chatRoomSchema = chatRoomSchema;
 exports.clockEventSchema = clockEventSchema;
 exports.clockEventTypeSchema = clockEventTypeSchema;
 exports.clockEventsSchema = clockEventsSchema;
 exports.clockGpsSchema = clockGpsSchema;
 exports.clockValidationStatusSchema = clockValidationStatusSchema;
 exports.createClockEventInputSchema = createClockEventInputSchema;
+exports.createRoomInputSchema = createRoomInputSchema;
 exports.geoLocationSchema = geoLocationSchema;
 exports.myLocationsSchema = myLocationsSchema;
 exports.myProfileSchema = myProfileSchema;
 exports.scheduleAssignmentBreakSchema = scheduleAssignmentBreakSchema;
 exports.scheduleAssignmentSchema = scheduleAssignmentSchema;
 exports.scheduleAssignmentsSchema = scheduleAssignmentsSchema;
+exports.sendMessageInputSchema = sendMessageInputSchema;
 //# sourceMappingURL=index.cjs.map
 //# sourceMappingURL=index.cjs.map
