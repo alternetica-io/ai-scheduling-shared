@@ -127,7 +127,11 @@ var chatTypingEventSchema = z.object({
   employeeId: z.string(),
   name: z.string()
 });
+var registerDeviceInputSchema = z.object({
+  token: z.string().min(1),
+  platform: z.enum(["ios", "android"])
+});
 
-export { chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
-//# sourceMappingURL=chunk-SVBPXERT.js.map
-//# sourceMappingURL=chunk-SVBPXERT.js.map
+export { chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
+//# sourceMappingURL=chunk-HUWYBHPI.js.map
+//# sourceMappingURL=chunk-HUWYBHPI.js.map

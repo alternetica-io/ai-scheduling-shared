@@ -284,4 +284,14 @@ declare const chatTypingEventSchema: z.ZodObject<{
 }, z.core.$strip>;
 type ChatTypingEvent = z.infer<typeof chatTypingEventSchema>;
 
-export { type ChatContact, type ChatMember, type ChatMessage, type ChatMessageCreatedEvent, type ChatRoom, type ChatTypingEvent, type ClockEvent, type ClockEventType, type ClockValidationStatus, type CreateClockEventInput, type CreateRoomInput, type GeoLocation, type MyLocations, type MyProfile, type ScheduleAssignment, type ScheduleAssignmentBreak, type SendMessageInput, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
+/** POST /push/register body. */
+declare const registerDeviceInputSchema: z.ZodObject<{
+    token: z.ZodString;
+    platform: z.ZodEnum<{
+        ios: "ios";
+        android: "android";
+    }>;
+}, z.core.$strip>;
+type RegisterDeviceInput = z.infer<typeof registerDeviceInputSchema>;
+
+export { type ChatContact, type ChatMember, type ChatMessage, type ChatMessageCreatedEvent, type ChatRoom, type ChatTypingEvent, type ClockEvent, type ClockEventType, type ClockValidationStatus, type CreateClockEventInput, type CreateRoomInput, type GeoLocation, type MyLocations, type MyProfile, type RegisterDeviceInput, type ScheduleAssignment, type ScheduleAssignmentBreak, type SendMessageInput, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };

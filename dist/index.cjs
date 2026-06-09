@@ -195,6 +195,10 @@ var chatTypingEventSchema = zod.z.object({
   employeeId: zod.z.string(),
   name: zod.z.string()
 });
+var registerDeviceInputSchema = zod.z.object({
+  token: zod.z.string().min(1),
+  platform: zod.z.enum(["ios", "android"])
+});
 
 // src/i18n/en/common.json
 var common_default = {
@@ -630,6 +634,7 @@ exports.describeApiError = describeApiError;
 exports.geoLocationSchema = geoLocationSchema;
 exports.myLocationsSchema = myLocationsSchema;
 exports.myProfileSchema = myProfileSchema;
+exports.registerDeviceInputSchema = registerDeviceInputSchema;
 exports.scheduleAssignmentBreakSchema = scheduleAssignmentBreakSchema;
 exports.scheduleAssignmentSchema = scheduleAssignmentSchema;
 exports.scheduleAssignmentsSchema = scheduleAssignmentsSchema;
