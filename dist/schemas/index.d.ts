@@ -99,6 +99,7 @@ declare const createClockEventInputSchema: z.ZodObject<{
     occurredAt: z.ZodString;
     shiftAssignmentId: z.ZodOptional<z.ZodString>;
     locationId: z.ZodOptional<z.ZodString>;
+    breakLimitMinutes: z.ZodOptional<z.ZodNullable<z.ZodNumber>>;
     gps: z.ZodObject<{
         lat: z.ZodNumber;
         lng: z.ZodNumber;
@@ -162,6 +163,7 @@ declare const clockEventSchema: z.ZodObject<{
     lng: z.ZodNullable<z.ZodNumber>;
     accuracy: z.ZodNullable<z.ZodNumber>;
     photoUrl: z.ZodNullable<z.ZodString>;
+    breakLimitMinutes: z.ZodDefault<z.ZodNullable<z.ZodNumber>>;
 }, z.core.$strip>;
 declare const clockEventsSchema: z.ZodArray<z.ZodObject<{
     id: z.ZodString;
@@ -185,6 +187,7 @@ declare const clockEventsSchema: z.ZodArray<z.ZodObject<{
     lng: z.ZodNullable<z.ZodNumber>;
     accuracy: z.ZodNullable<z.ZodNumber>;
     photoUrl: z.ZodNullable<z.ZodString>;
+    breakLimitMinutes: z.ZodDefault<z.ZodNullable<z.ZodNumber>>;
 }, z.core.$strip>>;
 type ClockEvent = z.infer<typeof clockEventSchema>;
 

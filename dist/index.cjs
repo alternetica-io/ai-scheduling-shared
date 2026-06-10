@@ -115,6 +115,9 @@ var createClockEventInputSchema = zod.z.object({
   shiftAssignmentId: zod.z.string().optional(),
   /** Location to validate the geofence against (Locations feature). */
   locationId: zod.z.string().optional(),
+  /** En un break_start: límite en minutos del descanso elegido (para overbreak).
+   *  null/omitido = descanso sin límite (turno sin descanso configurado). */
+  breakLimitMinutes: zod.z.number().nullable().optional(),
   gps: clockGpsSchema
 });
 var geoLocationSchema = zod.z.object({
@@ -142,7 +145,9 @@ var clockEventSchema = zod.z.object({
   lat: zod.z.number().nullable(),
   lng: zod.z.number().nullable(),
   accuracy: zod.z.number().nullable(),
-  photoUrl: zod.z.string().nullable()
+  photoUrl: zod.z.string().nullable(),
+  /** Límite (min) del descanso, presente en break_start. null = sin límite. */
+  breakLimitMinutes: zod.z.number().nullable().default(null)
 });
 var clockEventsSchema = zod.z.array(clockEventSchema);
 var chatMessageSchema = zod.z.object({

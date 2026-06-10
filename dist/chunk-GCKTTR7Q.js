@@ -47,6 +47,9 @@ var createClockEventInputSchema = z.object({
   shiftAssignmentId: z.string().optional(),
   /** Location to validate the geofence against (Locations feature). */
   locationId: z.string().optional(),
+  /** En un break_start: límite en minutos del descanso elegido (para overbreak).
+   *  null/omitido = descanso sin límite (turno sin descanso configurado). */
+  breakLimitMinutes: z.number().nullable().optional(),
   gps: clockGpsSchema
 });
 var geoLocationSchema = z.object({
@@ -74,7 +77,9 @@ var clockEventSchema = z.object({
   lat: z.number().nullable(),
   lng: z.number().nullable(),
   accuracy: z.number().nullable(),
-  photoUrl: z.string().nullable()
+  photoUrl: z.string().nullable(),
+  /** Límite (min) del descanso, presente en break_start. null = sin límite. */
+  breakLimitMinutes: z.number().nullable().default(null)
 });
 var clockEventsSchema = z.array(clockEventSchema);
 var chatMessageSchema = z.object({
@@ -135,5 +140,5 @@ var registerDeviceInputSchema = z.object({
 });
 
 export { chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
-//# sourceMappingURL=chunk-QE3BUUED.js.map
-//# sourceMappingURL=chunk-QE3BUUED.js.map
+//# sourceMappingURL=chunk-GCKTTR7Q.js.map
+//# sourceMappingURL=chunk-GCKTTR7Q.js.map

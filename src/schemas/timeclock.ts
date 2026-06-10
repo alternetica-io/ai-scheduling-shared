@@ -20,6 +20,9 @@ export const createClockEventInputSchema = z.object({
   shiftAssignmentId: z.string().optional(),
   /** Location to validate the geofence against (Locations feature). */
   locationId: z.string().optional(),
+  /** En un break_start: límite en minutos del descanso elegido (para overbreak).
+   *  null/omitido = descanso sin límite (turno sin descanso configurado). */
+  breakLimitMinutes: z.number().nullable().optional(),
   gps: clockGpsSchema,
 });
 export type CreateClockEventInput = z.infer<typeof createClockEventInputSchema>;
@@ -59,6 +62,8 @@ export const clockEventSchema = z.object({
   lng: z.number().nullable(),
   accuracy: z.number().nullable(),
   photoUrl: z.string().nullable(),
+  /** Límite (min) del descanso, presente en break_start. null = sin límite. */
+  breakLimitMinutes: z.number().nullable().default(null),
 });
 export const clockEventsSchema = z.array(clockEventSchema);
 export type ClockEvent = z.infer<typeof clockEventSchema>;
