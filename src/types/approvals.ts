@@ -31,8 +31,14 @@ export function formatShiftRef(
   ref: ApprovalShiftRef,
   locale: string,
 ): { day: string; time: string } {
-  const t = (iso: string) =>
-    new Date(iso).toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' });
+  // Los horarios se guardan como wall-clock metido en UTC (07:00 → "07:00Z"),
+  // como en el grid. Mostramos los componentes UTC (NO toLocaleTimeString, que
+  // convertiría a la tz del dispositivo y desfasaría las horas).
+  const pad = (n: number) => String(n).padStart(2, '0');
+  const t = (iso: string) => {
+    const d = new Date(iso);
+    return `${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}`;
+  };
   return {
     day: new Date(`${ref.date}T00:00:00`).toLocaleDateString(locale, {
       weekday: 'short',

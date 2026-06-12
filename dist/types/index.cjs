@@ -2,7 +2,11 @@
 
 // src/types/approvals.ts
 function formatShiftRef(ref, locale) {
-  const t = (iso) => new Date(iso).toLocaleTimeString(locale, { hour: "2-digit", minute: "2-digit" });
+  const pad = (n) => String(n).padStart(2, "0");
+  const t = (iso) => {
+    const d = new Date(iso);
+    return `${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}`;
+  };
   return {
     day: (/* @__PURE__ */ new Date(`${ref.date}T00:00:00`)).toLocaleDateString(locale, {
       weekday: "short",
