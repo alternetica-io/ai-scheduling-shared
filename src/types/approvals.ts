@@ -82,6 +82,8 @@ export interface Incident {
   endDate: string | null;
   /** Texto libre que reportó el empleado (Fase 2). */
   message?: string | null;
+  /** Turno del empleado el día del incidente (startDate), o null. Backend enriquecido. */
+  shift?: ApprovalShiftRef | null;
   createdAt: string;
   updatedAt: string;
 }
