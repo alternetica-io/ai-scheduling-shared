@@ -7,7 +7,18 @@ function _interopDefault (e) { return e && e.__esModule ? e : { default: e }; }
 
 var axios__default = /*#__PURE__*/_interopDefault(axios);
 
-// src/errors/api-error.ts
+// src/types/approvals.ts
+function formatShiftRef(ref, locale) {
+  const t = (iso) => new Date(iso).toLocaleTimeString(locale, { hour: "2-digit", minute: "2-digit" });
+  return {
+    day: (/* @__PURE__ */ new Date(`${ref.date}T00:00:00`)).toLocaleDateString(locale, {
+      weekday: "short",
+      day: "2-digit",
+      month: "short"
+    }),
+    time: `${t(ref.start)} \u2013 ${t(ref.end)}`
+  };
+}
 function describeApiError(err, t) {
   if (axios__default.default.isAxiosError(err)) {
     const data = err.response?.data ?? {};
@@ -638,6 +649,7 @@ exports.createApiClient = createApiClient;
 exports.createClockEventInputSchema = createClockEventInputSchema;
 exports.createRoomInputSchema = createRoomInputSchema;
 exports.describeApiError = describeApiError;
+exports.formatShiftRef = formatShiftRef;
 exports.geoLocationSchema = geoLocationSchema;
 exports.myLocationsSchema = myLocationsSchema;
 exports.myProfileSchema = myProfileSchema;

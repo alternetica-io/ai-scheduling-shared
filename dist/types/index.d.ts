@@ -76,6 +76,31 @@ interface UpdateEmployeePayload {
  * Tipos compartidos del grupo Approvals (Incidents, Swap Requests,
  * Absence Reports, Day Off Requests).
  */
+/**
+ * Resumen del turno al que aplica una solicitud (para dar contexto en las
+ * cards de approvals: qué día, qué horario, qué rol). Lo devuelve el backend
+ * enriquecido en swap/day-off/absence.
+ */
+interface ApprovalShiftRef {
+    /** YYYY-MM-DD (fecha lógica del slot). */
+    date: string;
+    /** ISO datetime UTC — inicio real. */
+    start: string;
+    /** ISO datetime UTC — fin real. */
+    end: string;
+    /** Nombre del template (rol), o null si fue borrado. */
+    role: string | null;
+}
+/**
+ * Formatea un `ApprovalShiftRef` para mostrar — única fuente para web y móvil.
+ * Devuelve las partes (día / rango horario) para que cada plataforma componga
+ * su layout. Horas en la tz local del dispositivo (consistente con el resto
+ * de la UI de turnos).
+ */
+declare function formatShiftRef(ref: ApprovalShiftRef, locale: string): {
+    day: string;
+    time: string;
+};
 type IncidentType = 'MEDICAL_LEAVE' | 'EMERGENCY_LEAVE' | 'SHIFT_SWAP_REQUEST' | 'LATE' | 'NO_SHOW' | 'BIOMETRIC_MISS';
 type IncidentStatus = 'reported' | 'document_received' | 'pending_ocr' | 'processing_ocr' | 'pending_validation' | 'validated' | 'rejected' | 'repair_in_progress' | 'replacement_pending' | 'replacement_assigned' | 'resolved';
 interface Incident {
@@ -90,6 +115,8 @@ interface Incident {
     validated: boolean;
     startDate: string | null;
     endDate: string | null;
+    /** Texto libre que reportó el empleado (Fase 2). */
+    message?: string | null;
     createdAt: string;
     updatedAt: string;
 }
@@ -107,6 +134,10 @@ interface ShiftSwapRequest {
     assignmentId: string | null;
     status: ShiftSwapRequestStatus;
     createdAt: string;
+    /** Turno que se intercambia (del requester). Backend enriquecido. */
+    shift?: ApprovalShiftRef | null;
+    /** Turno del target ese día, o null = sin turno. Backend enriquecido. */
+    targetShift?: ApprovalShiftRef | null;
 }
 interface CreateShiftSwapRequestPayload {
     requesterId: string;
@@ -124,6 +155,8 @@ interface AbsenceReport {
     startDate: string;
     endDate: string;
     reportedAt: string;
+    /** Turno al que aplica, o null = sin turno. Backend enriquecido. */
+    shift?: ApprovalShiftRef | null;
 }
 interface CreateAbsenceReportPayload {
     employeeId: string;
@@ -145,6 +178,8 @@ interface DayOffRequest {
     reason: string;
     status: DayOffRequestStatus;
     createdAt: string;
+    /** Turno que el empleado pierde ese día, o null = sin turno. Backend enriquecido. */
+    shift?: ApprovalShiftRef | null;
 }
 interface CreateDayOffRequestPayload {
     employeeId: string;
@@ -397,4 +432,4 @@ interface WorkingTimePolicyView {
     };
 }
 
-export type { AbsenceReport, CompanyPolicy, CompanySkill, CreateAbsenceReportPayload, CreateCompanyPolicyPayload, CreateCompanyPolicyResult, CreateCompanySkillPayload, CreateDayOffRequestPayload, CreateEmployeePayload, CreateIncidentPayload, CreateSemanticRulePayload, CreateSemanticRuleResult, CreateShiftMembershipPayload, CreateShiftSwapRequestPayload, DayOffRequest, DayOffRequestStatus, Employee, FairnessHistoryRow, Incident, IncidentStatus, IncidentType, PolicyScope, PolicyScopeType, PolicySeverity, PolicySource, RulePriority, RuleType, SemanticRule, SemanticRuleListItem, SemanticRuleSuggestion, ShiftMembership, ShiftMembershipFilter, ShiftSwapRequest, ShiftSwapRequestStatus, UpdateCompanyPolicyPayload, UpdateEmployeePayload, UpdateSemanticRuleMetadataPayload, UpdateSemanticRuleTextPayload, WorkingTimePolicyOverrides, WorkingTimePolicyView };
+export { type AbsenceReport, type ApprovalShiftRef, type CompanyPolicy, type CompanySkill, type CreateAbsenceReportPayload, type CreateCompanyPolicyPayload, type CreateCompanyPolicyResult, type CreateCompanySkillPayload, type CreateDayOffRequestPayload, type CreateEmployeePayload, type CreateIncidentPayload, type CreateSemanticRulePayload, type CreateSemanticRuleResult, type CreateShiftMembershipPayload, type CreateShiftSwapRequestPayload, type DayOffRequest, type DayOffRequestStatus, type Employee, type FairnessHistoryRow, type Incident, type IncidentStatus, type IncidentType, type PolicyScope, type PolicyScopeType, type PolicySeverity, type PolicySource, type RulePriority, type RuleType, type SemanticRule, type SemanticRuleListItem, type SemanticRuleSuggestion, type ShiftMembership, type ShiftMembershipFilter, type ShiftSwapRequest, type ShiftSwapRequestStatus, type UpdateCompanyPolicyPayload, type UpdateEmployeePayload, type UpdateSemanticRuleMetadataPayload, type UpdateSemanticRuleTextPayload, type WorkingTimePolicyOverrides, type WorkingTimePolicyView, formatShiftRef };

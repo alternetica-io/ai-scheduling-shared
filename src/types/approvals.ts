@@ -3,6 +3,46 @@
  * Absence Reports, Day Off Requests).
  */
 
+// ─── Contexto de turno para las cards ─────────────────────────────────────────
+
+/**
+ * Resumen del turno al que aplica una solicitud (para dar contexto en las
+ * cards de approvals: qué día, qué horario, qué rol). Lo devuelve el backend
+ * enriquecido en swap/day-off/absence.
+ */
+export interface ApprovalShiftRef {
+  /** YYYY-MM-DD (fecha lógica del slot). */
+  date: string;
+  /** ISO datetime UTC — inicio real. */
+  start: string;
+  /** ISO datetime UTC — fin real. */
+  end: string;
+  /** Nombre del template (rol), o null si fue borrado. */
+  role: string | null;
+}
+
+/**
+ * Formatea un `ApprovalShiftRef` para mostrar — única fuente para web y móvil.
+ * Devuelve las partes (día / rango horario) para que cada plataforma componga
+ * su layout. Horas en la tz local del dispositivo (consistente con el resto
+ * de la UI de turnos).
+ */
+export function formatShiftRef(
+  ref: ApprovalShiftRef,
+  locale: string,
+): { day: string; time: string } {
+  const t = (iso: string) =>
+    new Date(iso).toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' });
+  return {
+    day: new Date(`${ref.date}T00:00:00`).toLocaleDateString(locale, {
+      weekday: 'short',
+      day: '2-digit',
+      month: 'short',
+    }),
+    time: `${t(ref.start)} – ${t(ref.end)}`,
+  };
+}
+
 // ─── Incident ─────────────────────────────────────────────────────────────────
 
 export type IncidentType =
@@ -38,6 +78,8 @@ export interface Incident {
   validated: boolean;
   startDate: string | null;
   endDate: string | null;
+  /** Texto libre que reportó el empleado (Fase 2). */
+  message?: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -60,6 +102,10 @@ export interface ShiftSwapRequest {
   assignmentId: string | null;
   status: ShiftSwapRequestStatus;
   createdAt: string;
+  /** Turno que se intercambia (del requester). Backend enriquecido. */
+  shift?: ApprovalShiftRef | null;
+  /** Turno del target ese día, o null = sin turno. Backend enriquecido. */
+  targetShift?: ApprovalShiftRef | null;
 }
 
 export interface CreateShiftSwapRequestPayload {
@@ -81,6 +127,8 @@ export interface AbsenceReport {
   startDate: string;
   endDate: string;
   reportedAt: string;
+  /** Turno al que aplica, o null = sin turno. Backend enriquecido. */
+  shift?: ApprovalShiftRef | null;
 }
 
 export interface CreateAbsenceReportPayload {
@@ -107,6 +155,8 @@ export interface DayOffRequest {
   reason: string;
   status: DayOffRequestStatus;
   createdAt: string;
+  /** Turno que el empleado pierde ese día, o null = sin turno. Backend enriquecido. */
+  shift?: ApprovalShiftRef | null;
 }
 
 export interface CreateDayOffRequestPayload {

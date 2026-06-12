@@ -1,5 +1,3 @@
-'use strict';
-
 // src/types/approvals.ts
 function formatShiftRef(ref, locale) {
   const t = (iso) => new Date(iso).toLocaleTimeString(locale, { hour: "2-digit", minute: "2-digit" });
@@ -13,6 +11,6 @@ function formatShiftRef(ref, locale) {
   };
 }
 
-exports.formatShiftRef = formatShiftRef;
-//# sourceMappingURL=index.cjs.map
-//# sourceMappingURL=index.cjs.map
+export { formatShiftRef };
+//# sourceMappingURL=chunk-4YUKZ5ZX.js.map
+//# sourceMappingURL=chunk-4YUKZ5ZX.js.map
