@@ -101,7 +101,9 @@ declare function formatShiftRef(ref: ApprovalShiftRef, locale: string): {
     day: string;
     time: string;
 };
-type IncidentType = 'MEDICAL_LEAVE' | 'EMERGENCY_LEAVE' | 'SHIFT_SWAP_REQUEST' | 'LATE' | 'NO_SHOW' | 'BIOMETRIC_MISS';
+type IncidentType = 
+/** Reporte libre del empleado (sin tipo); el texto va en `message`. */
+'GENERAL' | 'MEDICAL_LEAVE' | 'EMERGENCY_LEAVE' | 'SHIFT_SWAP_REQUEST' | 'LATE' | 'NO_SHOW' | 'BIOMETRIC_MISS';
 type IncidentStatus = 'reported' | 'document_received' | 'pending_ocr' | 'processing_ocr' | 'pending_validation' | 'validated' | 'rejected' | 'repair_in_progress' | 'replacement_pending' | 'replacement_assigned' | 'resolved';
 interface Incident {
     id: string;

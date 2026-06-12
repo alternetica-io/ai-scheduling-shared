@@ -46,6 +46,8 @@ export function formatShiftRef(
 // ─── Incident ─────────────────────────────────────────────────────────────────
 
 export type IncidentType =
+  /** Reporte libre del empleado (sin tipo); el texto va en `message`. */
+  | 'GENERAL'
   | 'MEDICAL_LEAVE'
   | 'EMERGENCY_LEAVE'
   | 'SHIFT_SWAP_REQUEST'
