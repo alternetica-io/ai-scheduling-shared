@@ -2,7 +2,16 @@ import { z } from 'zod';
 
 /** Mirrors the orchestrator timeclock controller (Sprint 2, GPS + selfie). */
 
-export const clockEventTypeSchema = z.enum(['in', 'out', 'break_start', 'break_end']);
+// `no_show` = evento sintético que crea el server cuando un turno vence sin
+// ningún fichaje. El móvil lo ignora en deriveClockStatus, pero DEBE poder
+// parsearlo o toda la query de status revienta (botón "Clock in" fantasma).
+export const clockEventTypeSchema = z.enum([
+  'in',
+  'out',
+  'break_start',
+  'break_end',
+  'no_show',
+]);
 export type ClockEventType = z.infer<typeof clockEventTypeSchema>;
 
 export const clockGpsSchema = z.object({

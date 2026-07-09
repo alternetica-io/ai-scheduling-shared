@@ -33,7 +33,13 @@ var myProfileSchema = z.object({
   /** IANA tz of the employee's branch (e.g. "America/Argentina/Buenos_Aires"). */
   timezone: z.string().nullable()
 });
-var clockEventTypeSchema = z.enum(["in", "out", "break_start", "break_end"]);
+var clockEventTypeSchema = z.enum([
+  "in",
+  "out",
+  "break_start",
+  "break_end",
+  "no_show"
+]);
 var clockGpsSchema = z.object({
   lat: z.number(),
   lng: z.number(),
@@ -140,5 +146,5 @@ var registerDeviceInputSchema = z.object({
 });
 
 export { chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
-//# sourceMappingURL=chunk-GCKTTR7Q.js.map
-//# sourceMappingURL=chunk-GCKTTR7Q.js.map
+//# sourceMappingURL=chunk-N72KD4DX.js.map
+//# sourceMappingURL=chunk-N72KD4DX.js.map

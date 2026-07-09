@@ -35,7 +35,13 @@ var myProfileSchema = zod.z.object({
   /** IANA tz of the employee's branch (e.g. "America/Argentina/Buenos_Aires"). */
   timezone: zod.z.string().nullable()
 });
-var clockEventTypeSchema = zod.z.enum(["in", "out", "break_start", "break_end"]);
+var clockEventTypeSchema = zod.z.enum([
+  "in",
+  "out",
+  "break_start",
+  "break_end",
+  "no_show"
+]);
 var clockGpsSchema = zod.z.object({
   lat: zod.z.number(),
   lng: zod.z.number(),

@@ -79,6 +79,7 @@ declare const clockEventTypeSchema: z.ZodEnum<{
     in: "in";
     break_start: "break_start";
     break_end: "break_end";
+    no_show: "no_show";
 }>;
 type ClockEventType = z.infer<typeof clockEventTypeSchema>;
 declare const clockGpsSchema: z.ZodObject<{
@@ -95,6 +96,7 @@ declare const createClockEventInputSchema: z.ZodObject<{
         in: "in";
         break_start: "break_start";
         break_end: "break_end";
+        no_show: "no_show";
     }>;
     occurredAt: z.ZodString;
     shiftAssignmentId: z.ZodOptional<z.ZodString>;
@@ -148,6 +150,7 @@ declare const clockEventSchema: z.ZodObject<{
         in: "in";
         break_start: "break_start";
         break_end: "break_end";
+        no_show: "no_show";
     }>;
     source: z.ZodString;
     occurredAt: z.ZodString;
@@ -172,6 +175,7 @@ declare const clockEventsSchema: z.ZodArray<z.ZodObject<{
         in: "in";
         break_start: "break_start";
         break_end: "break_end";
+        no_show: "no_show";
     }>;
     source: z.ZodString;
     occurredAt: z.ZodString;
