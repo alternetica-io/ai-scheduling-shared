@@ -18,8 +18,18 @@ var scheduleAssignmentSchema = z.object({
   origin: z.enum(["membership", "override", "exception"]),
   breaks: z.array(scheduleAssignmentBreakSchema),
   confirmedAt: z.string().nullable(),
+  /** 'employee' (a mano) | 'system' (auto por ventana) | null (sin confirmar).
+   *  Defaults tolerantes: si el backend aún no lo manda, el parse no rompe. */
+  confirmedBy: z.enum(["employee", "system"]).nullable().default(null),
   locationId: z.string().nullable().default(null),
-  locationName: z.string().nullable().default(null)
+  locationName: z.string().nullable().default(null),
+  /** Estado de fichaje del turno (para pildoras de turnos pasados/en curso). */
+  punchStatus: z.enum(["none", "open", "closed", "no_show"]).default("none"),
+  /** El empleado llegó tarde (fichaje de entrada con flag late_in). */
+  late: z.boolean().default(false),
+  /** Inicio/fin PROGRAMADO original si el turno se ajustó a un fichaje real. */
+  plannedStartTime: z.string().nullable().default(null),
+  plannedEndTime: z.string().nullable().default(null)
 });
 var scheduleAssignmentsSchema = z.array(scheduleAssignmentSchema);
 var myProfileSchema = z.object({
@@ -146,5 +156,5 @@ var registerDeviceInputSchema = z.object({
 });
 
 export { chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
-//# sourceMappingURL=chunk-N72KD4DX.js.map
-//# sourceMappingURL=chunk-N72KD4DX.js.map
+//# sourceMappingURL=chunk-FCUWNDZK.js.map
+//# sourceMappingURL=chunk-FCUWNDZK.js.map

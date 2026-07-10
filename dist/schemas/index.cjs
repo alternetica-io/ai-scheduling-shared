@@ -20,8 +20,18 @@ var scheduleAssignmentSchema = zod.z.object({
   origin: zod.z.enum(["membership", "override", "exception"]),
   breaks: zod.z.array(scheduleAssignmentBreakSchema),
   confirmedAt: zod.z.string().nullable(),
+  /** 'employee' (a mano) | 'system' (auto por ventana) | null (sin confirmar).
+   *  Defaults tolerantes: si el backend aún no lo manda, el parse no rompe. */
+  confirmedBy: zod.z.enum(["employee", "system"]).nullable().default(null),
   locationId: zod.z.string().nullable().default(null),
-  locationName: zod.z.string().nullable().default(null)
+  locationName: zod.z.string().nullable().default(null),
+  /** Estado de fichaje del turno (para pildoras de turnos pasados/en curso). */
+  punchStatus: zod.z.enum(["none", "open", "closed", "no_show"]).default("none"),
+  /** El empleado llegó tarde (fichaje de entrada con flag late_in). */
+  late: zod.z.boolean().default(false),
+  /** Inicio/fin PROGRAMADO original si el turno se ajustó a un fichaje real. */
+  plannedStartTime: zod.z.string().nullable().default(null),
+  plannedEndTime: zod.z.string().nullable().default(null)
 });
 var scheduleAssignmentsSchema = zod.z.array(scheduleAssignmentSchema);
 var myProfileSchema = zod.z.object({

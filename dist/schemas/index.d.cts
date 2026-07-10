@@ -32,8 +32,21 @@ declare const scheduleAssignmentSchema: z.ZodObject<{
         isPaid: z.ZodBoolean;
     }, z.core.$strip>>;
     confirmedAt: z.ZodNullable<z.ZodString>;
+    confirmedBy: z.ZodDefault<z.ZodNullable<z.ZodEnum<{
+        employee: "employee";
+        system: "system";
+    }>>>;
     locationId: z.ZodDefault<z.ZodNullable<z.ZodString>>;
     locationName: z.ZodDefault<z.ZodNullable<z.ZodString>>;
+    punchStatus: z.ZodDefault<z.ZodEnum<{
+        none: "none";
+        open: "open";
+        closed: "closed";
+        no_show: "no_show";
+    }>>;
+    late: z.ZodDefault<z.ZodBoolean>;
+    plannedStartTime: z.ZodDefault<z.ZodNullable<z.ZodString>>;
+    plannedEndTime: z.ZodDefault<z.ZodNullable<z.ZodString>>;
 }, z.core.$strip>;
 declare const scheduleAssignmentsSchema: z.ZodArray<z.ZodObject<{
     id: z.ZodString;
@@ -55,8 +68,21 @@ declare const scheduleAssignmentsSchema: z.ZodArray<z.ZodObject<{
         isPaid: z.ZodBoolean;
     }, z.core.$strip>>;
     confirmedAt: z.ZodNullable<z.ZodString>;
+    confirmedBy: z.ZodDefault<z.ZodNullable<z.ZodEnum<{
+        employee: "employee";
+        system: "system";
+    }>>>;
     locationId: z.ZodDefault<z.ZodNullable<z.ZodString>>;
     locationName: z.ZodDefault<z.ZodNullable<z.ZodString>>;
+    punchStatus: z.ZodDefault<z.ZodEnum<{
+        none: "none";
+        open: "open";
+        closed: "closed";
+        no_show: "no_show";
+    }>>;
+    late: z.ZodDefault<z.ZodBoolean>;
+    plannedStartTime: z.ZodDefault<z.ZodNullable<z.ZodString>>;
+    plannedEndTime: z.ZodDefault<z.ZodNullable<z.ZodString>>;
 }, z.core.$strip>>;
 type ScheduleAssignmentBreak = z.infer<typeof scheduleAssignmentBreakSchema>;
 type ScheduleAssignment = z.infer<typeof scheduleAssignmentSchema>;
@@ -75,11 +101,11 @@ type MyProfile = z.infer<typeof myProfileSchema>;
 
 /** Mirrors the orchestrator timeclock controller (Sprint 2, GPS + selfie). */
 declare const clockEventTypeSchema: z.ZodEnum<{
+    no_show: "no_show";
     out: "out";
     in: "in";
     break_start: "break_start";
     break_end: "break_end";
-    no_show: "no_show";
 }>;
 type ClockEventType = z.infer<typeof clockEventTypeSchema>;
 declare const clockGpsSchema: z.ZodObject<{
@@ -92,11 +118,11 @@ declare const clockGpsSchema: z.ZodObject<{
 declare const createClockEventInputSchema: z.ZodObject<{
     clientUuid: z.ZodString;
     type: z.ZodEnum<{
+        no_show: "no_show";
         out: "out";
         in: "in";
         break_start: "break_start";
         break_end: "break_end";
-        no_show: "no_show";
     }>;
     occurredAt: z.ZodString;
     shiftAssignmentId: z.ZodOptional<z.ZodString>;
@@ -146,11 +172,11 @@ type ClockValidationStatus = z.infer<typeof clockValidationStatusSchema>;
 declare const clockEventSchema: z.ZodObject<{
     id: z.ZodString;
     type: z.ZodEnum<{
+        no_show: "no_show";
         out: "out";
         in: "in";
         break_start: "break_start";
         break_end: "break_end";
-        no_show: "no_show";
     }>;
     source: z.ZodString;
     occurredAt: z.ZodString;
@@ -171,11 +197,11 @@ declare const clockEventSchema: z.ZodObject<{
 declare const clockEventsSchema: z.ZodArray<z.ZodObject<{
     id: z.ZodString;
     type: z.ZodEnum<{
+        no_show: "no_show";
         out: "out";
         in: "in";
         break_start: "break_start";
         break_end: "break_end";
-        no_show: "no_show";
     }>;
     source: z.ZodString;
     occurredAt: z.ZodString;
