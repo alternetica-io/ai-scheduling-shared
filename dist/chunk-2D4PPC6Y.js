@@ -98,6 +98,13 @@ var clockEventSchema = z.object({
   breakLimitMinutes: z.number().nullable().default(null)
 });
 var clockEventsSchema = z.array(clockEventSchema);
+var CHAT_MAX_ATTACHMENT_BYTES = 25 * 1024 * 1024;
+var CHAT_ALLOWED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/gif",
+  "image/webp"
+];
 var botOptionSchema = z.object({
   /** Localized chip label shown to the manager. */
   label: z.string(),
@@ -206,11 +213,20 @@ var chatTypingEventSchema = z.object({
   employeeId: z.string(),
   name: z.string()
 });
+var chatReadSchema = z.object({
+  employeeId: z.string(),
+  lastReadAt: z.string().nullable()
+});
+var chatReadEventSchema = z.object({
+  roomId: z.string(),
+  employeeId: z.string(),
+  lastReadAt: z.string()
+});
 var registerDeviceInputSchema = z.object({
   token: z.string().min(1),
   platform: z.enum(["ios", "android"])
 });
 
-export { botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
-//# sourceMappingURL=chunk-BSMNSAJC.js.map
-//# sourceMappingURL=chunk-BSMNSAJC.js.map
+export { CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
+//# sourceMappingURL=chunk-2D4PPC6Y.js.map
+//# sourceMappingURL=chunk-2D4PPC6Y.js.map

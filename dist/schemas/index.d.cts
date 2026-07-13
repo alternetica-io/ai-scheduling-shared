@@ -221,6 +221,10 @@ declare const clockEventsSchema: z.ZodArray<z.ZodObject<{
 }, z.core.$strip>>;
 type ClockEvent = z.infer<typeof clockEventSchema>;
 
+/** Max size for a chat attachment, enforced client-side before upload. */
+declare const CHAT_MAX_ATTACHMENT_BYTES: number;
+/** Attachments are images only (for now). MIME types accepted. */
+declare const CHAT_ALLOWED_IMAGE_TYPES: readonly ["image/jpeg", "image/png", "image/gif", "image/webp"];
 /**
  * Structured payload authored by the in-app scheduling assistant. Rendered by
  * the chat UI instead of a plain bubble. Discriminated on `kind`. All display
@@ -472,6 +476,19 @@ declare const chatTypingEventSchema: z.ZodObject<{
     name: z.ZodString;
 }, z.core.$strip>;
 type ChatTypingEvent = z.infer<typeof chatTypingEventSchema>;
+/** A member's read cursor (GET /chat/rooms/:id/reads). */
+declare const chatReadSchema: z.ZodObject<{
+    employeeId: z.ZodString;
+    lastReadAt: z.ZodNullable<z.ZodString>;
+}, z.core.$strip>;
+type ChatRead = z.infer<typeof chatReadSchema>;
+/** Socket payload for the 'ChatRead' event (someone read a room). */
+declare const chatReadEventSchema: z.ZodObject<{
+    roomId: z.ZodString;
+    employeeId: z.ZodString;
+    lastReadAt: z.ZodString;
+}, z.core.$strip>;
+type ChatReadEvent = z.infer<typeof chatReadEventSchema>;
 
 /** POST /push/register body. */
 declare const registerDeviceInputSchema: z.ZodObject<{
@@ -483,4 +500,4 @@ declare const registerDeviceInputSchema: z.ZodObject<{
 }, z.core.$strip>;
 type RegisterDeviceInput = z.infer<typeof registerDeviceInputSchema>;
 
-export { type BotOption, type BotPayload, type ChatContact, type ChatMember, type ChatMessage, type ChatMessageCreatedEvent, type ChatRoom, type ChatTypingEvent, type ClockEvent, type ClockEventType, type ClockValidationStatus, type CreateClockEventInput, type CreateRoomInput, type GeoLocation, type MyLocations, type MyProfile, type RegisterDeviceInput, type ScheduleAssignment, type ScheduleAssignmentBreak, type SendMessageInput, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
+export { type BotOption, type BotPayload, CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, type ChatContact, type ChatMember, type ChatMessage, type ChatMessageCreatedEvent, type ChatRead, type ChatReadEvent, type ChatRoom, type ChatTypingEvent, type ClockEvent, type ClockEventType, type ClockValidationStatus, type CreateClockEventInput, type CreateRoomInput, type GeoLocation, type MyLocations, type MyProfile, type RegisterDeviceInput, type ScheduleAssignment, type ScheduleAssignmentBreak, type SendMessageInput, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };

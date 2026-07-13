@@ -181,6 +181,13 @@ var clockEventSchema = zod.z.object({
   breakLimitMinutes: zod.z.number().nullable().default(null)
 });
 var clockEventsSchema = zod.z.array(clockEventSchema);
+var CHAT_MAX_ATTACHMENT_BYTES = 25 * 1024 * 1024;
+var CHAT_ALLOWED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/gif",
+  "image/webp"
+];
 var botOptionSchema = zod.z.object({
   /** Localized chip label shown to the manager. */
   label: zod.z.string(),
@@ -288,6 +295,15 @@ var chatTypingEventSchema = zod.z.object({
   roomId: zod.z.string(),
   employeeId: zod.z.string(),
   name: zod.z.string()
+});
+var chatReadSchema = zod.z.object({
+  employeeId: zod.z.string(),
+  lastReadAt: zod.z.string().nullable()
+});
+var chatReadEventSchema = zod.z.object({
+  roomId: zod.z.string(),
+  employeeId: zod.z.string(),
+  lastReadAt: zod.z.string()
 });
 var registerDeviceInputSchema = zod.z.object({
   token: zod.z.string().min(1),
@@ -708,6 +724,8 @@ var sharedResources = {
 var SUPPORTED_LANGUAGES = ["en", "es"];
 var FALLBACK_LANGUAGE = "en";
 
+exports.CHAT_ALLOWED_IMAGE_TYPES = CHAT_ALLOWED_IMAGE_TYPES;
+exports.CHAT_MAX_ATTACHMENT_BYTES = CHAT_MAX_ATTACHMENT_BYTES;
 exports.FALLBACK_LANGUAGE = FALLBACK_LANGUAGE;
 exports.SUPPORTED_LANGUAGES = SUPPORTED_LANGUAGES;
 exports.botOptionSchema = botOptionSchema;
@@ -717,6 +735,8 @@ exports.chatContactSchema = chatContactSchema;
 exports.chatMemberSchema = chatMemberSchema;
 exports.chatMessageCreatedEventSchema = chatMessageCreatedEventSchema;
 exports.chatMessageSchema = chatMessageSchema;
+exports.chatReadEventSchema = chatReadEventSchema;
+exports.chatReadSchema = chatReadSchema;
 exports.chatRoomSchema = chatRoomSchema;
 exports.chatTypingEventSchema = chatTypingEventSchema;
 exports.clockEventSchema = clockEventSchema;

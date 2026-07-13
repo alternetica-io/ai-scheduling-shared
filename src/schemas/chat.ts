@@ -1,5 +1,15 @@
 import { z } from 'zod';
 
+/** Max size for a chat attachment, enforced client-side before upload. */
+export const CHAT_MAX_ATTACHMENT_BYTES = 25 * 1024 * 1024; // 25 MB
+/** Attachments are images only (for now). MIME types accepted. */
+export const CHAT_ALLOWED_IMAGE_TYPES = [
+  'image/jpeg',
+  'image/png',
+  'image/gif',
+  'image/webp',
+] as const;
+
 /**
  * Structured payload authored by the in-app scheduling assistant. Rendered by
  * the chat UI instead of a plain bubble. Discriminated on `kind`. All display
@@ -149,3 +159,18 @@ export const chatTypingEventSchema = z.object({
   name: z.string(),
 });
 export type ChatTypingEvent = z.infer<typeof chatTypingEventSchema>;
+
+/** A member's read cursor (GET /chat/rooms/:id/reads). */
+export const chatReadSchema = z.object({
+  employeeId: z.string(),
+  lastReadAt: z.string().nullable(),
+});
+export type ChatRead = z.infer<typeof chatReadSchema>;
+
+/** Socket payload for the 'ChatRead' event (someone read a room). */
+export const chatReadEventSchema = z.object({
+  roomId: z.string(),
+  employeeId: z.string(),
+  lastReadAt: z.string(),
+});
+export type ChatReadEvent = z.infer<typeof chatReadEventSchema>;
