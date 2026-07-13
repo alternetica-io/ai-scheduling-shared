@@ -100,16 +100,72 @@ var clockEventSchema = zod.z.object({
   breakLimitMinutes: zod.z.number().nullable().default(null)
 });
 var clockEventsSchema = zod.z.array(clockEventSchema);
+var botOptionSchema = zod.z.object({
+  /** Localized chip label shown to the manager. */
+  label: zod.z.string(),
+  /** Stable token echoed back as a user message when tapped. */
+  value: zod.z.string()
+});
+var botSkippedSchema = zod.z.object({
+  employeeId: zod.z.string(),
+  employeeName: zod.z.string().nullable().default(null),
+  date: zod.z.string(),
+  reason: zod.z.string()
+});
+var botPayloadSchema = zod.z.discriminatedUnion("kind", [
+  /** Plain assistant text (render `content`). */
+  zod.z.object({ kind: zod.z.literal("text") }),
+  /** A question with 2–10 tappable chips (hierarchical selection, name disambiguation). */
+  zod.z.object({
+    kind: zod.z.literal("options"),
+    question: zod.z.string(),
+    options: zod.z.array(botOptionSchema).min(2).max(10)
+  }),
+  /** Summary card requiring explicit Confirm / Cancel before a write. */
+  zod.z.object({
+    kind: zod.z.literal("confirm"),
+    title: zod.z.string(),
+    lines: zod.z.array(zod.z.string()).default([]),
+    warnings: zod.z.array(zod.z.string()).default([]),
+    confirmLabel: zod.z.string(),
+    cancelLabel: zod.z.string(),
+    /** Tokens sent back as the user message on tap. */
+    confirmValue: zod.z.string(),
+    cancelValue: zod.z.string()
+  }),
+  /** Job progress, updatable in place (same message row). */
+  zod.z.object({
+    kind: zod.z.literal("progress"),
+    state: zod.z.enum(["queued", "generating"]),
+    label: zod.z.string()
+  }),
+  /** Outcome card for a completed operation. */
+  zod.z.object({
+    kind: zod.z.literal("result"),
+    title: zod.z.string(),
+    success: zod.z.boolean().default(true),
+    created: zod.z.number().nullable().default(null),
+    replaced: zod.z.number().nullable().default(null),
+    skipped: zod.z.array(botSkippedSchema).default([]),
+    warnings: zod.z.array(zod.z.string()).default([]),
+    /** Optional deep link to the schedule grid week (e.g. "/schedule?week=YYYY-MM-DD"). */
+    link: zod.z.string().nullable().default(null)
+  })
+]);
 var chatMessageSchema = zod.z.object({
   id: zod.z.string(),
   roomId: zod.z.string(),
   senderId: zod.z.string().nullable(),
   senderName: zod.z.string().nullable(),
+  /** 'user' for human messages, 'assistant' for the scheduling bot. */
+  senderType: zod.z.enum(["user", "assistant"]).default("user"),
   content: zod.z.string(),
   createdAt: zod.z.string(),
   attachmentUrl: zod.z.string().nullable().default(null),
   attachmentType: zod.z.enum(["image", "file"]).nullable().default(null),
-  attachmentName: zod.z.string().nullable().default(null)
+  attachmentName: zod.z.string().nullable().default(null),
+  /** Structured assistant payload; null for ordinary messages. */
+  botPayload: botPayloadSchema.nullable().default(null)
 });
 var chatContactSchema = zod.z.object({ id: zod.z.string(), name: zod.z.string() });
 var chatMemberSchema = zod.z.object({
@@ -119,7 +175,7 @@ var chatMemberSchema = zod.z.object({
 });
 var chatRoomSchema = zod.z.object({
   id: zod.z.string(),
-  type: zod.z.enum(["dm", "group"]),
+  type: zod.z.enum(["dm", "group", "assistant"]),
   title: zod.z.string(),
   memberCount: zod.z.number(),
   lastMessage: zod.z.object({
@@ -157,6 +213,9 @@ var registerDeviceInputSchema = zod.z.object({
   platform: zod.z.enum(["ios", "android"])
 });
 
+exports.botOptionSchema = botOptionSchema;
+exports.botPayloadSchema = botPayloadSchema;
+exports.botSkippedSchema = botSkippedSchema;
 exports.chatContactSchema = chatContactSchema;
 exports.chatMemberSchema = chatMemberSchema;
 exports.chatMessageCreatedEventSchema = chatMessageCreatedEventSchema;

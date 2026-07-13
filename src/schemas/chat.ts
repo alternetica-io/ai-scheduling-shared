@@ -1,16 +1,88 @@
 import { z } from 'zod';
 
+/**
+ * Structured payload authored by the in-app scheduling assistant. Rendered by
+ * the chat UI instead of a plain bubble. Discriminated on `kind`. All display
+ * strings arrive already localized by the backend (manager's locale); `value`
+ * fields are stable tokens sent back verbatim as the next user message when a
+ * chip/button is tapped. The message's `content` always carries a plain-text
+ * fallback so push and payload-unaware clients degrade gracefully.
+ *
+ * NOTE: the backend does NOT consume @ai-scheduling/shared — it mirrors this
+ * shape in its own TS type. Keep both in sync (see AssistantPayload backend).
+ */
+export const botOptionSchema = z.object({
+  /** Localized chip label shown to the manager. */
+  label: z.string(),
+  /** Stable token echoed back as a user message when tapped. */
+  value: z.string(),
+});
+export type BotOption = z.infer<typeof botOptionSchema>;
+
+export const botSkippedSchema = z.object({
+  employeeId: z.string(),
+  employeeName: z.string().nullable().default(null),
+  date: z.string(),
+  reason: z.string(),
+});
+
+export const botPayloadSchema = z.discriminatedUnion('kind', [
+  /** Plain assistant text (render `content`). */
+  z.object({ kind: z.literal('text') }),
+  /** A question with 2–10 tappable chips (hierarchical selection, name disambiguation). */
+  z.object({
+    kind: z.literal('options'),
+    question: z.string(),
+    options: z.array(botOptionSchema).min(2).max(10),
+  }),
+  /** Summary card requiring explicit Confirm / Cancel before a write. */
+  z.object({
+    kind: z.literal('confirm'),
+    title: z.string(),
+    lines: z.array(z.string()).default([]),
+    warnings: z.array(z.string()).default([]),
+    confirmLabel: z.string(),
+    cancelLabel: z.string(),
+    /** Tokens sent back as the user message on tap. */
+    confirmValue: z.string(),
+    cancelValue: z.string(),
+  }),
+  /** Job progress, updatable in place (same message row). */
+  z.object({
+    kind: z.literal('progress'),
+    state: z.enum(['queued', 'generating']),
+    label: z.string(),
+  }),
+  /** Outcome card for a completed operation. */
+  z.object({
+    kind: z.literal('result'),
+    title: z.string(),
+    success: z.boolean().default(true),
+    created: z.number().nullable().default(null),
+    replaced: z.number().nullable().default(null),
+    skipped: z.array(botSkippedSchema).default([]),
+    warnings: z.array(z.string()).default([]),
+    /** Optional deep link to the schedule grid week (e.g. "/schedule?week=YYYY-MM-DD"). */
+    link: z.string().nullable().default(null),
+  }),
+]);
+export type BotPayload = z.infer<typeof botPayloadSchema>;
+
 /** A chat message (GET /chat/rooms/:id/messages items, POST send response). */
 export const chatMessageSchema = z.object({
   id: z.string(),
   roomId: z.string(),
   senderId: z.string().nullable(),
   senderName: z.string().nullable(),
+  /** 'user' for human messages, 'assistant' for the scheduling bot. */
+  senderType: z.enum(['user', 'assistant']).default('user'),
   content: z.string(),
   createdAt: z.string(),
   attachmentUrl: z.string().nullable().default(null),
   attachmentType: z.enum(['image', 'file']).nullable().default(null),
   attachmentName: z.string().nullable().default(null),
+  /** Structured assistant payload; null for ordinary messages. */
+  botPayload: botPayloadSchema.nullable().default(null),
 });
 export type ChatMessage = z.infer<typeof chatMessageSchema>;
 
@@ -29,7 +101,7 @@ export type ChatMember = z.infer<typeof chatMemberSchema>;
 /** A room in the user's chat list (GET /chat/rooms). */
 export const chatRoomSchema = z.object({
   id: z.string(),
-  type: z.enum(['dm', 'group']),
+  type: z.enum(['dm', 'group', 'assistant']),
   title: z.string(),
   memberCount: z.number(),
   lastMessage: z

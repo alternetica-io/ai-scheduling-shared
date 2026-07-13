@@ -98,16 +98,72 @@ var clockEventSchema = z.object({
   breakLimitMinutes: z.number().nullable().default(null)
 });
 var clockEventsSchema = z.array(clockEventSchema);
+var botOptionSchema = z.object({
+  /** Localized chip label shown to the manager. */
+  label: z.string(),
+  /** Stable token echoed back as a user message when tapped. */
+  value: z.string()
+});
+var botSkippedSchema = z.object({
+  employeeId: z.string(),
+  employeeName: z.string().nullable().default(null),
+  date: z.string(),
+  reason: z.string()
+});
+var botPayloadSchema = z.discriminatedUnion("kind", [
+  /** Plain assistant text (render `content`). */
+  z.object({ kind: z.literal("text") }),
+  /** A question with 2–10 tappable chips (hierarchical selection, name disambiguation). */
+  z.object({
+    kind: z.literal("options"),
+    question: z.string(),
+    options: z.array(botOptionSchema).min(2).max(10)
+  }),
+  /** Summary card requiring explicit Confirm / Cancel before a write. */
+  z.object({
+    kind: z.literal("confirm"),
+    title: z.string(),
+    lines: z.array(z.string()).default([]),
+    warnings: z.array(z.string()).default([]),
+    confirmLabel: z.string(),
+    cancelLabel: z.string(),
+    /** Tokens sent back as the user message on tap. */
+    confirmValue: z.string(),
+    cancelValue: z.string()
+  }),
+  /** Job progress, updatable in place (same message row). */
+  z.object({
+    kind: z.literal("progress"),
+    state: z.enum(["queued", "generating"]),
+    label: z.string()
+  }),
+  /** Outcome card for a completed operation. */
+  z.object({
+    kind: z.literal("result"),
+    title: z.string(),
+    success: z.boolean().default(true),
+    created: z.number().nullable().default(null),
+    replaced: z.number().nullable().default(null),
+    skipped: z.array(botSkippedSchema).default([]),
+    warnings: z.array(z.string()).default([]),
+    /** Optional deep link to the schedule grid week (e.g. "/schedule?week=YYYY-MM-DD"). */
+    link: z.string().nullable().default(null)
+  })
+]);
 var chatMessageSchema = z.object({
   id: z.string(),
   roomId: z.string(),
   senderId: z.string().nullable(),
   senderName: z.string().nullable(),
+  /** 'user' for human messages, 'assistant' for the scheduling bot. */
+  senderType: z.enum(["user", "assistant"]).default("user"),
   content: z.string(),
   createdAt: z.string(),
   attachmentUrl: z.string().nullable().default(null),
   attachmentType: z.enum(["image", "file"]).nullable().default(null),
-  attachmentName: z.string().nullable().default(null)
+  attachmentName: z.string().nullable().default(null),
+  /** Structured assistant payload; null for ordinary messages. */
+  botPayload: botPayloadSchema.nullable().default(null)
 });
 var chatContactSchema = z.object({ id: z.string(), name: z.string() });
 var chatMemberSchema = z.object({
@@ -117,7 +173,7 @@ var chatMemberSchema = z.object({
 });
 var chatRoomSchema = z.object({
   id: z.string(),
-  type: z.enum(["dm", "group"]),
+  type: z.enum(["dm", "group", "assistant"]),
   title: z.string(),
   memberCount: z.number(),
   lastMessage: z.object({
@@ -155,6 +211,6 @@ var registerDeviceInputSchema = z.object({
   platform: z.enum(["ios", "android"])
 });
 
-export { chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
-//# sourceMappingURL=chunk-FCUWNDZK.js.map
-//# sourceMappingURL=chunk-FCUWNDZK.js.map
+export { botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
+//# sourceMappingURL=chunk-BSMNSAJC.js.map
+//# sourceMappingURL=chunk-BSMNSAJC.js.map
