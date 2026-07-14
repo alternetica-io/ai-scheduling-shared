@@ -253,7 +253,17 @@ var chatMessageSchema = zod.z.object({
   attachmentType: zod.z.enum(["image", "file"]).nullable().default(null),
   attachmentName: zod.z.string().nullable().default(null),
   /** Structured assistant payload; null for ordinary messages. */
-  botPayload: botPayloadSchema.nullable().default(null)
+  botPayload: botPayloadSchema.nullable().default(null),
+  /** The quoted message this one replies to (preview), or null. */
+  replyTo: zod.z.object({
+    id: zod.z.string(),
+    content: zod.z.string(),
+    senderName: zod.z.string().nullable()
+  }).nullable().default(null),
+  /** Set when the sender edited the message. */
+  editedAt: zod.z.string().nullable().default(null),
+  /** Set when the sender soft-deleted the message (content hidden). */
+  deletedAt: zod.z.string().nullable().default(null)
 });
 var chatContactSchema = zod.z.object({ id: zod.z.string(), name: zod.z.string() });
 var chatMemberSchema = zod.z.object({
@@ -279,7 +289,11 @@ var sendMessageInputSchema = zod.z.object({
   clientUuid: zod.z.string().optional(),
   attachmentPath: zod.z.string().optional(),
   attachmentType: zod.z.enum(["image", "file"]).optional(),
-  attachmentName: zod.z.string().optional()
+  attachmentName: zod.z.string().optional(),
+  /** Assistant rooms: stable token behind a tapped chip / confirm button. */
+  botValue: zod.z.string().optional(),
+  /** Reply: the message id being quoted. */
+  replyToId: zod.z.string().optional()
 });
 var createRoomInputSchema = zod.z.object({
   type: zod.z.enum(["dm", "group"]),
@@ -288,6 +302,10 @@ var createRoomInputSchema = zod.z.object({
   memberIds: zod.z.array(zod.z.string()).optional()
 });
 var chatMessageCreatedEventSchema = zod.z.object({
+  roomId: zod.z.string(),
+  message: chatMessageSchema
+});
+var chatMessageUpdatedEventSchema = zod.z.object({
   roomId: zod.z.string(),
   message: chatMessageSchema
 });
@@ -735,6 +753,7 @@ exports.chatContactSchema = chatContactSchema;
 exports.chatMemberSchema = chatMemberSchema;
 exports.chatMessageCreatedEventSchema = chatMessageCreatedEventSchema;
 exports.chatMessageSchema = chatMessageSchema;
+exports.chatMessageUpdatedEventSchema = chatMessageUpdatedEventSchema;
 exports.chatReadEventSchema = chatReadEventSchema;
 exports.chatReadSchema = chatReadSchema;
 exports.chatRoomSchema = chatRoomSchema;

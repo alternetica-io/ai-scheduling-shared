@@ -93,6 +93,19 @@ export const chatMessageSchema = z.object({
   attachmentName: z.string().nullable().default(null),
   /** Structured assistant payload; null for ordinary messages. */
   botPayload: botPayloadSchema.nullable().default(null),
+  /** The quoted message this one replies to (preview), or null. */
+  replyTo: z
+    .object({
+      id: z.string(),
+      content: z.string(),
+      senderName: z.string().nullable(),
+    })
+    .nullable()
+    .default(null),
+  /** Set when the sender edited the message. */
+  editedAt: z.string().nullable().default(null),
+  /** Set when the sender soft-deleted the message (content hidden). */
+  deletedAt: z.string().nullable().default(null),
 });
 export type ChatMessage = z.infer<typeof chatMessageSchema>;
 
@@ -133,6 +146,10 @@ export const sendMessageInputSchema = z.object({
   attachmentPath: z.string().optional(),
   attachmentType: z.enum(['image', 'file']).optional(),
   attachmentName: z.string().optional(),
+  /** Assistant rooms: stable token behind a tapped chip / confirm button. */
+  botValue: z.string().optional(),
+  /** Reply: the message id being quoted. */
+  replyToId: z.string().optional(),
 });
 export type SendMessageInput = z.infer<typeof sendMessageInputSchema>;
 
@@ -151,6 +168,13 @@ export const chatMessageCreatedEventSchema = z.object({
   message: chatMessageSchema,
 });
 export type ChatMessageCreatedEvent = z.infer<typeof chatMessageCreatedEventSchema>;
+
+/** Socket payload for 'ChatMessageUpdated' (edit / delete). */
+export const chatMessageUpdatedEventSchema = z.object({
+  roomId: z.string(),
+  message: chatMessageSchema,
+});
+export type ChatMessageUpdatedEvent = z.infer<typeof chatMessageUpdatedEventSchema>;
 
 /** Socket payload for the 'ChatTyping' event. */
 export const chatTypingEventSchema = z.object({

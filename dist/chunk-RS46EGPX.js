@@ -170,7 +170,17 @@ var chatMessageSchema = z.object({
   attachmentType: z.enum(["image", "file"]).nullable().default(null),
   attachmentName: z.string().nullable().default(null),
   /** Structured assistant payload; null for ordinary messages. */
-  botPayload: botPayloadSchema.nullable().default(null)
+  botPayload: botPayloadSchema.nullable().default(null),
+  /** The quoted message this one replies to (preview), or null. */
+  replyTo: z.object({
+    id: z.string(),
+    content: z.string(),
+    senderName: z.string().nullable()
+  }).nullable().default(null),
+  /** Set when the sender edited the message. */
+  editedAt: z.string().nullable().default(null),
+  /** Set when the sender soft-deleted the message (content hidden). */
+  deletedAt: z.string().nullable().default(null)
 });
 var chatContactSchema = z.object({ id: z.string(), name: z.string() });
 var chatMemberSchema = z.object({
@@ -196,7 +206,11 @@ var sendMessageInputSchema = z.object({
   clientUuid: z.string().optional(),
   attachmentPath: z.string().optional(),
   attachmentType: z.enum(["image", "file"]).optional(),
-  attachmentName: z.string().optional()
+  attachmentName: z.string().optional(),
+  /** Assistant rooms: stable token behind a tapped chip / confirm button. */
+  botValue: z.string().optional(),
+  /** Reply: the message id being quoted. */
+  replyToId: z.string().optional()
 });
 var createRoomInputSchema = z.object({
   type: z.enum(["dm", "group"]),
@@ -205,6 +219,10 @@ var createRoomInputSchema = z.object({
   memberIds: z.array(z.string()).optional()
 });
 var chatMessageCreatedEventSchema = z.object({
+  roomId: z.string(),
+  message: chatMessageSchema
+});
+var chatMessageUpdatedEventSchema = z.object({
   roomId: z.string(),
   message: chatMessageSchema
 });
@@ -227,6 +245,6 @@ var registerDeviceInputSchema = z.object({
   platform: z.enum(["ios", "android"])
 });
 
-export { CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
-//# sourceMappingURL=chunk-2D4PPC6Y.js.map
-//# sourceMappingURL=chunk-2D4PPC6Y.js.map
+export { CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
+//# sourceMappingURL=chunk-RS46EGPX.js.map
+//# sourceMappingURL=chunk-RS46EGPX.js.map

@@ -346,6 +346,13 @@ declare const chatMessageSchema: z.ZodObject<{
         warnings: z.ZodDefault<z.ZodArray<z.ZodString>>;
         link: z.ZodDefault<z.ZodNullable<z.ZodString>>;
     }, z.core.$strip>], "kind">>>;
+    replyTo: z.ZodDefault<z.ZodNullable<z.ZodObject<{
+        id: z.ZodString;
+        content: z.ZodString;
+        senderName: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>>>;
+    editedAt: z.ZodDefault<z.ZodNullable<z.ZodString>>;
+    deletedAt: z.ZodDefault<z.ZodNullable<z.ZodString>>;
 }, z.core.$strip>;
 type ChatMessage = z.infer<typeof chatMessageSchema>;
 /** A coworker to start a chat with (GET /chat/contacts). */
@@ -393,6 +400,8 @@ declare const sendMessageInputSchema: z.ZodObject<{
         image: "image";
     }>>;
     attachmentName: z.ZodOptional<z.ZodString>;
+    botValue: z.ZodOptional<z.ZodString>;
+    replyToId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 type SendMessageInput = z.infer<typeof sendMessageInputSchema>;
 /** POST /chat/rooms body — create a group or ensure a dm. */
@@ -466,9 +475,86 @@ declare const chatMessageCreatedEventSchema: z.ZodObject<{
             warnings: z.ZodDefault<z.ZodArray<z.ZodString>>;
             link: z.ZodDefault<z.ZodNullable<z.ZodString>>;
         }, z.core.$strip>], "kind">>>;
+        replyTo: z.ZodDefault<z.ZodNullable<z.ZodObject<{
+            id: z.ZodString;
+            content: z.ZodString;
+            senderName: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>>;
+        editedAt: z.ZodDefault<z.ZodNullable<z.ZodString>>;
+        deletedAt: z.ZodDefault<z.ZodNullable<z.ZodString>>;
     }, z.core.$strip>;
 }, z.core.$strip>;
 type ChatMessageCreatedEvent = z.infer<typeof chatMessageCreatedEventSchema>;
+/** Socket payload for 'ChatMessageUpdated' (edit / delete). */
+declare const chatMessageUpdatedEventSchema: z.ZodObject<{
+    roomId: z.ZodString;
+    message: z.ZodObject<{
+        id: z.ZodString;
+        roomId: z.ZodString;
+        senderId: z.ZodNullable<z.ZodString>;
+        senderName: z.ZodNullable<z.ZodString>;
+        senderType: z.ZodDefault<z.ZodEnum<{
+            user: "user";
+            assistant: "assistant";
+        }>>;
+        content: z.ZodString;
+        createdAt: z.ZodString;
+        attachmentUrl: z.ZodDefault<z.ZodNullable<z.ZodString>>;
+        attachmentType: z.ZodDefault<z.ZodNullable<z.ZodEnum<{
+            file: "file";
+            image: "image";
+        }>>>;
+        attachmentName: z.ZodDefault<z.ZodNullable<z.ZodString>>;
+        botPayload: z.ZodDefault<z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
+            kind: z.ZodLiteral<"text">;
+        }, z.core.$strip>, z.ZodObject<{
+            kind: z.ZodLiteral<"options">;
+            question: z.ZodString;
+            options: z.ZodArray<z.ZodObject<{
+                label: z.ZodString;
+                value: z.ZodString;
+            }, z.core.$strip>>;
+        }, z.core.$strip>, z.ZodObject<{
+            kind: z.ZodLiteral<"confirm">;
+            title: z.ZodString;
+            lines: z.ZodDefault<z.ZodArray<z.ZodString>>;
+            warnings: z.ZodDefault<z.ZodArray<z.ZodString>>;
+            confirmLabel: z.ZodString;
+            cancelLabel: z.ZodString;
+            confirmValue: z.ZodString;
+            cancelValue: z.ZodString;
+        }, z.core.$strip>, z.ZodObject<{
+            kind: z.ZodLiteral<"progress">;
+            state: z.ZodEnum<{
+                queued: "queued";
+                generating: "generating";
+            }>;
+            label: z.ZodString;
+        }, z.core.$strip>, z.ZodObject<{
+            kind: z.ZodLiteral<"result">;
+            title: z.ZodString;
+            success: z.ZodDefault<z.ZodBoolean>;
+            created: z.ZodDefault<z.ZodNullable<z.ZodNumber>>;
+            replaced: z.ZodDefault<z.ZodNullable<z.ZodNumber>>;
+            skipped: z.ZodDefault<z.ZodArray<z.ZodObject<{
+                employeeId: z.ZodString;
+                employeeName: z.ZodDefault<z.ZodNullable<z.ZodString>>;
+                date: z.ZodString;
+                reason: z.ZodString;
+            }, z.core.$strip>>>;
+            warnings: z.ZodDefault<z.ZodArray<z.ZodString>>;
+            link: z.ZodDefault<z.ZodNullable<z.ZodString>>;
+        }, z.core.$strip>], "kind">>>;
+        replyTo: z.ZodDefault<z.ZodNullable<z.ZodObject<{
+            id: z.ZodString;
+            content: z.ZodString;
+            senderName: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>>;
+        editedAt: z.ZodDefault<z.ZodNullable<z.ZodString>>;
+        deletedAt: z.ZodDefault<z.ZodNullable<z.ZodString>>;
+    }, z.core.$strip>;
+}, z.core.$strip>;
+type ChatMessageUpdatedEvent = z.infer<typeof chatMessageUpdatedEventSchema>;
 /** Socket payload for the 'ChatTyping' event. */
 declare const chatTypingEventSchema: z.ZodObject<{
     roomId: z.ZodString;
@@ -500,4 +586,4 @@ declare const registerDeviceInputSchema: z.ZodObject<{
 }, z.core.$strip>;
 type RegisterDeviceInput = z.infer<typeof registerDeviceInputSchema>;
 
-export { type BotOption, type BotPayload, CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, type ChatContact, type ChatMember, type ChatMessage, type ChatMessageCreatedEvent, type ChatRead, type ChatReadEvent, type ChatRoom, type ChatTypingEvent, type ClockEvent, type ClockEventType, type ClockValidationStatus, type CreateClockEventInput, type CreateRoomInput, type GeoLocation, type MyLocations, type MyProfile, type RegisterDeviceInput, type ScheduleAssignment, type ScheduleAssignmentBreak, type SendMessageInput, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
+export { type BotOption, type BotPayload, CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, type ChatContact, type ChatMember, type ChatMessage, type ChatMessageCreatedEvent, type ChatMessageUpdatedEvent, type ChatRead, type ChatReadEvent, type ChatRoom, type ChatTypingEvent, type ClockEvent, type ClockEventType, type ClockValidationStatus, type CreateClockEventInput, type CreateRoomInput, type GeoLocation, type MyLocations, type MyProfile, type RegisterDeviceInput, type ScheduleAssignment, type ScheduleAssignmentBreak, type SendMessageInput, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
