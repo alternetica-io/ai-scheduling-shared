@@ -180,8 +180,18 @@ var chatMessageSchema = z.object({
   /** Set when the sender edited the message. */
   editedAt: z.string().nullable().default(null),
   /** Set when the sender soft-deleted the message (content hidden). */
-  deletedAt: z.string().nullable().default(null)
+  deletedAt: z.string().nullable().default(null),
+  /** Emoji reactions aggregated per emoji (mine = the current user reacted). */
+  reactions: z.array(
+    z.object({
+      emoji: z.string(),
+      count: z.number(),
+      mine: z.boolean()
+    })
+  ).default([])
 });
+var reactionInputSchema = z.object({ emoji: z.string().min(1).max(16) });
+var CHAT_QUICK_REACTIONS = ["\u{1F44D}", "\u2764\uFE0F", "\u{1F602}", "\u{1F62E}", "\u{1F622}", "\u{1F64F}"];
 var chatContactSchema = z.object({ id: z.string(), name: z.string() });
 var chatMemberSchema = z.object({
   id: z.string(),
@@ -245,6 +255,6 @@ var registerDeviceInputSchema = z.object({
   platform: z.enum(["ios", "android"])
 });
 
-export { CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
-//# sourceMappingURL=chunk-RS46EGPX.js.map
-//# sourceMappingURL=chunk-RS46EGPX.js.map
+export { CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, CHAT_QUICK_REACTIONS, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, reactionInputSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
+//# sourceMappingURL=chunk-MJH3ROS4.js.map
+//# sourceMappingURL=chunk-MJH3ROS4.js.map

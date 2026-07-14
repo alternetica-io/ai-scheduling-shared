@@ -353,8 +353,20 @@ declare const chatMessageSchema: z.ZodObject<{
     }, z.core.$strip>>>;
     editedAt: z.ZodDefault<z.ZodNullable<z.ZodString>>;
     deletedAt: z.ZodDefault<z.ZodNullable<z.ZodString>>;
+    reactions: z.ZodDefault<z.ZodArray<z.ZodObject<{
+        emoji: z.ZodString;
+        count: z.ZodNumber;
+        mine: z.ZodBoolean;
+    }, z.core.$strip>>>;
 }, z.core.$strip>;
 type ChatMessage = z.infer<typeof chatMessageSchema>;
+/** POST /chat/rooms/:id/messages/:msgId/reactions body — toggles the emoji. */
+declare const reactionInputSchema: z.ZodObject<{
+    emoji: z.ZodString;
+}, z.core.$strip>;
+type ReactionInput = z.infer<typeof reactionInputSchema>;
+/** Curated quick-react set (WhatsApp-style). */
+declare const CHAT_QUICK_REACTIONS: readonly ["👍", "❤️", "😂", "😮", "😢", "🙏"];
 /** A coworker to start a chat with (GET /chat/contacts). */
 declare const chatContactSchema: z.ZodObject<{
     id: z.ZodString;
@@ -482,6 +494,11 @@ declare const chatMessageCreatedEventSchema: z.ZodObject<{
         }, z.core.$strip>>>;
         editedAt: z.ZodDefault<z.ZodNullable<z.ZodString>>;
         deletedAt: z.ZodDefault<z.ZodNullable<z.ZodString>>;
+        reactions: z.ZodDefault<z.ZodArray<z.ZodObject<{
+            emoji: z.ZodString;
+            count: z.ZodNumber;
+            mine: z.ZodBoolean;
+        }, z.core.$strip>>>;
     }, z.core.$strip>;
 }, z.core.$strip>;
 type ChatMessageCreatedEvent = z.infer<typeof chatMessageCreatedEventSchema>;
@@ -552,6 +569,11 @@ declare const chatMessageUpdatedEventSchema: z.ZodObject<{
         }, z.core.$strip>>>;
         editedAt: z.ZodDefault<z.ZodNullable<z.ZodString>>;
         deletedAt: z.ZodDefault<z.ZodNullable<z.ZodString>>;
+        reactions: z.ZodDefault<z.ZodArray<z.ZodObject<{
+            emoji: z.ZodString;
+            count: z.ZodNumber;
+            mine: z.ZodBoolean;
+        }, z.core.$strip>>>;
     }, z.core.$strip>;
 }, z.core.$strip>;
 type ChatMessageUpdatedEvent = z.infer<typeof chatMessageUpdatedEventSchema>;
@@ -586,4 +608,4 @@ declare const registerDeviceInputSchema: z.ZodObject<{
 }, z.core.$strip>;
 type RegisterDeviceInput = z.infer<typeof registerDeviceInputSchema>;
 
-export { type BotOption, type BotPayload, CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, type ChatContact, type ChatMember, type ChatMessage, type ChatMessageCreatedEvent, type ChatMessageUpdatedEvent, type ChatRead, type ChatReadEvent, type ChatRoom, type ChatTypingEvent, type ClockEvent, type ClockEventType, type ClockValidationStatus, type CreateClockEventInput, type CreateRoomInput, type GeoLocation, type MyLocations, type MyProfile, type RegisterDeviceInput, type ScheduleAssignment, type ScheduleAssignmentBreak, type SendMessageInput, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
+export { type BotOption, type BotPayload, CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, CHAT_QUICK_REACTIONS, type ChatContact, type ChatMember, type ChatMessage, type ChatMessageCreatedEvent, type ChatMessageUpdatedEvent, type ChatRead, type ChatReadEvent, type ChatRoom, type ChatTypingEvent, type ClockEvent, type ClockEventType, type ClockValidationStatus, type CreateClockEventInput, type CreateRoomInput, type GeoLocation, type MyLocations, type MyProfile, type ReactionInput, type RegisterDeviceInput, type ScheduleAssignment, type ScheduleAssignmentBreak, type SendMessageInput, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, reactionInputSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };

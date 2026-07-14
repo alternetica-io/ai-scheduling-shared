@@ -106,8 +106,25 @@ export const chatMessageSchema = z.object({
   editedAt: z.string().nullable().default(null),
   /** Set when the sender soft-deleted the message (content hidden). */
   deletedAt: z.string().nullable().default(null),
+  /** Emoji reactions aggregated per emoji (mine = the current user reacted). */
+  reactions: z
+    .array(
+      z.object({
+        emoji: z.string(),
+        count: z.number(),
+        mine: z.boolean(),
+      }),
+    )
+    .default([]),
 });
 export type ChatMessage = z.infer<typeof chatMessageSchema>;
+
+/** POST /chat/rooms/:id/messages/:msgId/reactions body — toggles the emoji. */
+export const reactionInputSchema = z.object({ emoji: z.string().min(1).max(16) });
+export type ReactionInput = z.infer<typeof reactionInputSchema>;
+
+/** Curated quick-react set (WhatsApp-style). */
+export const CHAT_QUICK_REACTIONS = ['👍', '❤️', '😂', '😮', '😢', '🙏'] as const;
 
 /** A coworker to start a chat with (GET /chat/contacts). */
 export const chatContactSchema = z.object({ id: z.string(), name: z.string() });

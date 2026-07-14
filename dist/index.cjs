@@ -263,8 +263,18 @@ var chatMessageSchema = zod.z.object({
   /** Set when the sender edited the message. */
   editedAt: zod.z.string().nullable().default(null),
   /** Set when the sender soft-deleted the message (content hidden). */
-  deletedAt: zod.z.string().nullable().default(null)
+  deletedAt: zod.z.string().nullable().default(null),
+  /** Emoji reactions aggregated per emoji (mine = the current user reacted). */
+  reactions: zod.z.array(
+    zod.z.object({
+      emoji: zod.z.string(),
+      count: zod.z.number(),
+      mine: zod.z.boolean()
+    })
+  ).default([])
 });
+var reactionInputSchema = zod.z.object({ emoji: zod.z.string().min(1).max(16) });
+var CHAT_QUICK_REACTIONS = ["\u{1F44D}", "\u2764\uFE0F", "\u{1F602}", "\u{1F62E}", "\u{1F622}", "\u{1F64F}"];
 var chatContactSchema = zod.z.object({ id: zod.z.string(), name: zod.z.string() });
 var chatMemberSchema = zod.z.object({
   id: zod.z.string(),
@@ -744,6 +754,7 @@ var FALLBACK_LANGUAGE = "en";
 
 exports.CHAT_ALLOWED_IMAGE_TYPES = CHAT_ALLOWED_IMAGE_TYPES;
 exports.CHAT_MAX_ATTACHMENT_BYTES = CHAT_MAX_ATTACHMENT_BYTES;
+exports.CHAT_QUICK_REACTIONS = CHAT_QUICK_REACTIONS;
 exports.FALLBACK_LANGUAGE = FALLBACK_LANGUAGE;
 exports.SUPPORTED_LANGUAGES = SUPPORTED_LANGUAGES;
 exports.botOptionSchema = botOptionSchema;
@@ -771,6 +782,7 @@ exports.formatShiftRef = formatShiftRef;
 exports.geoLocationSchema = geoLocationSchema;
 exports.myLocationsSchema = myLocationsSchema;
 exports.myProfileSchema = myProfileSchema;
+exports.reactionInputSchema = reactionInputSchema;
 exports.registerDeviceInputSchema = registerDeviceInputSchema;
 exports.scheduleAssignmentBreakSchema = scheduleAssignmentBreakSchema;
 exports.scheduleAssignmentSchema = scheduleAssignmentSchema;
