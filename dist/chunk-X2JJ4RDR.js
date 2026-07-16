@@ -105,6 +105,28 @@ var CHAT_ALLOWED_IMAGE_TYPES = [
   "image/gif",
   "image/webp"
 ];
+var CHAT_ALLOWED_FILE_TYPES = [
+  "application/pdf",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "application/vnd.ms-excel",
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  "application/vnd.ms-powerpoint",
+  "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+  "text/plain",
+  "text/csv",
+  "application/zip"
+];
+var CHAT_ALLOWED_ATTACHMENT_TYPES = [
+  ...CHAT_ALLOWED_IMAGE_TYPES,
+  ...CHAT_ALLOWED_FILE_TYPES
+];
+function attachmentKindForMime(mime) {
+  if (!mime) return null;
+  if (CHAT_ALLOWED_IMAGE_TYPES.includes(mime)) return "image";
+  if (CHAT_ALLOWED_FILE_TYPES.includes(mime)) return "file";
+  return null;
+}
 var botOptionSchema = z.object({
   /** Localized chip label shown to the manager. */
   label: z.string(),
@@ -169,6 +191,8 @@ var chatMessageSchema = z.object({
   attachmentUrl: z.string().nullable().default(null),
   attachmentType: z.enum(["image", "file"]).nullable().default(null),
   attachmentName: z.string().nullable().default(null),
+  /** Attachment size in bytes (for the download card); null when no attachment. */
+  attachmentSize: z.number().nullable().default(null),
   /** Structured assistant payload; null for ordinary messages. */
   botPayload: botPayloadSchema.nullable().default(null),
   /** The quoted message this one replies to (preview), or null. */
@@ -217,6 +241,8 @@ var sendMessageInputSchema = z.object({
   attachmentPath: z.string().optional(),
   attachmentType: z.enum(["image", "file"]).optional(),
   attachmentName: z.string().optional(),
+  /** Attachment size in bytes — required when an attachment is sent (quota). */
+  attachmentSize: z.number().int().nonnegative().optional(),
   /** Assistant rooms: stable token behind a tapped chip / confirm button. */
   botValue: z.string().optional(),
   /** Reply: the message id being quoted. */
@@ -255,6 +281,6 @@ var registerDeviceInputSchema = z.object({
   platform: z.enum(["ios", "android"])
 });
 
-export { CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, CHAT_QUICK_REACTIONS, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, reactionInputSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
-//# sourceMappingURL=chunk-MJH3ROS4.js.map
-//# sourceMappingURL=chunk-MJH3ROS4.js.map
+export { CHAT_ALLOWED_ATTACHMENT_TYPES, CHAT_ALLOWED_FILE_TYPES, CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, CHAT_QUICK_REACTIONS, attachmentKindForMime, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, reactionInputSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
+//# sourceMappingURL=chunk-X2JJ4RDR.js.map
+//# sourceMappingURL=chunk-X2JJ4RDR.js.map

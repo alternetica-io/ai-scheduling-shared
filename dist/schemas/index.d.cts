@@ -223,8 +223,18 @@ type ClockEvent = z.infer<typeof clockEventSchema>;
 
 /** Max size for a chat attachment, enforced client-side before upload. */
 declare const CHAT_MAX_ATTACHMENT_BYTES: number;
-/** Attachments are images only (for now). MIME types accepted. */
+/** Image MIME types — rendered inline in the bubble. */
 declare const CHAT_ALLOWED_IMAGE_TYPES: readonly ["image/jpeg", "image/png", "image/gif", "image/webp"];
+/**
+ * Non-image file MIME types allowed as attachments — shown as a downloadable
+ * card. Excludes executables/scripts on purpose. Single source of truth for
+ * web + mobile pickers and backend validation.
+ */
+declare const CHAT_ALLOWED_FILE_TYPES: readonly ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "text/plain", "text/csv", "application/zip"];
+/** Every MIME type accepted as a chat attachment (images ∪ files). */
+declare const CHAT_ALLOWED_ATTACHMENT_TYPES: readonly ["image/jpeg", "image/png", "image/gif", "image/webp", "application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "text/plain", "text/csv", "application/zip"];
+/** Returns the stored attachment kind for a MIME type, or null if unsupported. */
+declare function attachmentKindForMime(mime: string | undefined | null): 'image' | 'file' | null;
 /**
  * Structured payload authored by the in-app scheduling assistant. Rendered by
  * the chat UI instead of a plain bubble. Discriminated on `kind`. All display
@@ -306,6 +316,7 @@ declare const chatMessageSchema: z.ZodObject<{
         image: "image";
     }>>>;
     attachmentName: z.ZodDefault<z.ZodNullable<z.ZodString>>;
+    attachmentSize: z.ZodDefault<z.ZodNullable<z.ZodNumber>>;
     botPayload: z.ZodDefault<z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
         kind: z.ZodLiteral<"text">;
     }, z.core.$strip>, z.ZodObject<{
@@ -412,6 +423,7 @@ declare const sendMessageInputSchema: z.ZodObject<{
         image: "image";
     }>>;
     attachmentName: z.ZodOptional<z.ZodString>;
+    attachmentSize: z.ZodOptional<z.ZodNumber>;
     botValue: z.ZodOptional<z.ZodString>;
     replyToId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
@@ -447,6 +459,7 @@ declare const chatMessageCreatedEventSchema: z.ZodObject<{
             image: "image";
         }>>>;
         attachmentName: z.ZodDefault<z.ZodNullable<z.ZodString>>;
+        attachmentSize: z.ZodDefault<z.ZodNullable<z.ZodNumber>>;
         botPayload: z.ZodDefault<z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
             kind: z.ZodLiteral<"text">;
         }, z.core.$strip>, z.ZodObject<{
@@ -522,6 +535,7 @@ declare const chatMessageUpdatedEventSchema: z.ZodObject<{
             image: "image";
         }>>>;
         attachmentName: z.ZodDefault<z.ZodNullable<z.ZodString>>;
+        attachmentSize: z.ZodDefault<z.ZodNullable<z.ZodNumber>>;
         botPayload: z.ZodDefault<z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
             kind: z.ZodLiteral<"text">;
         }, z.core.$strip>, z.ZodObject<{
@@ -608,4 +622,4 @@ declare const registerDeviceInputSchema: z.ZodObject<{
 }, z.core.$strip>;
 type RegisterDeviceInput = z.infer<typeof registerDeviceInputSchema>;
 
-export { type BotOption, type BotPayload, CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, CHAT_QUICK_REACTIONS, type ChatContact, type ChatMember, type ChatMessage, type ChatMessageCreatedEvent, type ChatMessageUpdatedEvent, type ChatRead, type ChatReadEvent, type ChatRoom, type ChatTypingEvent, type ClockEvent, type ClockEventType, type ClockValidationStatus, type CreateClockEventInput, type CreateRoomInput, type GeoLocation, type MyLocations, type MyProfile, type ReactionInput, type RegisterDeviceInput, type ScheduleAssignment, type ScheduleAssignmentBreak, type SendMessageInput, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, reactionInputSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
+export { type BotOption, type BotPayload, CHAT_ALLOWED_ATTACHMENT_TYPES, CHAT_ALLOWED_FILE_TYPES, CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, CHAT_QUICK_REACTIONS, type ChatContact, type ChatMember, type ChatMessage, type ChatMessageCreatedEvent, type ChatMessageUpdatedEvent, type ChatRead, type ChatReadEvent, type ChatRoom, type ChatTypingEvent, type ClockEvent, type ClockEventType, type ClockValidationStatus, type CreateClockEventInput, type CreateRoomInput, type GeoLocation, type MyLocations, type MyProfile, type ReactionInput, type RegisterDeviceInput, type ScheduleAssignment, type ScheduleAssignmentBreak, type SendMessageInput, attachmentKindForMime, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, reactionInputSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };

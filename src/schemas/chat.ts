@@ -2,13 +2,45 @@ import { z } from 'zod';
 
 /** Max size for a chat attachment, enforced client-side before upload. */
 export const CHAT_MAX_ATTACHMENT_BYTES = 25 * 1024 * 1024; // 25 MB
-/** Attachments are images only (for now). MIME types accepted. */
+/** Image MIME types — rendered inline in the bubble. */
 export const CHAT_ALLOWED_IMAGE_TYPES = [
   'image/jpeg',
   'image/png',
   'image/gif',
   'image/webp',
 ] as const;
+/**
+ * Non-image file MIME types allowed as attachments — shown as a downloadable
+ * card. Excludes executables/scripts on purpose. Single source of truth for
+ * web + mobile pickers and backend validation.
+ */
+export const CHAT_ALLOWED_FILE_TYPES = [
+  'application/pdf',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  'application/vnd.ms-excel',
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  'application/vnd.ms-powerpoint',
+  'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+  'text/plain',
+  'text/csv',
+  'application/zip',
+] as const;
+/** Every MIME type accepted as a chat attachment (images ∪ files). */
+export const CHAT_ALLOWED_ATTACHMENT_TYPES = [
+  ...CHAT_ALLOWED_IMAGE_TYPES,
+  ...CHAT_ALLOWED_FILE_TYPES,
+] as const;
+
+/** Returns the stored attachment kind for a MIME type, or null if unsupported. */
+export function attachmentKindForMime(
+  mime: string | undefined | null,
+): 'image' | 'file' | null {
+  if (!mime) return null;
+  if ((CHAT_ALLOWED_IMAGE_TYPES as readonly string[]).includes(mime)) return 'image';
+  if ((CHAT_ALLOWED_FILE_TYPES as readonly string[]).includes(mime)) return 'file';
+  return null;
+}
 
 /**
  * Structured payload authored by the in-app scheduling assistant. Rendered by
@@ -91,6 +123,8 @@ export const chatMessageSchema = z.object({
   attachmentUrl: z.string().nullable().default(null),
   attachmentType: z.enum(['image', 'file']).nullable().default(null),
   attachmentName: z.string().nullable().default(null),
+  /** Attachment size in bytes (for the download card); null when no attachment. */
+  attachmentSize: z.number().nullable().default(null),
   /** Structured assistant payload; null for ordinary messages. */
   botPayload: botPayloadSchema.nullable().default(null),
   /** The quoted message this one replies to (preview), or null. */
@@ -163,6 +197,8 @@ export const sendMessageInputSchema = z.object({
   attachmentPath: z.string().optional(),
   attachmentType: z.enum(['image', 'file']).optional(),
   attachmentName: z.string().optional(),
+  /** Attachment size in bytes — required when an attachment is sent (quota). */
+  attachmentSize: z.number().int().nonnegative().optional(),
   /** Assistant rooms: stable token behind a tapped chip / confirm button. */
   botValue: z.string().optional(),
   /** Reply: the message id being quoted. */

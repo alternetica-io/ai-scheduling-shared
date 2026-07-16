@@ -188,6 +188,28 @@ var CHAT_ALLOWED_IMAGE_TYPES = [
   "image/gif",
   "image/webp"
 ];
+var CHAT_ALLOWED_FILE_TYPES = [
+  "application/pdf",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "application/vnd.ms-excel",
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  "application/vnd.ms-powerpoint",
+  "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+  "text/plain",
+  "text/csv",
+  "application/zip"
+];
+var CHAT_ALLOWED_ATTACHMENT_TYPES = [
+  ...CHAT_ALLOWED_IMAGE_TYPES,
+  ...CHAT_ALLOWED_FILE_TYPES
+];
+function attachmentKindForMime(mime) {
+  if (!mime) return null;
+  if (CHAT_ALLOWED_IMAGE_TYPES.includes(mime)) return "image";
+  if (CHAT_ALLOWED_FILE_TYPES.includes(mime)) return "file";
+  return null;
+}
 var botOptionSchema = zod.z.object({
   /** Localized chip label shown to the manager. */
   label: zod.z.string(),
@@ -252,6 +274,8 @@ var chatMessageSchema = zod.z.object({
   attachmentUrl: zod.z.string().nullable().default(null),
   attachmentType: zod.z.enum(["image", "file"]).nullable().default(null),
   attachmentName: zod.z.string().nullable().default(null),
+  /** Attachment size in bytes (for the download card); null when no attachment. */
+  attachmentSize: zod.z.number().nullable().default(null),
   /** Structured assistant payload; null for ordinary messages. */
   botPayload: botPayloadSchema.nullable().default(null),
   /** The quoted message this one replies to (preview), or null. */
@@ -300,6 +324,8 @@ var sendMessageInputSchema = zod.z.object({
   attachmentPath: zod.z.string().optional(),
   attachmentType: zod.z.enum(["image", "file"]).optional(),
   attachmentName: zod.z.string().optional(),
+  /** Attachment size in bytes — required when an attachment is sent (quota). */
+  attachmentSize: zod.z.number().int().nonnegative().optional(),
   /** Assistant rooms: stable token behind a tapped chip / confirm button. */
   botValue: zod.z.string().optional(),
   /** Reply: the message id being quoted. */
@@ -752,11 +778,14 @@ var sharedResources = {
 var SUPPORTED_LANGUAGES = ["en", "es"];
 var FALLBACK_LANGUAGE = "en";
 
+exports.CHAT_ALLOWED_ATTACHMENT_TYPES = CHAT_ALLOWED_ATTACHMENT_TYPES;
+exports.CHAT_ALLOWED_FILE_TYPES = CHAT_ALLOWED_FILE_TYPES;
 exports.CHAT_ALLOWED_IMAGE_TYPES = CHAT_ALLOWED_IMAGE_TYPES;
 exports.CHAT_MAX_ATTACHMENT_BYTES = CHAT_MAX_ATTACHMENT_BYTES;
 exports.CHAT_QUICK_REACTIONS = CHAT_QUICK_REACTIONS;
 exports.FALLBACK_LANGUAGE = FALLBACK_LANGUAGE;
 exports.SUPPORTED_LANGUAGES = SUPPORTED_LANGUAGES;
+exports.attachmentKindForMime = attachmentKindForMime;
 exports.botOptionSchema = botOptionSchema;
 exports.botPayloadSchema = botPayloadSchema;
 exports.botSkippedSchema = botSkippedSchema;
