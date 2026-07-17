@@ -233,7 +233,9 @@ var chatRoomSchema = z.object({
     senderName: z.string().nullable()
   }).nullable(),
   unreadCount: z.number(),
-  updatedAt: z.string()
+  updatedAt: z.string(),
+  /** Member muted push for this room. */
+  muted: z.boolean().default(false)
 });
 var sendMessageInputSchema = z.object({
   content: z.string().max(4e3).optional(),
@@ -282,5 +284,5 @@ var registerDeviceInputSchema = z.object({
 });
 
 export { CHAT_ALLOWED_ATTACHMENT_TYPES, CHAT_ALLOWED_FILE_TYPES, CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, CHAT_QUICK_REACTIONS, attachmentKindForMime, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, reactionInputSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
-//# sourceMappingURL=chunk-X2JJ4RDR.js.map
-//# sourceMappingURL=chunk-X2JJ4RDR.js.map
+//# sourceMappingURL=chunk-QQF2X7XX.js.map
+//# sourceMappingURL=chunk-QQF2X7XX.js.map

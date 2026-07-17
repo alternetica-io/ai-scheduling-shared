@@ -187,6 +187,8 @@ export const chatRoomSchema = z.object({
     .nullable(),
   unreadCount: z.number(),
   updatedAt: z.string(),
+  /** Member muted push for this room. */
+  muted: z.boolean().default(false),
 });
 export type ChatRoom = z.infer<typeof chatRoomSchema>;
 

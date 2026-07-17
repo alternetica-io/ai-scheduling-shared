@@ -411,6 +411,7 @@ declare const chatRoomSchema: z.ZodObject<{
     }, z.core.$strip>>;
     unreadCount: z.ZodNumber;
     updatedAt: z.ZodString;
+    muted: z.ZodDefault<z.ZodBoolean>;
 }, z.core.$strip>;
 type ChatRoom = z.infer<typeof chatRoomSchema>;
 /** POST /chat/rooms/:id/messages body. */

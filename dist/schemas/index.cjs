@@ -235,7 +235,9 @@ var chatRoomSchema = zod.z.object({
     senderName: zod.z.string().nullable()
   }).nullable(),
   unreadCount: zod.z.number(),
-  updatedAt: zod.z.string()
+  updatedAt: zod.z.string(),
+  /** Member muted push for this room. */
+  muted: zod.z.boolean().default(false)
 });
 var sendMessageInputSchema = zod.z.object({
   content: zod.z.string().max(4e3).optional(),
