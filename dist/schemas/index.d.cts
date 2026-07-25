@@ -40,6 +40,7 @@ declare const scheduleAssignmentSchema: z.ZodObject<{
     locationName: z.ZodDefault<z.ZodNullable<z.ZodString>>;
     punchStatus: z.ZodDefault<z.ZodEnum<{
         none: "none";
+        not_started: "not_started";
         open: "open";
         closed: "closed";
         no_show: "no_show";
@@ -47,6 +48,7 @@ declare const scheduleAssignmentSchema: z.ZodObject<{
     late: z.ZodDefault<z.ZodBoolean>;
     plannedStartTime: z.ZodDefault<z.ZodNullable<z.ZodString>>;
     plannedEndTime: z.ZodDefault<z.ZodNullable<z.ZodString>>;
+    tagIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
 }, z.core.$strip>;
 declare const scheduleAssignmentsSchema: z.ZodArray<z.ZodObject<{
     id: z.ZodString;
@@ -76,6 +78,7 @@ declare const scheduleAssignmentsSchema: z.ZodArray<z.ZodObject<{
     locationName: z.ZodDefault<z.ZodNullable<z.ZodString>>;
     punchStatus: z.ZodDefault<z.ZodEnum<{
         none: "none";
+        not_started: "not_started";
         open: "open";
         closed: "closed";
         no_show: "no_show";
@@ -83,6 +86,7 @@ declare const scheduleAssignmentsSchema: z.ZodArray<z.ZodObject<{
     late: z.ZodDefault<z.ZodBoolean>;
     plannedStartTime: z.ZodDefault<z.ZodNullable<z.ZodString>>;
     plannedEndTime: z.ZodDefault<z.ZodNullable<z.ZodString>>;
+    tagIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
 }, z.core.$strip>>;
 type ScheduleAssignmentBreak = z.infer<typeof scheduleAssignmentBreakSchema>;
 type ScheduleAssignment = z.infer<typeof scheduleAssignmentSchema>;
@@ -220,6 +224,39 @@ declare const clockEventsSchema: z.ZodArray<z.ZodObject<{
     breakLimitMinutes: z.ZodDefault<z.ZodNullable<z.ZodNumber>>;
 }, z.core.$strip>>;
 type ClockEvent = z.infer<typeof clockEventSchema>;
+
+/**
+ * Contrato del catálogo de tags por tenant (subsistema Tags). Espeja
+ * `GET /tags` del backend (orchestrator `TagsController`). Un tag aplica a uno
+ * o más dominios (horario / asistencia). Los de sistema (`isSystem`, ej.
+ * "Manual") se pueden renombrar/recolorear pero no borrar.
+ */
+declare const tagDomainSchema: z.ZodEnum<{
+    schedule: "schedule";
+    attendance: "attendance";
+}>;
+type TagDomain = z.infer<typeof tagDomainSchema>;
+declare const workforceTagSchema: z.ZodObject<{
+    id: z.ZodString;
+    name: z.ZodString;
+    color: z.ZodDefault<z.ZodNullable<z.ZodString>>;
+    domains: z.ZodDefault<z.ZodArray<z.ZodEnum<{
+        schedule: "schedule";
+        attendance: "attendance";
+    }>>>;
+    isSystem: z.ZodDefault<z.ZodBoolean>;
+}, z.core.$strip>;
+declare const workforceTagsSchema: z.ZodArray<z.ZodObject<{
+    id: z.ZodString;
+    name: z.ZodString;
+    color: z.ZodDefault<z.ZodNullable<z.ZodString>>;
+    domains: z.ZodDefault<z.ZodArray<z.ZodEnum<{
+        schedule: "schedule";
+        attendance: "attendance";
+    }>>>;
+    isSystem: z.ZodDefault<z.ZodBoolean>;
+}, z.core.$strip>>;
+type WorkforceTag = z.infer<typeof workforceTagSchema>;
 
 /** Max size for a chat attachment, enforced client-side before upload. */
 declare const CHAT_MAX_ATTACHMENT_BYTES: number;
@@ -623,4 +660,4 @@ declare const registerDeviceInputSchema: z.ZodObject<{
 }, z.core.$strip>;
 type RegisterDeviceInput = z.infer<typeof registerDeviceInputSchema>;
 
-export { type BotOption, type BotPayload, CHAT_ALLOWED_ATTACHMENT_TYPES, CHAT_ALLOWED_FILE_TYPES, CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, CHAT_QUICK_REACTIONS, type ChatContact, type ChatMember, type ChatMessage, type ChatMessageCreatedEvent, type ChatMessageUpdatedEvent, type ChatRead, type ChatReadEvent, type ChatRoom, type ChatTypingEvent, type ClockEvent, type ClockEventType, type ClockValidationStatus, type CreateClockEventInput, type CreateRoomInput, type GeoLocation, type MyLocations, type MyProfile, type ReactionInput, type RegisterDeviceInput, type ScheduleAssignment, type ScheduleAssignmentBreak, type SendMessageInput, attachmentKindForMime, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, reactionInputSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
+export { type BotOption, type BotPayload, CHAT_ALLOWED_ATTACHMENT_TYPES, CHAT_ALLOWED_FILE_TYPES, CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, CHAT_QUICK_REACTIONS, type ChatContact, type ChatMember, type ChatMessage, type ChatMessageCreatedEvent, type ChatMessageUpdatedEvent, type ChatRead, type ChatReadEvent, type ChatRoom, type ChatTypingEvent, type ClockEvent, type ClockEventType, type ClockValidationStatus, type CreateClockEventInput, type CreateRoomInput, type GeoLocation, type MyLocations, type MyProfile, type ReactionInput, type RegisterDeviceInput, type ScheduleAssignment, type ScheduleAssignmentBreak, type SendMessageInput, type TagDomain, type WorkforceTag, attachmentKindForMime, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, reactionInputSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema, tagDomainSchema, workforceTagSchema, workforceTagsSchema };

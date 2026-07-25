@@ -31,13 +31,16 @@ export const scheduleAssignmentSchema = z.object({
   locationName: z.string().nullable().default(null),
   /** Estado de fichaje del turno (para pildoras de turnos pasados/en curso). */
   punchStatus: z
-    .enum(['none', 'open', 'closed', 'no_show'])
+    .enum(['none', 'not_started', 'open', 'closed', 'no_show'])
     .default('none'),
   /** El empleado llegó tarde (fichaje de entrada con flag late_in). */
   late: z.boolean().default(false),
   /** Inicio/fin PROGRAMADO original si el turno se ajustó a un fichaje real. */
   plannedStartTime: z.string().nullable().default(null),
   plannedEndTime: z.string().nullable().default(null),
+  /** Tags aplicados al turno (catálogo por tenant). Incluye el "Manual"
+   *  auto-stampeado en turnos retroactivos. Default tolerante. */
+  tagIds: z.array(z.string()).default([]),
 });
 
 export const scheduleAssignmentsSchema = z.array(scheduleAssignmentSchema);

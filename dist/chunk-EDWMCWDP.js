@@ -24,12 +24,15 @@ var scheduleAssignmentSchema = z.object({
   locationId: z.string().nullable().default(null),
   locationName: z.string().nullable().default(null),
   /** Estado de fichaje del turno (para pildoras de turnos pasados/en curso). */
-  punchStatus: z.enum(["none", "open", "closed", "no_show"]).default("none"),
+  punchStatus: z.enum(["none", "not_started", "open", "closed", "no_show"]).default("none"),
   /** El empleado llegó tarde (fichaje de entrada con flag late_in). */
   late: z.boolean().default(false),
   /** Inicio/fin PROGRAMADO original si el turno se ajustó a un fichaje real. */
   plannedStartTime: z.string().nullable().default(null),
-  plannedEndTime: z.string().nullable().default(null)
+  plannedEndTime: z.string().nullable().default(null),
+  /** Tags aplicados al turno (catálogo por tenant). Incluye el "Manual"
+   *  auto-stampeado en turnos retroactivos. Default tolerante. */
+  tagIds: z.array(z.string()).default([])
 });
 var scheduleAssignmentsSchema = z.array(scheduleAssignmentSchema);
 var myProfileSchema = z.object({
@@ -98,6 +101,16 @@ var clockEventSchema = z.object({
   breakLimitMinutes: z.number().nullable().default(null)
 });
 var clockEventsSchema = z.array(clockEventSchema);
+var tagDomainSchema = z.enum(["schedule", "attendance"]);
+var workforceTagSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  /** Hex del chip. null = usar fallback. */
+  color: z.string().nullable().default(null),
+  domains: z.array(tagDomainSchema).default([]),
+  isSystem: z.boolean().default(false)
+});
+var workforceTagsSchema = z.array(workforceTagSchema);
 var CHAT_MAX_ATTACHMENT_BYTES = 25 * 1024 * 1024;
 var CHAT_ALLOWED_IMAGE_TYPES = [
   "image/jpeg",
@@ -283,6 +296,6 @@ var registerDeviceInputSchema = z.object({
   platform: z.enum(["ios", "android"])
 });
 
-export { CHAT_ALLOWED_ATTACHMENT_TYPES, CHAT_ALLOWED_FILE_TYPES, CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, CHAT_QUICK_REACTIONS, attachmentKindForMime, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, reactionInputSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema };
-//# sourceMappingURL=chunk-QQF2X7XX.js.map
-//# sourceMappingURL=chunk-QQF2X7XX.js.map
+export { CHAT_ALLOWED_ATTACHMENT_TYPES, CHAT_ALLOWED_FILE_TYPES, CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, CHAT_QUICK_REACTIONS, attachmentKindForMime, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, reactionInputSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema, tagDomainSchema, workforceTagSchema, workforceTagsSchema };
+//# sourceMappingURL=chunk-EDWMCWDP.js.map
+//# sourceMappingURL=chunk-EDWMCWDP.js.map

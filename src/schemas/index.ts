@@ -6,5 +6,6 @@
  */
 export * from './schedule';
 export * from './timeclock';
+export * from './tags';
 export * from './chat';
 export * from './push';

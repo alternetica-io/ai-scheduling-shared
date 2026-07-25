@@ -107,12 +107,15 @@ var scheduleAssignmentSchema = zod.z.object({
   locationId: zod.z.string().nullable().default(null),
   locationName: zod.z.string().nullable().default(null),
   /** Estado de fichaje del turno (para pildoras de turnos pasados/en curso). */
-  punchStatus: zod.z.enum(["none", "open", "closed", "no_show"]).default("none"),
+  punchStatus: zod.z.enum(["none", "not_started", "open", "closed", "no_show"]).default("none"),
   /** El empleado llegó tarde (fichaje de entrada con flag late_in). */
   late: zod.z.boolean().default(false),
   /** Inicio/fin PROGRAMADO original si el turno se ajustó a un fichaje real. */
   plannedStartTime: zod.z.string().nullable().default(null),
-  plannedEndTime: zod.z.string().nullable().default(null)
+  plannedEndTime: zod.z.string().nullable().default(null),
+  /** Tags aplicados al turno (catálogo por tenant). Incluye el "Manual"
+   *  auto-stampeado en turnos retroactivos. Default tolerante. */
+  tagIds: zod.z.array(zod.z.string()).default([])
 });
 var scheduleAssignmentsSchema = zod.z.array(scheduleAssignmentSchema);
 var myProfileSchema = zod.z.object({
@@ -181,6 +184,16 @@ var clockEventSchema = zod.z.object({
   breakLimitMinutes: zod.z.number().nullable().default(null)
 });
 var clockEventsSchema = zod.z.array(clockEventSchema);
+var tagDomainSchema = zod.z.enum(["schedule", "attendance"]);
+var workforceTagSchema = zod.z.object({
+  id: zod.z.string(),
+  name: zod.z.string(),
+  /** Hex del chip. null = usar fallback. */
+  color: zod.z.string().nullable().default(null),
+  domains: zod.z.array(tagDomainSchema).default([]),
+  isSystem: zod.z.boolean().default(false)
+});
+var workforceTagsSchema = zod.z.array(workforceTagSchema);
 var CHAT_MAX_ATTACHMENT_BYTES = 25 * 1024 * 1024;
 var CHAT_ALLOWED_IMAGE_TYPES = [
   "image/jpeg",
@@ -820,5 +833,8 @@ exports.scheduleAssignmentSchema = scheduleAssignmentSchema;
 exports.scheduleAssignmentsSchema = scheduleAssignmentsSchema;
 exports.sendMessageInputSchema = sendMessageInputSchema;
 exports.sharedResources = sharedResources;
+exports.tagDomainSchema = tagDomainSchema;
+exports.workforceTagSchema = workforceTagSchema;
+exports.workforceTagsSchema = workforceTagsSchema;
 //# sourceMappingURL=index.cjs.map
 //# sourceMappingURL=index.cjs.map
