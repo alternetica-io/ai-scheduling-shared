@@ -93,6 +93,7 @@ type ScheduleAssignment = z.infer<typeof scheduleAssignmentSchema>;
 /** Mirrors GET /employees/me. */
 declare const myProfileSchema: z.ZodObject<{
     id: z.ZodString;
+    companyId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     name: z.ZodString;
     role: z.ZodNullable<z.ZodString>;
     phone: z.ZodNullable<z.ZodString>;

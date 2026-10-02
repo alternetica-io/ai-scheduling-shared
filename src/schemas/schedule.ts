@@ -51,6 +51,9 @@ export type ScheduleAssignment = z.infer<typeof scheduleAssignmentSchema>;
 /** Mirrors GET /employees/me. */
 export const myProfileSchema = z.object({
   id: z.string(),
+  // nullish por transición: un backend viejo (sin companyId) no debe romper el
+  // parse del perfil en el móvil. El backend nuevo siempre lo devuelve.
+  companyId: z.string().nullish(),
   name: z.string(),
   role: z.string().nullable(),
   phone: z.string().nullable(),

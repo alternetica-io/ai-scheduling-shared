@@ -39,6 +39,9 @@ var scheduleAssignmentSchema = zod.z.object({
 var scheduleAssignmentsSchema = zod.z.array(scheduleAssignmentSchema);
 var myProfileSchema = zod.z.object({
   id: zod.z.string(),
+  // nullish por transición: un backend viejo (sin companyId) no debe romper el
+  // parse del perfil en el móvil. El backend nuevo siempre lo devuelve.
+  companyId: zod.z.string().nullish(),
   name: zod.z.string(),
   role: zod.z.string().nullable(),
   phone: zod.z.string().nullable(),

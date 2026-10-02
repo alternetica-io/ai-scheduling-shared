@@ -37,6 +37,9 @@ var scheduleAssignmentSchema = z.object({
 var scheduleAssignmentsSchema = z.array(scheduleAssignmentSchema);
 var myProfileSchema = z.object({
   id: z.string(),
+  // nullish por transición: un backend viejo (sin companyId) no debe romper el
+  // parse del perfil en el móvil. El backend nuevo siempre lo devuelve.
+  companyId: z.string().nullish(),
   name: z.string(),
   role: z.string().nullable(),
   phone: z.string().nullable(),
@@ -297,5 +300,5 @@ var registerDeviceInputSchema = z.object({
 });
 
 export { CHAT_ALLOWED_ATTACHMENT_TYPES, CHAT_ALLOWED_FILE_TYPES, CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, CHAT_QUICK_REACTIONS, attachmentKindForMime, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, reactionInputSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema, tagDomainSchema, workforceTagSchema, workforceTagsSchema };
-//# sourceMappingURL=chunk-EDWMCWDP.js.map
-//# sourceMappingURL=chunk-EDWMCWDP.js.map
+//# sourceMappingURL=chunk-YJ2V6HWS.js.map
+//# sourceMappingURL=chunk-YJ2V6HWS.js.map
