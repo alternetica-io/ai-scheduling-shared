@@ -9,10 +9,10 @@ var axios__default = /*#__PURE__*/_interopDefault(axios);
 
 // src/types/approvals.ts
 function formatShiftRef(ref, locale) {
-  const pad = (n) => String(n).padStart(2, "0");
+  const pad2 = (n) => String(n).padStart(2, "0");
   const t = (iso) => {
     const d = new Date(iso);
-    return `${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}`;
+    return `${pad2(d.getUTCHours())}:${pad2(d.getUTCMinutes())}`;
   };
   return {
     day: (/* @__PURE__ */ new Date(`${ref.date}T00:00:00`)).toLocaleDateString(locale, {
@@ -22,6 +22,76 @@ function formatShiftRef(ref, locale) {
     }),
     time: `${t(ref.start)} \u2013 ${t(ref.end)}`
   };
+}
+
+// src/time/zone.ts
+var pad = (n) => String(n).padStart(2, "0");
+function partsInZone(instantMs, tz) {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: tz,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false
+  }).formatToParts(new Date(instantMs));
+  const get = (t) => Number(parts.find((p) => p.type === t)?.value ?? "0");
+  return {
+    y: get("year"),
+    mo: get("month"),
+    d: get("day"),
+    // `hour12: false` puede devolver 24 para la medianoche en algunos runtimes.
+    h: get("hour") % 24,
+    mi: get("minute"),
+    s: get("second")
+  };
+}
+function zoneOffsetMs(instantMs, tz) {
+  const p = partsInZone(instantMs, tz);
+  return Date.UTC(p.y, p.mo - 1, p.d, p.h, p.mi, p.s) - instantMs;
+}
+function todayInZone(tz, now = /* @__PURE__ */ new Date()) {
+  const p = partsInZone(now.getTime(), tz);
+  return `${p.y}-${pad(p.mo)}-${pad(p.d)}`;
+}
+function wallMinutesInZone(instant, tz) {
+  const ms = typeof instant === "string" ? Date.parse(instant) : instant.getTime();
+  const p = partsInZone(ms, tz);
+  return p.h * 60 + p.mi;
+}
+function instantToWallClock(instant, tz) {
+  const ms = typeof instant === "string" ? Date.parse(instant) : instant.getTime();
+  const p = partsInZone(ms, tz);
+  return new Date(Date.UTC(p.y, p.mo - 1, p.d, p.h, p.mi, p.s)).toISOString();
+}
+function wallClockToInstantMs(wallClockIso, tz) {
+  const wallMs = Date.parse(wallClockIso);
+  const firstPass = wallMs - zoneOffsetMs(wallMs, tz);
+  return wallMs - zoneOffsetMs(firstPass, tz);
+}
+function wallClockToInstantIso(wallClockIso, tz) {
+  return new Date(wallClockToInstantMs(wallClockIso, tz)).toISOString();
+}
+function weekStartOfDate(ymd, firstDay) {
+  const [y, m, d] = ymd.split("-").map(Number);
+  const anchor = Date.UTC(y, m - 1, d);
+  const dow = new Date(anchor).getUTCDay();
+  const start = firstDay === "sunday" ? 0 : 1;
+  const offset = (dow - start + 7) % 7;
+  const out = new Date(anchor - offset * 864e5);
+  return `${out.getUTCFullYear()}-${pad(out.getUTCMonth() + 1)}-${pad(out.getUTCDate())}`;
+}
+function weekStartInZone(tz, firstDay, now = /* @__PURE__ */ new Date()) {
+  return weekStartOfDate(todayInZone(tz, now), firstDay);
+}
+function addDaysToDate(ymd, days) {
+  const [y, m, d] = ymd.split("-").map(Number);
+  const out = new Date(
+    Date.UTC(y, m - 1, d) + days * 864e5
+  );
+  return `${out.getUTCFullYear()}-${pad(out.getUTCMonth() + 1)}-${pad(out.getUTCDate())}`;
 }
 function describeApiError(err, t) {
   if (axios__default.default.isAxiosError(err)) {
@@ -803,6 +873,7 @@ exports.CHAT_MAX_ATTACHMENT_BYTES = CHAT_MAX_ATTACHMENT_BYTES;
 exports.CHAT_QUICK_REACTIONS = CHAT_QUICK_REACTIONS;
 exports.FALLBACK_LANGUAGE = FALLBACK_LANGUAGE;
 exports.SUPPORTED_LANGUAGES = SUPPORTED_LANGUAGES;
+exports.addDaysToDate = addDaysToDate;
 exports.attachmentKindForMime = attachmentKindForMime;
 exports.botOptionSchema = botOptionSchema;
 exports.botPayloadSchema = botPayloadSchema;
@@ -827,6 +898,7 @@ exports.createRoomInputSchema = createRoomInputSchema;
 exports.describeApiError = describeApiError;
 exports.formatShiftRef = formatShiftRef;
 exports.geoLocationSchema = geoLocationSchema;
+exports.instantToWallClock = instantToWallClock;
 exports.myLocationsSchema = myLocationsSchema;
 exports.myProfileSchema = myProfileSchema;
 exports.reactionInputSchema = reactionInputSchema;
@@ -837,6 +909,12 @@ exports.scheduleAssignmentsSchema = scheduleAssignmentsSchema;
 exports.sendMessageInputSchema = sendMessageInputSchema;
 exports.sharedResources = sharedResources;
 exports.tagDomainSchema = tagDomainSchema;
+exports.todayInZone = todayInZone;
+exports.wallClockToInstantIso = wallClockToInstantIso;
+exports.wallClockToInstantMs = wallClockToInstantMs;
+exports.wallMinutesInZone = wallMinutesInZone;
+exports.weekStartInZone = weekStartInZone;
+exports.weekStartOfDate = weekStartOfDate;
 exports.workforceTagSchema = workforceTagSchema;
 exports.workforceTagsSchema = workforceTagsSchema;
 //# sourceMappingURL=index.cjs.map

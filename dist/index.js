@@ -3,5 +3,77 @@ export { createApiClient } from './chunk-ALEQ5QUT.js';
 export { describeApiError } from './chunk-4F6AZ26W.js';
 export { CHAT_ALLOWED_ATTACHMENT_TYPES, CHAT_ALLOWED_FILE_TYPES, CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, CHAT_QUICK_REACTIONS, attachmentKindForMime, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, reactionInputSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema, tagDomainSchema, workforceTagSchema, workforceTagsSchema } from './chunk-YJ2V6HWS.js';
 export { FALLBACK_LANGUAGE, SUPPORTED_LANGUAGES, sharedResources } from './chunk-RQBUBIPK.js';
+
+// src/time/zone.ts
+var pad = (n) => String(n).padStart(2, "0");
+function partsInZone(instantMs, tz) {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: tz,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false
+  }).formatToParts(new Date(instantMs));
+  const get = (t) => Number(parts.find((p) => p.type === t)?.value ?? "0");
+  return {
+    y: get("year"),
+    mo: get("month"),
+    d: get("day"),
+    // `hour12: false` puede devolver 24 para la medianoche en algunos runtimes.
+    h: get("hour") % 24,
+    mi: get("minute"),
+    s: get("second")
+  };
+}
+function zoneOffsetMs(instantMs, tz) {
+  const p = partsInZone(instantMs, tz);
+  return Date.UTC(p.y, p.mo - 1, p.d, p.h, p.mi, p.s) - instantMs;
+}
+function todayInZone(tz, now = /* @__PURE__ */ new Date()) {
+  const p = partsInZone(now.getTime(), tz);
+  return `${p.y}-${pad(p.mo)}-${pad(p.d)}`;
+}
+function wallMinutesInZone(instant, tz) {
+  const ms = typeof instant === "string" ? Date.parse(instant) : instant.getTime();
+  const p = partsInZone(ms, tz);
+  return p.h * 60 + p.mi;
+}
+function instantToWallClock(instant, tz) {
+  const ms = typeof instant === "string" ? Date.parse(instant) : instant.getTime();
+  const p = partsInZone(ms, tz);
+  return new Date(Date.UTC(p.y, p.mo - 1, p.d, p.h, p.mi, p.s)).toISOString();
+}
+function wallClockToInstantMs(wallClockIso, tz) {
+  const wallMs = Date.parse(wallClockIso);
+  const firstPass = wallMs - zoneOffsetMs(wallMs, tz);
+  return wallMs - zoneOffsetMs(firstPass, tz);
+}
+function wallClockToInstantIso(wallClockIso, tz) {
+  return new Date(wallClockToInstantMs(wallClockIso, tz)).toISOString();
+}
+function weekStartOfDate(ymd, firstDay) {
+  const [y, m, d] = ymd.split("-").map(Number);
+  const anchor = Date.UTC(y, m - 1, d);
+  const dow = new Date(anchor).getUTCDay();
+  const start = firstDay === "sunday" ? 0 : 1;
+  const offset = (dow - start + 7) % 7;
+  const out = new Date(anchor - offset * 864e5);
+  return `${out.getUTCFullYear()}-${pad(out.getUTCMonth() + 1)}-${pad(out.getUTCDate())}`;
+}
+function weekStartInZone(tz, firstDay, now = /* @__PURE__ */ new Date()) {
+  return weekStartOfDate(todayInZone(tz, now), firstDay);
+}
+function addDaysToDate(ymd, days) {
+  const [y, m, d] = ymd.split("-").map(Number);
+  const out = new Date(
+    Date.UTC(y, m - 1, d) + days * 864e5
+  );
+  return `${out.getUTCFullYear()}-${pad(out.getUTCMonth() + 1)}-${pad(out.getUTCDate())}`;
+}
+
+export { addDaysToDate, instantToWallClock, todayInZone, wallClockToInstantIso, wallClockToInstantMs, wallMinutesInZone, weekStartInZone, weekStartOfDate };
 //# sourceMappingURL=index.js.map
 //# sourceMappingURL=index.js.map
