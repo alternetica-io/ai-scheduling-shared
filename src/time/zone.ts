@@ -110,8 +110,13 @@ const PROBE_MS = 6 * 3600 * 1000;
  */
 export function wallClockToInstantMs(wallClockIso: string, tz: string): number {
   const wallMs = Date.parse(wallClockIso);
-  const before = zoneOffsetMs(wallMs - PROBE_MS, tz);
-  const after = zoneOffsetMs(wallMs + PROBE_MS, tz);
+  // Las sondas se centran en el instante ESTIMADO, no en la hora de pared
+  // tratada como instante: en una zona con desfase grande (Auckland, +13) los
+  // dos están a trece horas de distancia y las sondas no llegarían a abrazar
+  // el cambio de horario.
+  const approx = wallMs - zoneOffsetMs(wallMs, tz);
+  const before = zoneOffsetMs(approx - PROBE_MS, tz);
+  const after = zoneOffsetMs(approx + PROBE_MS, tz);
   if (before === after) return wallMs - before;
 
   const candBefore = wallMs - before;

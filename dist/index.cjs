@@ -69,8 +69,9 @@ function instantToWallClock(instant, tz) {
 var PROBE_MS = 6 * 3600 * 1e3;
 function wallClockToInstantMs(wallClockIso, tz) {
   const wallMs = Date.parse(wallClockIso);
-  const before = zoneOffsetMs(wallMs - PROBE_MS, tz);
-  const after = zoneOffsetMs(wallMs + PROBE_MS, tz);
+  const approx = wallMs - zoneOffsetMs(wallMs, tz);
+  const before = zoneOffsetMs(approx - PROBE_MS, tz);
+  const after = zoneOffsetMs(approx + PROBE_MS, tz);
   if (before === after) return wallMs - before;
   const candBefore = wallMs - before;
   const candAfter = wallMs - after;
