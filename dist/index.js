@@ -46,10 +46,20 @@ function instantToWallClock(instant, tz) {
   const p = partsInZone(ms, tz);
   return new Date(Date.UTC(p.y, p.mo - 1, p.d, p.h, p.mi, p.s)).toISOString();
 }
+var PROBE_MS = 6 * 3600 * 1e3;
 function wallClockToInstantMs(wallClockIso, tz) {
   const wallMs = Date.parse(wallClockIso);
-  const firstPass = wallMs - zoneOffsetMs(wallMs, tz);
-  return wallMs - zoneOffsetMs(firstPass, tz);
+  const before = zoneOffsetMs(wallMs - PROBE_MS, tz);
+  const after = zoneOffsetMs(wallMs + PROBE_MS, tz);
+  if (before === after) return wallMs - before;
+  const candBefore = wallMs - before;
+  const candAfter = wallMs - after;
+  const okBefore = zoneOffsetMs(candBefore, tz) === before;
+  const okAfter = zoneOffsetMs(candAfter, tz) === after;
+  if (okBefore && okAfter) return Math.min(candBefore, candAfter);
+  if (okBefore) return candBefore;
+  if (okAfter) return candAfter;
+  return candBefore;
 }
 function wallClockToInstantIso(wallClockIso, tz) {
   return new Date(wallClockToInstantMs(wallClockIso, tz)).toISOString();

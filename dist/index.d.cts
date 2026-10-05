@@ -39,15 +39,24 @@ declare function instantToWallClock(instant: Date | string, tz: string): string;
 /**
  * Inverso: un ISO wall-clock-como-UTC → el instante real en esa zona, en ms.
  *
- * DOS PASADAS, y no es un detalle: el desfase hay que medirlo en el instante
- * RESULTANTE, no en la hora de pared tratada como si fuera UTC. En un cambio
- * de horario de verano los dos difieren y una sola pasada se equivoca por una
- * hora justo el día del cambio.
+ * Los cambios de horario de verano hacen que esto NO sea una resta: dos veces
+ * al año hay horas de pared que no existen y horas que ocurren dos veces. La
+ * desambiguación sigue la convención **`compatible` de Temporal**, que es el
+ * estándar de hecho y la que usan los tres repos:
  *
- * Horas que no existen (la madrugada que el reloj se saltea al adelantar) o
- * que ocurren dos veces (al atrasar) se resuelven de forma determinística:
- * la segunda pasada fija un único instante, y para la hora repetida devuelve
- * la primera ocurrencia.
+ *  - **Hueco** (al adelantar, el reloj salta de 02:00 a 03:00): la hora
+ *    inexistente se empuja HACIA ADELANTE. 02:30 → 03:30.
+ *  - **Repetida** (al atrasar, la 01:30 ocurre dos veces): se toma la
+ *    PRIMERA ocurrencia.
+ *
+ * Cómo: se sondean los desfases a ambos lados, se construye un instante
+ * candidato con cada uno y se valida cuál reproduce la hora de pared pedida.
+ * Si los dos valen, la hora es ambigua → el menor (la primera). Si ninguno
+ * vale, la hora está en el hueco → se usa el desfase ANTERIOR al cambio, que
+ * es justamente lo que empuja el resultado hacia adelante.
+ *
+ * Una sola resta con el desfase "actual" se equivoca por una hora el día del
+ * cambio, y dos pasadas encadenadas caen dentro del hueco en vez de saltarlo.
  */
 declare function wallClockToInstantMs(wallClockIso: string, tz: string): number;
 /** Igual que `wallClockToInstantMs` pero devuelve el ISO del instante real. */
