@@ -49,6 +49,11 @@ var myProfileSchema = z.object({
   /** IANA tz of the employee's branch (e.g. "America/Argentina/Buenos_Aires"). */
   timezone: z.string().nullable(),
   /**
+   * Zona de la EMPRESA: respaldo cuando la sucursal del empleado no tiene la
+   * suya. Nullish por transición con backends viejos.
+   */
+  companyTimezone: z.string().nullish(),
+  /**
    * Primer día de la semana del tenant. Con default para que un backend viejo
    * (que todavía no lo devuelve) no rompa el parse del perfil — el móvil lo
    * necesita para no hardcodear el lunes.
@@ -306,5 +311,5 @@ var registerDeviceInputSchema = z.object({
 });
 
 export { CHAT_ALLOWED_ATTACHMENT_TYPES, CHAT_ALLOWED_FILE_TYPES, CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, CHAT_QUICK_REACTIONS, attachmentKindForMime, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, reactionInputSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema, tagDomainSchema, workforceTagSchema, workforceTagsSchema };
-//# sourceMappingURL=chunk-GH62AQJP.js.map
-//# sourceMappingURL=chunk-GH62AQJP.js.map
+//# sourceMappingURL=chunk-X6D6VN64.js.map
+//# sourceMappingURL=chunk-X6D6VN64.js.map

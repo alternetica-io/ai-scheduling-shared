@@ -101,6 +101,7 @@ declare const myProfileSchema: z.ZodObject<{
     email: z.ZodNullable<z.ZodString>;
     companyName: z.ZodNullable<z.ZodString>;
     timezone: z.ZodNullable<z.ZodString>;
+    companyTimezone: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     weekStartsOn: z.ZodDefault<z.ZodEnum<{
         sunday: "sunday";
         monday: "monday";

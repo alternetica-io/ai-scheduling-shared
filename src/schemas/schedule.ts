@@ -63,6 +63,11 @@ export const myProfileSchema = z.object({
   /** IANA tz of the employee's branch (e.g. "America/Argentina/Buenos_Aires"). */
   timezone: z.string().nullable(),
   /**
+   * Zona de la EMPRESA: respaldo cuando la sucursal del empleado no tiene la
+   * suya. Nullish por transición con backends viejos.
+   */
+  companyTimezone: z.string().nullish(),
+  /**
    * Primer día de la semana del tenant. Con default para que un backend viejo
    * (que todavía no lo devuelve) no rompa el parse del perfil — el móvil lo
    * necesita para no hardcodear el lunes.
