@@ -62,6 +62,12 @@ export const myProfileSchema = z.object({
   companyName: z.string().nullable(),
   /** IANA tz of the employee's branch (e.g. "America/Argentina/Buenos_Aires"). */
   timezone: z.string().nullable(),
+  /**
+   * Primer día de la semana del tenant. Con default para que un backend viejo
+   * (que todavía no lo devuelve) no rompa el parse del perfil — el móvil lo
+   * necesita para no hardcodear el lunes.
+   */
+  weekStartsOn: z.enum(['sunday', 'monday']).default('monday'),
 });
 
 export type MyProfile = z.infer<typeof myProfileSchema>;

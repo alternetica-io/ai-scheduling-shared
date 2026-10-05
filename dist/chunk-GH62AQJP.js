@@ -47,7 +47,13 @@ var myProfileSchema = z.object({
   email: z.string().nullable(),
   companyName: z.string().nullable(),
   /** IANA tz of the employee's branch (e.g. "America/Argentina/Buenos_Aires"). */
-  timezone: z.string().nullable()
+  timezone: z.string().nullable(),
+  /**
+   * Primer día de la semana del tenant. Con default para que un backend viejo
+   * (que todavía no lo devuelve) no rompa el parse del perfil — el móvil lo
+   * necesita para no hardcodear el lunes.
+   */
+  weekStartsOn: z.enum(["sunday", "monday"]).default("monday")
 });
 var clockEventTypeSchema = z.enum([
   "in",
@@ -300,5 +306,5 @@ var registerDeviceInputSchema = z.object({
 });
 
 export { CHAT_ALLOWED_ATTACHMENT_TYPES, CHAT_ALLOWED_FILE_TYPES, CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, CHAT_QUICK_REACTIONS, attachmentKindForMime, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, reactionInputSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema, tagDomainSchema, workforceTagSchema, workforceTagsSchema };
-//# sourceMappingURL=chunk-YJ2V6HWS.js.map
-//# sourceMappingURL=chunk-YJ2V6HWS.js.map
+//# sourceMappingURL=chunk-GH62AQJP.js.map
+//# sourceMappingURL=chunk-GH62AQJP.js.map

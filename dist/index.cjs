@@ -200,7 +200,13 @@ var myProfileSchema = zod.z.object({
   email: zod.z.string().nullable(),
   companyName: zod.z.string().nullable(),
   /** IANA tz of the employee's branch (e.g. "America/Argentina/Buenos_Aires"). */
-  timezone: zod.z.string().nullable()
+  timezone: zod.z.string().nullable(),
+  /**
+   * Primer día de la semana del tenant. Con default para que un backend viejo
+   * (que todavía no lo devuelve) no rompa el parse del perfil — el móvil lo
+   * necesita para no hardcodear el lunes.
+   */
+  weekStartsOn: zod.z.enum(["sunday", "monday"]).default("monday")
 });
 var clockEventTypeSchema = zod.z.enum([
   "in",
