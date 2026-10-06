@@ -85,6 +85,11 @@ function addDaysToDate(ymd, days) {
   return `${out.getUTCFullYear()}-${pad(out.getUTCMonth() + 1)}-${pad(out.getUTCDate())}`;
 }
 
-export { addDaysToDate, instantToWallClock, todayInZone, wallClockToInstantIso, wallClockToInstantMs, wallMinutesInZone, weekStartInZone, weekStartOfDate };
+// src/auth/mfa.ts
+function needsMfaChallenge(aal) {
+  return aal.nextLevel === "aal2" && aal.currentLevel === "aal1";
+}
+
+export { addDaysToDate, instantToWallClock, needsMfaChallenge, todayInZone, wallClockToInstantIso, wallClockToInstantMs, wallMinutesInZone, weekStartInZone, weekStartOfDate };
 //# sourceMappingURL=index.js.map
 //# sourceMappingURL=index.js.map

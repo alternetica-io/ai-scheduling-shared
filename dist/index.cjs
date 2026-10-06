@@ -888,6 +888,11 @@ var sharedResources = {
 var SUPPORTED_LANGUAGES = ["en", "es"];
 var FALLBACK_LANGUAGE = "en";
 
+// src/auth/mfa.ts
+function needsMfaChallenge(aal) {
+  return aal.nextLevel === "aal2" && aal.currentLevel === "aal1";
+}
+
 exports.CHAT_ALLOWED_ATTACHMENT_TYPES = CHAT_ALLOWED_ATTACHMENT_TYPES;
 exports.CHAT_ALLOWED_FILE_TYPES = CHAT_ALLOWED_FILE_TYPES;
 exports.CHAT_ALLOWED_IMAGE_TYPES = CHAT_ALLOWED_IMAGE_TYPES;
@@ -923,6 +928,7 @@ exports.geoLocationSchema = geoLocationSchema;
 exports.instantToWallClock = instantToWallClock;
 exports.myLocationsSchema = myLocationsSchema;
 exports.myProfileSchema = myProfileSchema;
+exports.needsMfaChallenge = needsMfaChallenge;
 exports.reactionInputSchema = reactionInputSchema;
 exports.registerDeviceInputSchema = registerDeviceInputSchema;
 exports.scheduleAssignmentBreakSchema = scheduleAssignmentBreakSchema;
