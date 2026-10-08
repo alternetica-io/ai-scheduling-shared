@@ -100,6 +100,7 @@ declare const myProfileSchema: z.ZodObject<{
     departmentId: z.ZodNullable<z.ZodString>;
     email: z.ZodNullable<z.ZodString>;
     companyName: z.ZodNullable<z.ZodString>;
+    branchName: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     timezone: z.ZodNullable<z.ZodString>;
     companyTimezone: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     weekStartsOn: z.ZodDefault<z.ZodEnum<{

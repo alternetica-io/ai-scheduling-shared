@@ -46,6 +46,16 @@ var myProfileSchema = z.object({
   departmentId: z.string().nullable(),
   email: z.string().nullable(),
   companyName: z.string().nullable(),
+  /**
+   * Nombre de la sucursal del empleado. El móvil lo muestra en el encabezado
+   * del horario, donde antes había un nombre escrito a mano en el archivo de
+   * traducción (móvil #10).
+   *
+   * `nullish` por dos motivos distintos, y los dos importan: un backend viejo
+   * no lo manda —el móvil se actualiza por OTA y conviven versiones— y un
+   * empleado sin departamento no tiene sucursal que mostrar.
+   */
+  branchName: z.string().nullish(),
   /** IANA tz of the employee's branch (e.g. "America/Argentina/Buenos_Aires"). */
   timezone: z.string().nullable(),
   /**
@@ -311,5 +321,5 @@ var registerDeviceInputSchema = z.object({
 });
 
 export { CHAT_ALLOWED_ATTACHMENT_TYPES, CHAT_ALLOWED_FILE_TYPES, CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, CHAT_QUICK_REACTIONS, attachmentKindForMime, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, reactionInputSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema, tagDomainSchema, workforceTagSchema, workforceTagsSchema };
-//# sourceMappingURL=chunk-X6D6VN64.js.map
-//# sourceMappingURL=chunk-X6D6VN64.js.map
+//# sourceMappingURL=chunk-SHO4AN36.js.map
+//# sourceMappingURL=chunk-SHO4AN36.js.map

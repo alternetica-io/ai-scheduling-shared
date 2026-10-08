@@ -48,6 +48,16 @@ var myProfileSchema = zod.z.object({
   departmentId: zod.z.string().nullable(),
   email: zod.z.string().nullable(),
   companyName: zod.z.string().nullable(),
+  /**
+   * Nombre de la sucursal del empleado. El móvil lo muestra en el encabezado
+   * del horario, donde antes había un nombre escrito a mano en el archivo de
+   * traducción (móvil #10).
+   *
+   * `nullish` por dos motivos distintos, y los dos importan: un backend viejo
+   * no lo manda —el móvil se actualiza por OTA y conviven versiones— y un
+   * empleado sin departamento no tiene sucursal que mostrar.
+   */
+  branchName: zod.z.string().nullish(),
   /** IANA tz of the employee's branch (e.g. "America/Argentina/Buenos_Aires"). */
   timezone: zod.z.string().nullable(),
   /**
