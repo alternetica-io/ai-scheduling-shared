@@ -72,6 +72,34 @@ var myProfileSchema = zod.z.object({
    */
   weekStartsOn: zod.z.enum(["sunday", "monday"]).default("monday")
 });
+var requestKindSchema = zod.z.enum(["day_off", "absence", "swap", "incident", "correction"]).catch("incident");
+var requestDecisionSchema = zod.z.enum(["undecided", "accepted", "rejected"]).catch("undecided");
+var dayNoteSchema = zod.z.object({
+  employeeId: zod.z.string(),
+  /** `YYYY-MM-DD`. Una solicitud de cinco días trae cinco notas. */
+  date: zod.z.string(),
+  kind: requestKindSchema,
+  /** Qué decidió el manager. */
+  decision: requestDecisionSchema,
+  /**
+   * El día YA está afectado, con decisión o sin ella.
+   *
+   * Es el segundo eje, y existe porque una ausencia reportada está en efecto
+   * desde el momento en que se reporta —la persona no viene— mientras un día
+   * libre pendiente todavía no afecta nada. Mezclarlos haría que la grilla
+   * trate una ausencia como "todavía nada".
+   */
+  inEffect: zod.z.boolean(),
+  requestId: zod.z.string(),
+  rangeStart: zod.z.string(),
+  rangeEnd: zod.z.string(),
+  /** El tipo quita o reasigna turnos. Lo decide el backend. */
+  blocksShifts: zod.z.boolean()
+});
+function parseDayNotes(data) {
+  if (!Array.isArray(data)) return [];
+  return data.map((d) => dayNoteSchema.safeParse(d)).filter((r) => r.success).map((r) => r.data);
+}
 var clockEventTypeSchema = zod.z.enum([
   "in",
   "out",
@@ -347,11 +375,15 @@ exports.clockGpsSchema = clockGpsSchema;
 exports.clockValidationStatusSchema = clockValidationStatusSchema;
 exports.createClockEventInputSchema = createClockEventInputSchema;
 exports.createRoomInputSchema = createRoomInputSchema;
+exports.dayNoteSchema = dayNoteSchema;
 exports.geoLocationSchema = geoLocationSchema;
 exports.myLocationsSchema = myLocationsSchema;
 exports.myProfileSchema = myProfileSchema;
+exports.parseDayNotes = parseDayNotes;
 exports.reactionInputSchema = reactionInputSchema;
 exports.registerDeviceInputSchema = registerDeviceInputSchema;
+exports.requestDecisionSchema = requestDecisionSchema;
+exports.requestKindSchema = requestKindSchema;
 exports.scheduleAssignmentBreakSchema = scheduleAssignmentBreakSchema;
 exports.scheduleAssignmentSchema = scheduleAssignmentSchema;
 exports.scheduleAssignmentsSchema = scheduleAssignmentsSchema;

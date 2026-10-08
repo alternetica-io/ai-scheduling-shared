@@ -70,6 +70,34 @@ var myProfileSchema = z.object({
    */
   weekStartsOn: z.enum(["sunday", "monday"]).default("monday")
 });
+var requestKindSchema = z.enum(["day_off", "absence", "swap", "incident", "correction"]).catch("incident");
+var requestDecisionSchema = z.enum(["undecided", "accepted", "rejected"]).catch("undecided");
+var dayNoteSchema = z.object({
+  employeeId: z.string(),
+  /** `YYYY-MM-DD`. Una solicitud de cinco días trae cinco notas. */
+  date: z.string(),
+  kind: requestKindSchema,
+  /** Qué decidió el manager. */
+  decision: requestDecisionSchema,
+  /**
+   * El día YA está afectado, con decisión o sin ella.
+   *
+   * Es el segundo eje, y existe porque una ausencia reportada está en efecto
+   * desde el momento en que se reporta —la persona no viene— mientras un día
+   * libre pendiente todavía no afecta nada. Mezclarlos haría que la grilla
+   * trate una ausencia como "todavía nada".
+   */
+  inEffect: z.boolean(),
+  requestId: z.string(),
+  rangeStart: z.string(),
+  rangeEnd: z.string(),
+  /** El tipo quita o reasigna turnos. Lo decide el backend. */
+  blocksShifts: z.boolean()
+});
+function parseDayNotes(data) {
+  if (!Array.isArray(data)) return [];
+  return data.map((d) => dayNoteSchema.safeParse(d)).filter((r) => r.success).map((r) => r.data);
+}
 var clockEventTypeSchema = z.enum([
   "in",
   "out",
@@ -320,6 +348,6 @@ var registerDeviceInputSchema = z.object({
   platform: z.enum(["ios", "android"])
 });
 
-export { CHAT_ALLOWED_ATTACHMENT_TYPES, CHAT_ALLOWED_FILE_TYPES, CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, CHAT_QUICK_REACTIONS, attachmentKindForMime, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, reactionInputSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema, tagDomainSchema, workforceTagSchema, workforceTagsSchema };
-//# sourceMappingURL=chunk-SHO4AN36.js.map
-//# sourceMappingURL=chunk-SHO4AN36.js.map
+export { CHAT_ALLOWED_ATTACHMENT_TYPES, CHAT_ALLOWED_FILE_TYPES, CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, CHAT_QUICK_REACTIONS, attachmentKindForMime, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, dayNoteSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, parseDayNotes, reactionInputSchema, registerDeviceInputSchema, requestDecisionSchema, requestKindSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema, tagDomainSchema, workforceTagSchema, workforceTagsSchema };
+//# sourceMappingURL=chunk-EG6NB2ZP.js.map
+//# sourceMappingURL=chunk-EG6NB2ZP.js.map

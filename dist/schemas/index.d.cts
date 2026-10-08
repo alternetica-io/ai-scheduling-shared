@@ -110,6 +110,61 @@ declare const myProfileSchema: z.ZodObject<{
 }, z.core.$strip>;
 type MyProfile = z.infer<typeof myProfileSchema>;
 
+/**
+ * Las solicitudes que afectan un día del calendario (refs orch #31).
+ *
+ * Diseño: `docs/design/solicitudes-en-el-horario.md` del orchestrator.
+ *
+ * Vive acá porque lo consumen la web (la grilla, front #18) y el móvil (el
+ * horario, front #19). El backend tiene su propia copia del tipo: no depende de
+ * este paquete, y hacerlo depender sería desproporcionado. Las dos copias están
+ * cubiertas por tests que afirman el mismo contrato.
+ */
+/**
+ * `catchall` NO es decoración: un tipo nuevo del backend tiene que poder
+ * aparecer sin romper el parse. Que se muestre con una etiqueta genérica es
+ * recuperable; que haga desaparecer la solicitud del horario es el bug
+ * original (un día pedido que se ve como un día libre).
+ */
+declare const requestKindSchema: z.ZodCatch<z.ZodEnum<{
+    day_off: "day_off";
+    absence: "absence";
+    swap: "swap";
+    incident: "incident";
+    correction: "correction";
+}>>;
+declare const requestDecisionSchema: z.ZodCatch<z.ZodEnum<{
+    rejected: "rejected";
+    accepted: "accepted";
+    undecided: "undecided";
+}>>;
+declare const dayNoteSchema: z.ZodObject<{
+    employeeId: z.ZodString;
+    date: z.ZodString;
+    kind: z.ZodCatch<z.ZodEnum<{
+        day_off: "day_off";
+        absence: "absence";
+        swap: "swap";
+        incident: "incident";
+        correction: "correction";
+    }>>;
+    decision: z.ZodCatch<z.ZodEnum<{
+        rejected: "rejected";
+        accepted: "accepted";
+        undecided: "undecided";
+    }>>;
+    inEffect: z.ZodBoolean;
+    requestId: z.ZodString;
+    rangeStart: z.ZodString;
+    rangeEnd: z.ZodString;
+    blocksShifts: z.ZodBoolean;
+}, z.core.$strip>;
+type DayNote = z.infer<typeof dayNoteSchema>;
+type RequestKind = z.infer<typeof requestKindSchema>;
+type RequestDecision = z.infer<typeof requestDecisionSchema>;
+/** Parse tolerante de la lista: una nota corrupta no tira las demás. */
+declare function parseDayNotes(data: unknown): DayNote[];
+
 /** Mirrors the orchestrator timeclock controller (Sprint 2, GPS + selfie). */
 declare const clockEventTypeSchema: z.ZodEnum<{
     no_show: "no_show";
@@ -667,4 +722,4 @@ declare const registerDeviceInputSchema: z.ZodObject<{
 }, z.core.$strip>;
 type RegisterDeviceInput = z.infer<typeof registerDeviceInputSchema>;
 
-export { type BotOption, type BotPayload, CHAT_ALLOWED_ATTACHMENT_TYPES, CHAT_ALLOWED_FILE_TYPES, CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, CHAT_QUICK_REACTIONS, type ChatContact, type ChatMember, type ChatMessage, type ChatMessageCreatedEvent, type ChatMessageUpdatedEvent, type ChatRead, type ChatReadEvent, type ChatRoom, type ChatTypingEvent, type ClockEvent, type ClockEventType, type ClockValidationStatus, type CreateClockEventInput, type CreateRoomInput, type GeoLocation, type MyLocations, type MyProfile, type ReactionInput, type RegisterDeviceInput, type ScheduleAssignment, type ScheduleAssignmentBreak, type SendMessageInput, type TagDomain, type WorkforceTag, attachmentKindForMime, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, reactionInputSchema, registerDeviceInputSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema, tagDomainSchema, workforceTagSchema, workforceTagsSchema };
+export { type BotOption, type BotPayload, CHAT_ALLOWED_ATTACHMENT_TYPES, CHAT_ALLOWED_FILE_TYPES, CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, CHAT_QUICK_REACTIONS, type ChatContact, type ChatMember, type ChatMessage, type ChatMessageCreatedEvent, type ChatMessageUpdatedEvent, type ChatRead, type ChatReadEvent, type ChatRoom, type ChatTypingEvent, type ClockEvent, type ClockEventType, type ClockValidationStatus, type CreateClockEventInput, type CreateRoomInput, type DayNote, type GeoLocation, type MyLocations, type MyProfile, type ReactionInput, type RegisterDeviceInput, type RequestDecision, type RequestKind, type ScheduleAssignment, type ScheduleAssignmentBreak, type SendMessageInput, type TagDomain, type WorkforceTag, attachmentKindForMime, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, dayNoteSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, parseDayNotes, reactionInputSchema, registerDeviceInputSchema, requestDecisionSchema, requestKindSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema, tagDomainSchema, workforceTagSchema, workforceTagsSchema };
