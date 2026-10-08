@@ -104,6 +104,22 @@ function addDaysToDate(ymd, days) {
   );
   return `${out.getUTCFullYear()}-${pad(out.getUTCMonth() + 1)}-${pad(out.getUTCDate())}`;
 }
+
+// src/time/shift-interval.ts
+function scheduledInterval(t) {
+  return {
+    start: t.plannedStart ?? t.actualStart ?? null,
+    end: t.plannedEnd ?? t.actualEnd ?? null
+  };
+}
+function workedInterval(t) {
+  return { start: t.actualStart ?? null, end: t.actualEnd ?? null };
+}
+function shiftTimesDiffer(t) {
+  const p = scheduledInterval(t);
+  const w = workedInterval(t);
+  return p.start !== w.start || p.end !== w.end;
+}
 function describeApiError(err, t) {
   if (axios__default.default.isAxiosError(err)) {
     const data = err.response?.data ?? {};
@@ -944,8 +960,10 @@ exports.registerDeviceInputSchema = registerDeviceInputSchema;
 exports.scheduleAssignmentBreakSchema = scheduleAssignmentBreakSchema;
 exports.scheduleAssignmentSchema = scheduleAssignmentSchema;
 exports.scheduleAssignmentsSchema = scheduleAssignmentsSchema;
+exports.scheduledInterval = scheduledInterval;
 exports.sendMessageInputSchema = sendMessageInputSchema;
 exports.sharedResources = sharedResources;
+exports.shiftTimesDiffer = shiftTimesDiffer;
 exports.tagDomainSchema = tagDomainSchema;
 exports.todayInZone = todayInZone;
 exports.wallClockToInstantIso = wallClockToInstantIso;
@@ -953,6 +971,7 @@ exports.wallClockToInstantMs = wallClockToInstantMs;
 exports.wallMinutesInZone = wallMinutesInZone;
 exports.weekStartInZone = weekStartInZone;
 exports.weekStartOfDate = weekStartOfDate;
+exports.workedInterval = workedInterval;
 exports.workforceTagSchema = workforceTagSchema;
 exports.workforceTagsSchema = workforceTagsSchema;
 //# sourceMappingURL=index.cjs.map

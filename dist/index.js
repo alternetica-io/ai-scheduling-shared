@@ -85,11 +85,27 @@ function addDaysToDate(ymd, days) {
   return `${out.getUTCFullYear()}-${pad(out.getUTCMonth() + 1)}-${pad(out.getUTCDate())}`;
 }
 
+// src/time/shift-interval.ts
+function scheduledInterval(t) {
+  return {
+    start: t.plannedStart ?? t.actualStart ?? null,
+    end: t.plannedEnd ?? t.actualEnd ?? null
+  };
+}
+function workedInterval(t) {
+  return { start: t.actualStart ?? null, end: t.actualEnd ?? null };
+}
+function shiftTimesDiffer(t) {
+  const p = scheduledInterval(t);
+  const w = workedInterval(t);
+  return p.start !== w.start || p.end !== w.end;
+}
+
 // src/auth/mfa.ts
 function needsMfaChallenge(aal) {
   return aal.nextLevel === "aal2" && aal.currentLevel === "aal1";
 }
 
-export { addDaysToDate, instantToWallClock, needsMfaChallenge, todayInZone, wallClockToInstantIso, wallClockToInstantMs, wallMinutesInZone, weekStartInZone, weekStartOfDate };
+export { addDaysToDate, instantToWallClock, needsMfaChallenge, scheduledInterval, shiftTimesDiffer, todayInZone, wallClockToInstantIso, wallClockToInstantMs, wallMinutesInZone, weekStartInZone, weekStartOfDate, workedInterval };
 //# sourceMappingURL=index.js.map
 //# sourceMappingURL=index.js.map
