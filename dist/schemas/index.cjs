@@ -260,8 +260,16 @@ var chatMessageSchema = zod.z.object({
   attachmentName: zod.z.string().nullable().default(null),
   /** Attachment size in bytes (for the download card); null when no attachment. */
   attachmentSize: zod.z.number().nullable().default(null),
-  /** Structured assistant payload; null for ordinary messages. */
-  botPayload: botPayloadSchema.nullable().default(null),
+  /**
+   * Structured assistant payload; null for ordinary messages.
+   *
+   * A payload this client does not understand —a kind added later, or a shape
+   * that breaks the contract— degrades to null, so the message renders as its
+   * plain-text `content`. It must never invalidate the message: an assistant
+   * question once went out with zero options, the phone dropped it and the web
+   * could not load the conversation at all (orch #79).
+   */
+  botPayload: botPayloadSchema.nullable().default(null).catch(null),
   /** The quoted message this one replies to (preview), or null. */
   replyTo: zod.z.object({
     id: zod.z.string(),
@@ -281,6 +289,15 @@ var chatMessageSchema = zod.z.object({
     })
   ).default([])
 });
+function parseChatMessages(rows, onInvalid) {
+  if (!Array.isArray(rows)) return [];
+  return rows.flatMap((row) => {
+    const parsed = chatMessageSchema.safeParse(row);
+    if (parsed.success) return [parsed.data];
+    onInvalid?.(row, parsed.error);
+    return [];
+  });
+}
 var reactionInputSchema = zod.z.object({ emoji: zod.z.string().min(1).max(16) });
 var CHAT_QUICK_REACTIONS = ["\u{1F44D}", "\u2764\uFE0F", "\u{1F602}", "\u{1F62E}", "\u{1F622}", "\u{1F64F}"];
 var chatContactSchema = zod.z.object({ id: zod.z.string(), name: zod.z.string() });
@@ -379,6 +396,7 @@ exports.dayNoteSchema = dayNoteSchema;
 exports.geoLocationSchema = geoLocationSchema;
 exports.myLocationsSchema = myLocationsSchema;
 exports.myProfileSchema = myProfileSchema;
+exports.parseChatMessages = parseChatMessages;
 exports.parseDayNotes = parseDayNotes;
 exports.reactionInputSchema = reactionInputSchema;
 exports.registerDeviceInputSchema = registerDeviceInputSchema;

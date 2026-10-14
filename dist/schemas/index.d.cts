@@ -416,7 +416,7 @@ declare const chatMessageSchema: z.ZodObject<{
     }>>>;
     attachmentName: z.ZodDefault<z.ZodNullable<z.ZodString>>;
     attachmentSize: z.ZodDefault<z.ZodNullable<z.ZodNumber>>;
-    botPayload: z.ZodDefault<z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
+    botPayload: z.ZodCatch<z.ZodDefault<z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
         kind: z.ZodLiteral<"text">;
     }, z.core.$strip>, z.ZodObject<{
         kind: z.ZodLiteral<"options">;
@@ -455,7 +455,7 @@ declare const chatMessageSchema: z.ZodObject<{
         }, z.core.$strip>>>;
         warnings: z.ZodDefault<z.ZodArray<z.ZodString>>;
         link: z.ZodDefault<z.ZodNullable<z.ZodString>>;
-    }, z.core.$strip>], "kind">>>;
+    }, z.core.$strip>], "kind">>>>;
     replyTo: z.ZodDefault<z.ZodNullable<z.ZodObject<{
         id: z.ZodString;
         content: z.ZodString;
@@ -470,6 +470,15 @@ declare const chatMessageSchema: z.ZodObject<{
     }, z.core.$strip>>>;
 }, z.core.$strip>;
 type ChatMessage = z.infer<typeof chatMessageSchema>;
+/**
+ * Parses a list of chat messages one by one (GET messages / search).
+ *
+ * Parsing the array as a whole meant a single bad row emptied the entire
+ * conversation (orch #79). A row that still fails —its core fields broken, not
+ * just its payload— is left out and reported through `onInvalid`, so a client
+ * can log it instead of losing it in silence.
+ */
+declare function parseChatMessages(rows: unknown, onInvalid?: (row: unknown, error: z.ZodError) => void): ChatMessage[];
 /** POST /chat/rooms/:id/messages/:msgId/reactions body — toggles the emoji. */
 declare const reactionInputSchema: z.ZodObject<{
     emoji: z.ZodString;
@@ -560,7 +569,7 @@ declare const chatMessageCreatedEventSchema: z.ZodObject<{
         }>>>;
         attachmentName: z.ZodDefault<z.ZodNullable<z.ZodString>>;
         attachmentSize: z.ZodDefault<z.ZodNullable<z.ZodNumber>>;
-        botPayload: z.ZodDefault<z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
+        botPayload: z.ZodCatch<z.ZodDefault<z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
             kind: z.ZodLiteral<"text">;
         }, z.core.$strip>, z.ZodObject<{
             kind: z.ZodLiteral<"options">;
@@ -599,7 +608,7 @@ declare const chatMessageCreatedEventSchema: z.ZodObject<{
             }, z.core.$strip>>>;
             warnings: z.ZodDefault<z.ZodArray<z.ZodString>>;
             link: z.ZodDefault<z.ZodNullable<z.ZodString>>;
-        }, z.core.$strip>], "kind">>>;
+        }, z.core.$strip>], "kind">>>>;
         replyTo: z.ZodDefault<z.ZodNullable<z.ZodObject<{
             id: z.ZodString;
             content: z.ZodString;
@@ -636,7 +645,7 @@ declare const chatMessageUpdatedEventSchema: z.ZodObject<{
         }>>>;
         attachmentName: z.ZodDefault<z.ZodNullable<z.ZodString>>;
         attachmentSize: z.ZodDefault<z.ZodNullable<z.ZodNumber>>;
-        botPayload: z.ZodDefault<z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
+        botPayload: z.ZodCatch<z.ZodDefault<z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
             kind: z.ZodLiteral<"text">;
         }, z.core.$strip>, z.ZodObject<{
             kind: z.ZodLiteral<"options">;
@@ -675,7 +684,7 @@ declare const chatMessageUpdatedEventSchema: z.ZodObject<{
             }, z.core.$strip>>>;
             warnings: z.ZodDefault<z.ZodArray<z.ZodString>>;
             link: z.ZodDefault<z.ZodNullable<z.ZodString>>;
-        }, z.core.$strip>], "kind">>>;
+        }, z.core.$strip>], "kind">>>>;
         replyTo: z.ZodDefault<z.ZodNullable<z.ZodObject<{
             id: z.ZodString;
             content: z.ZodString;
@@ -722,4 +731,4 @@ declare const registerDeviceInputSchema: z.ZodObject<{
 }, z.core.$strip>;
 type RegisterDeviceInput = z.infer<typeof registerDeviceInputSchema>;
 
-export { type BotOption, type BotPayload, CHAT_ALLOWED_ATTACHMENT_TYPES, CHAT_ALLOWED_FILE_TYPES, CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, CHAT_QUICK_REACTIONS, type ChatContact, type ChatMember, type ChatMessage, type ChatMessageCreatedEvent, type ChatMessageUpdatedEvent, type ChatRead, type ChatReadEvent, type ChatRoom, type ChatTypingEvent, type ClockEvent, type ClockEventType, type ClockValidationStatus, type CreateClockEventInput, type CreateRoomInput, type DayNote, type GeoLocation, type MyLocations, type MyProfile, type ReactionInput, type RegisterDeviceInput, type RequestDecision, type RequestKind, type ScheduleAssignment, type ScheduleAssignmentBreak, type SendMessageInput, type TagDomain, type WorkforceTag, attachmentKindForMime, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, dayNoteSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, parseDayNotes, reactionInputSchema, registerDeviceInputSchema, requestDecisionSchema, requestKindSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema, tagDomainSchema, workforceTagSchema, workforceTagsSchema };
+export { type BotOption, type BotPayload, CHAT_ALLOWED_ATTACHMENT_TYPES, CHAT_ALLOWED_FILE_TYPES, CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, CHAT_QUICK_REACTIONS, type ChatContact, type ChatMember, type ChatMessage, type ChatMessageCreatedEvent, type ChatMessageUpdatedEvent, type ChatRead, type ChatReadEvent, type ChatRoom, type ChatTypingEvent, type ClockEvent, type ClockEventType, type ClockValidationStatus, type CreateClockEventInput, type CreateRoomInput, type DayNote, type GeoLocation, type MyLocations, type MyProfile, type ReactionInput, type RegisterDeviceInput, type RequestDecision, type RequestKind, type ScheduleAssignment, type ScheduleAssignmentBreak, type SendMessageInput, type TagDomain, type WorkforceTag, attachmentKindForMime, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, dayNoteSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, parseChatMessages, parseDayNotes, reactionInputSchema, registerDeviceInputSchema, requestDecisionSchema, requestKindSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema, tagDomainSchema, workforceTagSchema, workforceTagsSchema };

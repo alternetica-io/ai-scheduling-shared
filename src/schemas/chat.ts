@@ -125,8 +125,16 @@ export const chatMessageSchema = z.object({
   attachmentName: z.string().nullable().default(null),
   /** Attachment size in bytes (for the download card); null when no attachment. */
   attachmentSize: z.number().nullable().default(null),
-  /** Structured assistant payload; null for ordinary messages. */
-  botPayload: botPayloadSchema.nullable().default(null),
+  /**
+   * Structured assistant payload; null for ordinary messages.
+   *
+   * A payload this client does not understand —a kind added later, or a shape
+   * that breaks the contract— degrades to null, so the message renders as its
+   * plain-text `content`. It must never invalidate the message: an assistant
+   * question once went out with zero options, the phone dropped it and the web
+   * could not load the conversation at all (orch #79).
+   */
+  botPayload: botPayloadSchema.nullable().default(null).catch(null),
   /** The quoted message this one replies to (preview), or null. */
   replyTo: z
     .object({
@@ -152,6 +160,27 @@ export const chatMessageSchema = z.object({
     .default([]),
 });
 export type ChatMessage = z.infer<typeof chatMessageSchema>;
+
+/**
+ * Parses a list of chat messages one by one (GET messages / search).
+ *
+ * Parsing the array as a whole meant a single bad row emptied the entire
+ * conversation (orch #79). A row that still fails —its core fields broken, not
+ * just its payload— is left out and reported through `onInvalid`, so a client
+ * can log it instead of losing it in silence.
+ */
+export function parseChatMessages(
+  rows: unknown,
+  onInvalid?: (row: unknown, error: z.ZodError) => void,
+): ChatMessage[] {
+  if (!Array.isArray(rows)) return [];
+  return rows.flatMap((row) => {
+    const parsed = chatMessageSchema.safeParse(row);
+    if (parsed.success) return [parsed.data];
+    onInvalid?.(row, parsed.error);
+    return [];
+  });
+}
 
 /** POST /chat/rooms/:id/messages/:msgId/reactions body — toggles the emoji. */
 export const reactionInputSchema = z.object({ emoji: z.string().min(1).max(16) });
