@@ -158,6 +158,7 @@ declare const dayNoteSchema: z.ZodObject<{
     rangeStart: z.ZodString;
     rangeEnd: z.ZodString;
     blocksShifts: z.ZodBoolean;
+    shiftAssignmentId: z.ZodDefault<z.ZodNullable<z.ZodString>>;
 }, z.core.$strip>;
 type DayNote = z.infer<typeof dayNoteSchema>;
 type RequestKind = z.infer<typeof requestKindSchema>;

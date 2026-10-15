@@ -46,6 +46,12 @@ export const dayNoteSchema = z.object({
   rangeEnd: z.string(),
   /** El tipo quita o reasigna turnos. Lo decide el backend. */
   blocksShifts: z.boolean(),
+  /**
+   * El turno al que la solicitud se refiere, si está vinculada a uno. Una
+   * inasistencia registrada sobre un turno es el registro de ese turno: no
+   * choca con él (orch #87). Opcional: un backend anterior no lo manda.
+   */
+  shiftAssignmentId: z.string().nullable().default(null),
 });
 
 export type DayNote = z.infer<typeof dayNoteSchema>;

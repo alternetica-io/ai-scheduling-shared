@@ -94,7 +94,13 @@ var dayNoteSchema = zod.z.object({
   rangeStart: zod.z.string(),
   rangeEnd: zod.z.string(),
   /** El tipo quita o reasigna turnos. Lo decide el backend. */
-  blocksShifts: zod.z.boolean()
+  blocksShifts: zod.z.boolean(),
+  /**
+   * El turno al que la solicitud se refiere, si está vinculada a uno. Una
+   * inasistencia registrada sobre un turno es el registro de ese turno: no
+   * choca con él (orch #87). Opcional: un backend anterior no lo manda.
+   */
+  shiftAssignmentId: zod.z.string().nullable().default(null)
 });
 function parseDayNotes(data) {
   if (!Array.isArray(data)) return [];

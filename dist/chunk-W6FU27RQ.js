@@ -92,7 +92,13 @@ var dayNoteSchema = z.object({
   rangeStart: z.string(),
   rangeEnd: z.string(),
   /** El tipo quita o reasigna turnos. Lo decide el backend. */
-  blocksShifts: z.boolean()
+  blocksShifts: z.boolean(),
+  /**
+   * El turno al que la solicitud se refiere, si está vinculada a uno. Una
+   * inasistencia registrada sobre un turno es el registro de ese turno: no
+   * choca con él (orch #87). Opcional: un backend anterior no lo manda.
+   */
+  shiftAssignmentId: z.string().nullable().default(null)
 });
 function parseDayNotes(data) {
   if (!Array.isArray(data)) return [];
@@ -366,5 +372,5 @@ var registerDeviceInputSchema = z.object({
 });
 
 export { CHAT_ALLOWED_ATTACHMENT_TYPES, CHAT_ALLOWED_FILE_TYPES, CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, CHAT_QUICK_REACTIONS, attachmentKindForMime, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, dayNoteSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, parseChatMessages, parseDayNotes, reactionInputSchema, registerDeviceInputSchema, requestDecisionSchema, requestKindSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema, tagDomainSchema, workforceTagSchema, workforceTagsSchema };
-//# sourceMappingURL=chunk-WESWC6YC.js.map
-//# sourceMappingURL=chunk-WESWC6YC.js.map
+//# sourceMappingURL=chunk-W6FU27RQ.js.map
+//# sourceMappingURL=chunk-W6FU27RQ.js.map
