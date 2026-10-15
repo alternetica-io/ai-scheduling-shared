@@ -120,9 +120,24 @@ function shiftTimesDiffer(t) {
   const w = workedInterval(t);
   return p.start !== w.start || p.end !== w.end;
 }
+var LIBRARY_TEXT = [
+  /request failed with status code/i,
+  /^network error$/i,
+  /^timeout of \d+ms exceeded$/i,
+  /unexpected token/i,
+  /^\s*[[{]/
+  // a serialized object or array, e.g. a Zod issue list
+];
+function isLibraryText(text) {
+  return LIBRARY_TEXT.some((re) => re.test(text));
+}
 function describeApiError(err, t) {
   if (axios__default.default.isAxiosError(err)) {
-    const data = err.response?.data ?? {};
+    if (!err.response) return t("errors:NETWORK");
+    const status = err.response.status;
+    if (status === 429) return t("errors:RATE_LIMITED");
+    if (status >= 500) return t("errors:SERVER");
+    const data = err.response.data ?? {};
     if (data.errorCode) {
       const key = `errors:${data.errorCode}`;
       const translated = t(key, {
@@ -131,14 +146,16 @@ function describeApiError(err, t) {
       });
       if (translated !== key && translated !== data.errorCode) return translated;
     }
-    if (Array.isArray(data.message)) return data.message.join(" \xB7 ");
-    if (data.message) return data.message;
-    if (err.response?.status) {
-      return t("errors:GENERIC_HTTP", { status: err.response.status });
+    if (Array.isArray(data.message)) return t("errors:VALIDATION");
+    if (typeof data.message === "string" && data.message.trim() && !isLibraryText(data.message)) {
+      return data.message;
     }
+    return t("errors:GENERIC");
   }
-  if (err instanceof Error && err.message) return err.message;
-  return t("errors:UNKNOWN");
+  if (err instanceof Error && err.message && !isLibraryText(err.message)) {
+    return err.message;
+  }
+  return t("errors:GENERIC");
 }
 var DEFAULT_TIMEOUT_MS = 3e4;
 function createApiClient(adapters) {
@@ -744,8 +761,12 @@ var errors_default = {
   CHECK_VIOLATION: "The submitted data does not meet a validation rule.",
   INTERNAL_ERROR: "An unexpected error occurred. Please try again or contact support.",
   IMPORT_ALREADY_COMMITTED: "This company already has a recent import. Revert the previous one or wait until the revert window expires (7 days). See Settings \u2192 Importar datos \u2192 Importaciones recientes.",
-  GENERIC_HTTP: "Server error ({{status}}). Please try again.",
-  UNKNOWN: "Something went wrong."
+  UNKNOWN: "Something went wrong.",
+  NETWORK: "No connection. Check your internet and try again.",
+  RATE_LIMITED: "Too many requests. Wait a few seconds and try again.",
+  SERVER: "Something went wrong on our side. Please try again in a moment.",
+  VALIDATION: "Please check the form and try again.",
+  GENERIC: "The action could not be completed. Please try again."
 };
 
 // src/i18n/es/common.json
@@ -947,8 +968,12 @@ var errors_default2 = {
   CHECK_VIOLATION: "Los datos enviados no cumplen una regla de validaci\xF3n.",
   INTERNAL_ERROR: "Ocurri\xF3 un error inesperado. Prob\xE1 de nuevo o contact\xE1 al soporte.",
   IMPORT_ALREADY_COMMITTED: "Esta empresa ya tiene una importaci\xF3n reciente. Revert\xED la anterior o esper\xE1 hasta que expire la ventana de revert (7 d\xEDas). Mir\xE1 Settings \u2192 Importar datos \u2192 Importaciones recientes.",
-  GENERIC_HTTP: "Error del servidor ({{status}}). Prob\xE1 de nuevo.",
-  UNKNOWN: "Algo sali\xF3 mal."
+  UNKNOWN: "Algo sali\xF3 mal.",
+  NETWORK: "Sin conexi\xF3n. Revisa tu internet e intenta de nuevo.",
+  RATE_LIMITED: "Demasiadas solicitudes. Espera unos segundos e intenta de nuevo.",
+  SERVER: "Hubo un problema de nuestro lado. Intenta de nuevo en un momento.",
+  VALIDATION: "Revisa los datos del formulario e intenta de nuevo.",
+  GENERIC: "No se pudo completar la acci\xF3n. Intenta de nuevo."
 };
 
 // src/i18n/index.ts
@@ -998,6 +1023,7 @@ exports.describeApiError = describeApiError;
 exports.formatShiftRef = formatShiftRef;
 exports.geoLocationSchema = geoLocationSchema;
 exports.instantToWallClock = instantToWallClock;
+exports.isLibraryText = isLibraryText;
 exports.myLocationsSchema = myLocationsSchema;
 exports.myProfileSchema = myProfileSchema;
 exports.needsMfaChallenge = needsMfaChallenge;

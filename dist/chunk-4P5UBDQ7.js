@@ -197,8 +197,12 @@ var errors_default = {
   CHECK_VIOLATION: "The submitted data does not meet a validation rule.",
   INTERNAL_ERROR: "An unexpected error occurred. Please try again or contact support.",
   IMPORT_ALREADY_COMMITTED: "This company already has a recent import. Revert the previous one or wait until the revert window expires (7 days). See Settings \u2192 Importar datos \u2192 Importaciones recientes.",
-  GENERIC_HTTP: "Server error ({{status}}). Please try again.",
-  UNKNOWN: "Something went wrong."
+  UNKNOWN: "Something went wrong.",
+  NETWORK: "No connection. Check your internet and try again.",
+  RATE_LIMITED: "Too many requests. Wait a few seconds and try again.",
+  SERVER: "Something went wrong on our side. Please try again in a moment.",
+  VALIDATION: "Please check the form and try again.",
+  GENERIC: "The action could not be completed. Please try again."
 };
 
 // src/i18n/es/common.json
@@ -400,8 +404,12 @@ var errors_default2 = {
   CHECK_VIOLATION: "Los datos enviados no cumplen una regla de validaci\xF3n.",
   INTERNAL_ERROR: "Ocurri\xF3 un error inesperado. Prob\xE1 de nuevo o contact\xE1 al soporte.",
   IMPORT_ALREADY_COMMITTED: "Esta empresa ya tiene una importaci\xF3n reciente. Revert\xED la anterior o esper\xE1 hasta que expire la ventana de revert (7 d\xEDas). Mir\xE1 Settings \u2192 Importar datos \u2192 Importaciones recientes.",
-  GENERIC_HTTP: "Error del servidor ({{status}}). Prob\xE1 de nuevo.",
-  UNKNOWN: "Algo sali\xF3 mal."
+  UNKNOWN: "Algo sali\xF3 mal.",
+  NETWORK: "Sin conexi\xF3n. Revisa tu internet e intenta de nuevo.",
+  RATE_LIMITED: "Demasiadas solicitudes. Espera unos segundos e intenta de nuevo.",
+  SERVER: "Hubo un problema de nuestro lado. Intenta de nuevo en un momento.",
+  VALIDATION: "Revisa los datos del formulario e intenta de nuevo.",
+  GENERIC: "No se pudo completar la acci\xF3n. Intenta de nuevo."
 };
 
 // src/i18n/index.ts
@@ -413,5 +421,5 @@ var SUPPORTED_LANGUAGES = ["en", "es"];
 var FALLBACK_LANGUAGE = "en";
 
 export { FALLBACK_LANGUAGE, SUPPORTED_LANGUAGES, sharedResources };
-//# sourceMappingURL=chunk-RQBUBIPK.js.map
-//# sourceMappingURL=chunk-RQBUBIPK.js.map
+//# sourceMappingURL=chunk-4P5UBDQ7.js.map
+//# sourceMappingURL=chunk-4P5UBDQ7.js.map

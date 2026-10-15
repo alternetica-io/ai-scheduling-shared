@@ -15,13 +15,22 @@ interface BackendErrorBody {
  * dependency and works identically on both platforms.
  */
 type TranslateFn = (key: string, params?: Record<string, unknown>) => string;
+/** `true` if the text is a library's, not a message written for a person. */
+declare function isLibraryText(text: string): boolean;
 /**
- * Turns any caught error into a translated, user-friendly string.
+ * Turns any caught error into a translated message a person can read. It is
+ * the only place that does it: every screen, web and mobile, goes through it.
  *
- * Resolution order: `errors:<errorCode>` → backend `message` → HTTP status →
- * generic. i18next returns the key unchanged when there is no translation, so
- * we fall through when the lookup did not resolve.
+ * Order:
+ * 1. no response → no connection; 429 → wait; 5xx → our side;
+ * 2. `errorCode` → `errors:<code>`;
+ * 3. the backend's `message`, already in the user's language — except a
+ *    class-validator list, which is technical (`scopeId must be a UUID`);
+ * 4. otherwise, a generic "could not complete the action".
+ *
+ * It never returns an HTTP status code nor a library's text (front #28: the
+ * toast read "Request failed with status code 409").
  */
 declare function describeApiError(err: unknown, t: TranslateFn): string;
 
-export { type BackendErrorBody, type TranslateFn, describeApiError };
+export { type BackendErrorBody, type TranslateFn, describeApiError, isLibraryText };

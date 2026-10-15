@@ -202,8 +202,12 @@ declare const sharedResources: {
             CHECK_VIOLATION: string;
             INTERNAL_ERROR: string;
             IMPORT_ALREADY_COMMITTED: string;
-            GENERIC_HTTP: string;
             UNKNOWN: string;
+            NETWORK: string;
+            RATE_LIMITED: string;
+            SERVER: string;
+            VALIDATION: string;
+            GENERIC: string;
         };
     };
     readonly es: {
@@ -403,8 +407,12 @@ declare const sharedResources: {
             CHECK_VIOLATION: string;
             INTERNAL_ERROR: string;
             IMPORT_ALREADY_COMMITTED: string;
-            GENERIC_HTTP: string;
             UNKNOWN: string;
+            NETWORK: string;
+            RATE_LIMITED: string;
+            SERVER: string;
+            VALIDATION: string;
+            GENERIC: string;
         };
     };
 };

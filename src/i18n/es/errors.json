@@ -10,6 +10,10 @@
   "CHECK_VIOLATION": "Los datos enviados no cumplen una regla de validación.",
   "INTERNAL_ERROR": "Ocurrió un error inesperado. Probá de nuevo o contactá al soporte.",
   "IMPORT_ALREADY_COMMITTED": "Esta empresa ya tiene una importación reciente. Revertí la anterior o esperá hasta que expire la ventana de revert (7 días). Mirá Settings → Importar datos → Importaciones recientes.",
-  "GENERIC_HTTP": "Error del servidor ({{status}}). Probá de nuevo.",
-  "UNKNOWN": "Algo salió mal."
+  "UNKNOWN": "Algo salió mal.",
+  "NETWORK": "Sin conexión. Revisa tu internet e intenta de nuevo.",
+  "RATE_LIMITED": "Demasiadas solicitudes. Espera unos segundos e intenta de nuevo.",
+  "SERVER": "Hubo un problema de nuestro lado. Intenta de nuevo en un momento.",
+  "VALIDATION": "Revisa los datos del formulario e intenta de nuevo.",
+  "GENERIC": "No se pudo completar la acción. Intenta de nuevo."
 }

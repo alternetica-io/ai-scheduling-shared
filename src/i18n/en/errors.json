@@ -10,6 +10,10 @@
   "CHECK_VIOLATION": "The submitted data does not meet a validation rule.",
   "INTERNAL_ERROR": "An unexpected error occurred. Please try again or contact support.",
   "IMPORT_ALREADY_COMMITTED": "This company already has a recent import. Revert the previous one or wait until the revert window expires (7 days). See Settings → Importar datos → Importaciones recientes.",
-  "GENERIC_HTTP": "Server error ({{status}}). Please try again.",
-  "UNKNOWN": "Something went wrong."
+  "UNKNOWN": "Something went wrong.",
+  "NETWORK": "No connection. Check your internet and try again.",
+  "RATE_LIMITED": "Too many requests. Wait a few seconds and try again.",
+  "SERVER": "Something went wrong on our side. Please try again in a moment.",
+  "VALIDATION": "Please check the form and try again.",
+  "GENERIC": "The action could not be completed. Please try again."
 }
