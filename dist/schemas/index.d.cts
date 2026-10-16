@@ -396,6 +396,7 @@ declare const botPayloadSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
     }, z.core.$strip>>>;
     warnings: z.ZodDefault<z.ZodArray<z.ZodString>>;
     link: z.ZodDefault<z.ZodNullable<z.ZodString>>;
+    linkLabel: z.ZodDefault<z.ZodNullable<z.ZodString>>;
 }, z.core.$strip>], "kind">;
 type BotPayload = z.infer<typeof botPayloadSchema>;
 /** A chat message (GET /chat/rooms/:id/messages items, POST send response). */
@@ -456,6 +457,7 @@ declare const chatMessageSchema: z.ZodObject<{
         }, z.core.$strip>>>;
         warnings: z.ZodDefault<z.ZodArray<z.ZodString>>;
         link: z.ZodDefault<z.ZodNullable<z.ZodString>>;
+        linkLabel: z.ZodDefault<z.ZodNullable<z.ZodString>>;
     }, z.core.$strip>], "kind">>>>;
     replyTo: z.ZodDefault<z.ZodNullable<z.ZodObject<{
         id: z.ZodString;
@@ -609,6 +611,7 @@ declare const chatMessageCreatedEventSchema: z.ZodObject<{
             }, z.core.$strip>>>;
             warnings: z.ZodDefault<z.ZodArray<z.ZodString>>;
             link: z.ZodDefault<z.ZodNullable<z.ZodString>>;
+            linkLabel: z.ZodDefault<z.ZodNullable<z.ZodString>>;
         }, z.core.$strip>], "kind">>>>;
         replyTo: z.ZodDefault<z.ZodNullable<z.ZodObject<{
             id: z.ZodString;
@@ -685,6 +688,7 @@ declare const chatMessageUpdatedEventSchema: z.ZodObject<{
             }, z.core.$strip>>>;
             warnings: z.ZodDefault<z.ZodArray<z.ZodString>>;
             link: z.ZodDefault<z.ZodNullable<z.ZodString>>;
+            linkLabel: z.ZodDefault<z.ZodNullable<z.ZodString>>;
         }, z.core.$strip>], "kind">>>>;
         replyTo: z.ZodDefault<z.ZodNullable<z.ZodObject<{
             id: z.ZodString;

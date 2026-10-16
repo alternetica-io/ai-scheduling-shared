@@ -246,8 +246,17 @@ var botPayloadSchema = z.discriminatedUnion("kind", [
     replaced: z.number().nullable().default(null),
     skipped: z.array(botSkippedSchema).default([]),
     warnings: z.array(z.string()).default([]),
-    /** Optional deep link to the schedule grid week (e.g. "/schedule?week=YYYY-MM-DD"). */
-    link: z.string().nullable().default(null)
+    /**
+     * Optional deep link inside the web app: the schedule week
+     * ("/schedule?week=YYYY-MM-DD"), or where something was saved
+     * ("/rules?highlight=<id>", "/policies?highlight=<id>", orch #97).
+     */
+    link: z.string().nullable().default(null),
+    /**
+     * The link's localized label ("Ver la regla"). Null = the client's own
+     * default ("Ver semana"), for payloads sent before it existed (orch #97).
+     */
+    linkLabel: z.string().nullable().default(null)
   })
 ]);
 var chatMessageSchema = z.object({
@@ -372,5 +381,5 @@ var registerDeviceInputSchema = z.object({
 });
 
 export { CHAT_ALLOWED_ATTACHMENT_TYPES, CHAT_ALLOWED_FILE_TYPES, CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, CHAT_QUICK_REACTIONS, attachmentKindForMime, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, dayNoteSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, parseChatMessages, parseDayNotes, reactionInputSchema, registerDeviceInputSchema, requestDecisionSchema, requestKindSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema, tagDomainSchema, workforceTagSchema, workforceTagsSchema };
-//# sourceMappingURL=chunk-W6FU27RQ.js.map
-//# sourceMappingURL=chunk-W6FU27RQ.js.map
+//# sourceMappingURL=chunk-WRNLNZN2.js.map
+//# sourceMappingURL=chunk-WRNLNZN2.js.map

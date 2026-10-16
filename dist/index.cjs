@@ -443,8 +443,17 @@ var botPayloadSchema = zod.z.discriminatedUnion("kind", [
     replaced: zod.z.number().nullable().default(null),
     skipped: zod.z.array(botSkippedSchema).default([]),
     warnings: zod.z.array(zod.z.string()).default([]),
-    /** Optional deep link to the schedule grid week (e.g. "/schedule?week=YYYY-MM-DD"). */
-    link: zod.z.string().nullable().default(null)
+    /**
+     * Optional deep link inside the web app: the schedule week
+     * ("/schedule?week=YYYY-MM-DD"), or where something was saved
+     * ("/rules?highlight=<id>", "/policies?highlight=<id>", orch #97).
+     */
+    link: zod.z.string().nullable().default(null),
+    /**
+     * The link's localized label ("Ver la regla"). Null = the client's own
+     * default ("Ver semana"), for payloads sent before it existed (orch #97).
+     */
+    linkLabel: zod.z.string().nullable().default(null)
   })
 ]);
 var chatMessageSchema = zod.z.object({
