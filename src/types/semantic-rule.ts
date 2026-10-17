@@ -24,6 +24,21 @@ export interface SemanticRule {
   metadata: Record<string, unknown>;
   createdAt: string;
   createdBy: string | null;
+  origin?: SemanticRuleOrigin | null;
+}
+
+/**
+ * La solicitud de la que nació una regla (orch #32). Una regla con origen es
+ * de solo lectura: se cambia la solicitud, y la API responde 409
+ * `rule_from_request` a editarla o borrarla.
+ */
+export interface SemanticRuleOrigin {
+  /** 'day_off' | 'absence' | 'shift_swap' hoy; string para tolerar nuevos. */
+  kind: string;
+  requestId: string;
+  employeeId: string | null;
+  effectiveFrom: string | null;
+  effectiveTo: string | null;
 }
 
 /** Item devuelto por GET /rules/semantic (lista; subset del aggregate). */
@@ -40,6 +55,9 @@ export interface SemanticRuleListItem {
   /** true si el LLM extrajo estructura (regla aplicable por el scheduler).
    *  Sin estructura, la regla queda como contexto para humanos. */
   hasStructure: boolean;
+  /** De qué solicitud nació, o null si la escribió una persona. Ausente en
+   *  APIs anteriores a orch #32. */
+  origin?: SemanticRuleOrigin | null;
 }
 
 export interface CreateSemanticRulePayload {
