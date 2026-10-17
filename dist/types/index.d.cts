@@ -136,17 +136,30 @@ interface ShiftSwapRequest {
     requesterId: string;
     targetId: string;
     assignmentId: string | null;
+    /**
+     * `cover`: el turno de quien pide pasa al compañero; `exchange`: se
+     * intercambian los dos (orch #31). Un backend anterior no lo manda: cover.
+     */
+    kind?: ShiftSwapKind;
+    /** En un `exchange`, el turno elegido del compañero. */
+    targetAssignmentId?: string | null;
     status: ShiftSwapRequestStatus;
     createdAt: string;
     /** Turno que se intercambia (del requester). Backend enriquecido. */
     shift?: ApprovalShiftRef | null;
-    /** Turno del target ese día, o null = sin turno. Backend enriquecido. */
+    /**
+     * En un `exchange`, el turno elegido del compañero; si no, su turno de ese
+     * día, o null = sin turno. Backend enriquecido.
+     */
     targetShift?: ApprovalShiftRef | null;
 }
+type ShiftSwapKind = 'cover' | 'exchange';
 interface CreateShiftSwapRequestPayload {
     requesterId: string;
     targetId: string;
     assignmentId?: string | null;
+    kind?: ShiftSwapKind;
+    targetAssignmentId?: string;
 }
 interface AbsenceReport {
     id: string;
@@ -436,4 +449,4 @@ interface WorkingTimePolicyView {
     };
 }
 
-export { type AbsenceReport, type ApprovalShiftRef, type CompanyPolicy, type CompanySkill, type CreateAbsenceReportPayload, type CreateCompanyPolicyPayload, type CreateCompanyPolicyResult, type CreateCompanySkillPayload, type CreateDayOffRequestPayload, type CreateEmployeePayload, type CreateIncidentPayload, type CreateSemanticRulePayload, type CreateSemanticRuleResult, type CreateShiftMembershipPayload, type CreateShiftSwapRequestPayload, type DayOffRequest, type DayOffRequestStatus, type Employee, type FairnessHistoryRow, type Incident, type IncidentStatus, type IncidentType, type PolicyScope, type PolicyScopeType, type PolicySeverity, type PolicySource, type RulePriority, type RuleType, type SemanticRule, type SemanticRuleListItem, type SemanticRuleSuggestion, type ShiftMembership, type ShiftMembershipFilter, type ShiftSwapRequest, type ShiftSwapRequestStatus, type UpdateCompanyPolicyPayload, type UpdateEmployeePayload, type UpdateSemanticRuleMetadataPayload, type UpdateSemanticRuleTextPayload, type WorkingTimePolicyOverrides, type WorkingTimePolicyView, formatShiftRef };
+export { type AbsenceReport, type ApprovalShiftRef, type CompanyPolicy, type CompanySkill, type CreateAbsenceReportPayload, type CreateCompanyPolicyPayload, type CreateCompanyPolicyResult, type CreateCompanySkillPayload, type CreateDayOffRequestPayload, type CreateEmployeePayload, type CreateIncidentPayload, type CreateSemanticRulePayload, type CreateSemanticRuleResult, type CreateShiftMembershipPayload, type CreateShiftSwapRequestPayload, type DayOffRequest, type DayOffRequestStatus, type Employee, type FairnessHistoryRow, type Incident, type IncidentStatus, type IncidentType, type PolicyScope, type PolicyScopeType, type PolicySeverity, type PolicySource, type RulePriority, type RuleType, type SemanticRule, type SemanticRuleListItem, type SemanticRuleSuggestion, type ShiftMembership, type ShiftMembershipFilter, type ShiftSwapKind, type ShiftSwapRequest, type ShiftSwapRequestStatus, type UpdateCompanyPolicyPayload, type UpdateEmployeePayload, type UpdateSemanticRuleMetadataPayload, type UpdateSemanticRuleTextPayload, type WorkingTimePolicyOverrides, type WorkingTimePolicyView, formatShiftRef };

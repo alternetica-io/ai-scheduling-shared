@@ -110,18 +110,32 @@ export interface ShiftSwapRequest {
   requesterId: string;
   targetId: string;
   assignmentId: string | null;
+  /**
+   * `cover`: el turno de quien pide pasa al compañero; `exchange`: se
+   * intercambian los dos (orch #31). Un backend anterior no lo manda: cover.
+   */
+  kind?: ShiftSwapKind;
+  /** En un `exchange`, el turno elegido del compañero. */
+  targetAssignmentId?: string | null;
   status: ShiftSwapRequestStatus;
   createdAt: string;
   /** Turno que se intercambia (del requester). Backend enriquecido. */
   shift?: ApprovalShiftRef | null;
-  /** Turno del target ese día, o null = sin turno. Backend enriquecido. */
+  /**
+   * En un `exchange`, el turno elegido del compañero; si no, su turno de ese
+   * día, o null = sin turno. Backend enriquecido.
+   */
   targetShift?: ApprovalShiftRef | null;
 }
+
+export type ShiftSwapKind = 'cover' | 'exchange';
 
 export interface CreateShiftSwapRequestPayload {
   requesterId: string;
   targetId: string;
   assignmentId?: string | null;
+  kind?: ShiftSwapKind;
+  targetAssignmentId?: string;
 }
 
 // ─── AbsenceReport ────────────────────────────────────────────────────────────
