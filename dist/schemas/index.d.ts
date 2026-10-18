@@ -165,6 +165,16 @@ type RequestKind = z.infer<typeof requestKindSchema>;
 type RequestDecision = z.infer<typeof requestDecisionSchema>;
 /** Parse tolerante de la lista: una nota corrupta no tira las demás. */
 declare function parseDayNotes(data: unknown): DayNote[];
+/**
+ * ¿El día está en conflicto? Hay un turno y una solicitud en efecto que
+ * bloquea turnos (front #18). Lo usan la grilla de la web y el horario del
+ * empleado en el móvil (front #19).
+ *
+ * El turno al que la solicitud está vinculada no cuenta: una inasistencia
+ * registrada sobre un turno es el registro de ese turno, no un choque con él
+ * (orch #87). Con otro turno ese día, sí.
+ */
+declare function dayNotesConflict(notes: readonly DayNote[], shiftIds: readonly string[]): boolean;
 
 /** Mirrors the orchestrator timeclock controller (Sprint 2, GPS + selfie). */
 declare const clockEventTypeSchema: z.ZodEnum<{
@@ -736,4 +746,4 @@ declare const registerDeviceInputSchema: z.ZodObject<{
 }, z.core.$strip>;
 type RegisterDeviceInput = z.infer<typeof registerDeviceInputSchema>;
 
-export { type BotOption, type BotPayload, CHAT_ALLOWED_ATTACHMENT_TYPES, CHAT_ALLOWED_FILE_TYPES, CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, CHAT_QUICK_REACTIONS, type ChatContact, type ChatMember, type ChatMessage, type ChatMessageCreatedEvent, type ChatMessageUpdatedEvent, type ChatRead, type ChatReadEvent, type ChatRoom, type ChatTypingEvent, type ClockEvent, type ClockEventType, type ClockValidationStatus, type CreateClockEventInput, type CreateRoomInput, type DayNote, type GeoLocation, type MyLocations, type MyProfile, type ReactionInput, type RegisterDeviceInput, type RequestDecision, type RequestKind, type ScheduleAssignment, type ScheduleAssignmentBreak, type SendMessageInput, type TagDomain, type WorkforceTag, attachmentKindForMime, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, dayNoteSchema, geoLocationSchema, myLocationsSchema, myProfileSchema, parseChatMessages, parseDayNotes, reactionInputSchema, registerDeviceInputSchema, requestDecisionSchema, requestKindSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema, tagDomainSchema, workforceTagSchema, workforceTagsSchema };
+export { type BotOption, type BotPayload, CHAT_ALLOWED_ATTACHMENT_TYPES, CHAT_ALLOWED_FILE_TYPES, CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, CHAT_QUICK_REACTIONS, type ChatContact, type ChatMember, type ChatMessage, type ChatMessageCreatedEvent, type ChatMessageUpdatedEvent, type ChatRead, type ChatReadEvent, type ChatRoom, type ChatTypingEvent, type ClockEvent, type ClockEventType, type ClockValidationStatus, type CreateClockEventInput, type CreateRoomInput, type DayNote, type GeoLocation, type MyLocations, type MyProfile, type ReactionInput, type RegisterDeviceInput, type RequestDecision, type RequestKind, type ScheduleAssignment, type ScheduleAssignmentBreak, type SendMessageInput, type TagDomain, type WorkforceTag, attachmentKindForMime, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, dayNoteSchema, dayNotesConflict, geoLocationSchema, myLocationsSchema, myProfileSchema, parseChatMessages, parseDayNotes, reactionInputSchema, registerDeviceInputSchema, requestDecisionSchema, requestKindSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema, tagDomainSchema, workforceTagSchema, workforceTagsSchema };

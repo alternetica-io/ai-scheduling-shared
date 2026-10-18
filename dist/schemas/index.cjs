@@ -106,6 +106,11 @@ function parseDayNotes(data) {
   if (!Array.isArray(data)) return [];
   return data.map((d) => dayNoteSchema.safeParse(d)).filter((r) => r.success).map((r) => r.data);
 }
+function dayNotesConflict(notes, shiftIds) {
+  return notes.some(
+    (n) => n.decision !== "rejected" && n.inEffect && n.blocksShifts && shiftIds.some((id) => id !== n.shiftAssignmentId)
+  );
+}
 var clockEventTypeSchema = zod.z.enum([
   "in",
   "out",
@@ -408,6 +413,7 @@ exports.clockValidationStatusSchema = clockValidationStatusSchema;
 exports.createClockEventInputSchema = createClockEventInputSchema;
 exports.createRoomInputSchema = createRoomInputSchema;
 exports.dayNoteSchema = dayNoteSchema;
+exports.dayNotesConflict = dayNotesConflict;
 exports.geoLocationSchema = geoLocationSchema;
 exports.myLocationsSchema = myLocationsSchema;
 exports.myProfileSchema = myProfileSchema;

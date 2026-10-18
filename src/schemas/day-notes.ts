@@ -66,3 +66,25 @@ export function parseDayNotes(data: unknown): DayNote[] {
     .filter((r): r is { success: true; data: DayNote } => r.success)
     .map((r) => r.data);
 }
+
+/**
+ * ¿El día está en conflicto? Hay un turno y una solicitud en efecto que
+ * bloquea turnos (front #18). Lo usan la grilla de la web y el horario del
+ * empleado en el móvil (front #19).
+ *
+ * El turno al que la solicitud está vinculada no cuenta: una inasistencia
+ * registrada sobre un turno es el registro de ese turno, no un choque con él
+ * (orch #87). Con otro turno ese día, sí.
+ */
+export function dayNotesConflict(
+  notes: readonly DayNote[],
+  shiftIds: readonly string[],
+): boolean {
+  return notes.some(
+    (n) =>
+      n.decision !== 'rejected' &&
+      n.inEffect &&
+      n.blocksShifts &&
+      shiftIds.some((id) => id !== n.shiftAssignmentId),
+  );
+}
