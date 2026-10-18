@@ -706,6 +706,10 @@ var common_default = {
     valueScopedSuffix: "(their departments + unassigned)"
   },
   scheduleJobBanner: {
+    queuePlace: "Position {{position}} in the queue",
+    queueWait_one: "about {{count}} minute",
+    queueWait_other: "about {{count}} minutes",
+    queueWaitSoon: "starts in under a minute",
     queued: "\u{1F4C5} Schedule generation queued for the week of {{weekStart}}",
     active: "\u2699\uFE0F Generating schedule for the week of {{weekStart}}",
     multi_one: "{{count}} schedule generation in progress",
@@ -930,6 +934,10 @@ var common_default2 = {
     valueScopedSuffix: "(sus departamentos + sin asignar)"
   },
   scheduleJobBanner: {
+    queuePlace: "Lugar {{position}} en la cola",
+    queueWait_one: "unos {{count}} minuto",
+    queueWait_other: "unos {{count}} minutos",
+    queueWaitSoon: "arranca en menos de un minuto",
     queued: "\u{1F4C5} Generaci\xF3n en cola para la semana del {{weekStart}}",
     active: "\u2699\uFE0F Generando horario para la semana del {{weekStart}}",
     multi_one: "{{count}} generaci\xF3n de horario en curso",

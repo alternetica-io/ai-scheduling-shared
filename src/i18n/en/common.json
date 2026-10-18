@@ -121,6 +121,10 @@
     "valueScopedSuffix": "(their departments + unassigned)"
   },
   "scheduleJobBanner": {
+    "queuePlace": "Position {{position}} in the queue",
+    "queueWait_one": "about {{count}} minute",
+    "queueWait_other": "about {{count}} minutes",
+    "queueWaitSoon": "starts in under a minute",
     "queued": "📅 Schedule generation queued for the week of {{weekStart}}",
     "active": "⚙️ Generating schedule for the week of {{weekStart}}",
     "multi_one": "{{count}} schedule generation in progress",

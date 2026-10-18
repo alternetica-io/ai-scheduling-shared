@@ -129,6 +129,10 @@ declare const sharedResources: {
                 valueScopedSuffix: string;
             };
             scheduleJobBanner: {
+                queuePlace: string;
+                queueWait_one: string;
+                queueWait_other: string;
+                queueWaitSoon: string;
                 queued: string;
                 active: string;
                 multi_one: string;
@@ -351,6 +355,10 @@ declare const sharedResources: {
                 valueScopedSuffix: string;
             };
             scheduleJobBanner: {
+                queuePlace: string;
+                queueWait_one: string;
+                queueWait_other: string;
+                queueWaitSoon: string;
                 queued: string;
                 active: string;
                 multi_one: string;

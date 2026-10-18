@@ -2,7 +2,7 @@ export { formatShiftRef } from './chunk-FHIF4JAS.js';
 export { createApiClient } from './chunk-ALEQ5QUT.js';
 export { describeApiError, isLibraryText } from './chunk-NHQWMKQ3.js';
 export { CHAT_ALLOWED_ATTACHMENT_TYPES, CHAT_ALLOWED_FILE_TYPES, CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, CHAT_QUICK_REACTIONS, attachmentKindForMime, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, dayNoteSchema, dayNotesConflict, geoLocationSchema, myLocationsSchema, myProfileSchema, parseChatMessages, parseDayNotes, reactionInputSchema, registerDeviceInputSchema, requestDecisionSchema, requestKindSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema, tagDomainSchema, workforceTagSchema, workforceTagsSchema } from './chunk-LNRC46UP.js';
-export { FALLBACK_LANGUAGE, SUPPORTED_LANGUAGES, sharedResources } from './chunk-2EIWPDBM.js';
+export { FALLBACK_LANGUAGE, SUPPORTED_LANGUAGES, sharedResources } from './chunk-SPNOEO3A.js';
 
 // src/time/zone.ts
 var pad = (n) => String(n).padStart(2, "0");
