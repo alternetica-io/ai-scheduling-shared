@@ -120,6 +120,8 @@ declare const sharedResources: {
                 sortByAria: string;
                 selectAll: string;
                 selectRow: string;
+                goToPage: string;
+                range: string;
             };
             managerFilter: {
                 label: string;
@@ -325,6 +327,8 @@ declare const sharedResources: {
                 sortByAria: string;
                 selectAll: string;
                 selectRow: string;
+                goToPage: string;
+                range: string;
             };
             managerFilter: {
                 label: string;

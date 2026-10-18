@@ -112,7 +112,9 @@ var common_default = {
     showingOf: "Showing {{shown}} of {{total}}",
     sortByAria: "Sort by {{column}}",
     selectAll: "Select all",
-    selectRow: "Select row"
+    selectRow: "Select row",
+    goToPage: "Go to page {{page}}",
+    range: "{{from}}\u2013{{to}} of {{total}}"
   },
   managerFilter: {
     label: "Manager scope",
@@ -319,7 +321,9 @@ var common_default2 = {
     showingOf: "Mostrando {{shown}} de {{total}}",
     sortByAria: "Ordenar por {{column}}",
     selectAll: "Seleccionar todo",
-    selectRow: "Seleccionar fila"
+    selectRow: "Seleccionar fila",
+    goToPage: "Ir a la p\xE1gina {{page}}",
+    range: "{{from}}\u2013{{to}} de {{total}}"
   },
   managerFilter: {
     label: "Manager",
@@ -421,5 +425,5 @@ var SUPPORTED_LANGUAGES = ["en", "es"];
 var FALLBACK_LANGUAGE = "en";
 
 export { FALLBACK_LANGUAGE, SUPPORTED_LANGUAGES, sharedResources };
-//# sourceMappingURL=chunk-6QUOBQLS.js.map
-//# sourceMappingURL=chunk-6QUOBQLS.js.map
+//# sourceMappingURL=chunk-PPBXRKAT.js.map
+//# sourceMappingURL=chunk-PPBXRKAT.js.map

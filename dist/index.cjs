@@ -691,7 +691,9 @@ var common_default = {
     showingOf: "Showing {{shown}} of {{total}}",
     sortByAria: "Sort by {{column}}",
     selectAll: "Select all",
-    selectRow: "Select row"
+    selectRow: "Select row",
+    goToPage: "Go to page {{page}}",
+    range: "{{from}}\u2013{{to}} of {{total}}"
   },
   managerFilter: {
     label: "Manager scope",
@@ -898,7 +900,9 @@ var common_default2 = {
     showingOf: "Mostrando {{shown}} de {{total}}",
     sortByAria: "Ordenar por {{column}}",
     selectAll: "Seleccionar todo",
-    selectRow: "Seleccionar fila"
+    selectRow: "Seleccionar fila",
+    goToPage: "Ir a la p\xE1gina {{page}}",
+    range: "{{from}}\u2013{{to}} de {{total}}"
   },
   managerFilter: {
     label: "Manager",

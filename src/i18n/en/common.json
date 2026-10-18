@@ -111,7 +111,9 @@
     "showingOf": "Showing {{shown}} of {{total}}",
     "sortByAria": "Sort by {{column}}",
     "selectAll": "Select all",
-    "selectRow": "Select row"
+    "selectRow": "Select row",
+    "goToPage": "Go to page {{page}}",
+    "range": "{{from}}–{{to}} of {{total}}"
   },
   "managerFilter": {
     "label": "Manager scope",

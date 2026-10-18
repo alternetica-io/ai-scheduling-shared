@@ -111,7 +111,9 @@
     "showingOf": "Mostrando {{shown}} de {{total}}",
     "sortByAria": "Ordenar por {{column}}",
     "selectAll": "Seleccionar todo",
-    "selectRow": "Seleccionar fila"
+    "selectRow": "Seleccionar fila",
+    "goToPage": "Ir a la página {{page}}",
+    "range": "{{from}}–{{to}} de {{total}}"
   },
   "managerFilter": {
     "label": "Manager",
