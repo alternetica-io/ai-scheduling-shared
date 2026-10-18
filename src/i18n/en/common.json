@@ -129,7 +129,15 @@
     "cancel": "Cancel",
     "cancelling": "Cancelling…",
     "cancelSuccess": "Cancellation requested",
-    "cancelError": "Could not cancel"
+    "cancelError": "Could not cancel",
+    "step": {
+      "loading": "Reading employees, shifts and rules",
+      "translating-rules": "Preparing the rules for the AI",
+      "proposing": "The AI is building the week",
+      "verifying": "Checking the rules and policies",
+      "repairing": "Fixing what did not comply (attempt {{attempt}} of {{total}})",
+      "persisting": "Saving the shifts"
+    }
   },
   "scheduleToast": {
     "successTitle": "Schedule generated",

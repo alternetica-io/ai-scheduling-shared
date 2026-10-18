@@ -130,7 +130,15 @@ var common_default = {
     cancel: "Cancel",
     cancelling: "Cancelling\u2026",
     cancelSuccess: "Cancellation requested",
-    cancelError: "Could not cancel"
+    cancelError: "Could not cancel",
+    step: {
+      loading: "Reading employees, shifts and rules",
+      "translating-rules": "Preparing the rules for the AI",
+      proposing: "The AI is building the week",
+      verifying: "Checking the rules and policies",
+      repairing: "Fixing what did not comply (attempt {{attempt}} of {{total}})",
+      persisting: "Saving the shifts"
+    }
   },
   scheduleToast: {
     successTitle: "Schedule generated",
@@ -339,7 +347,15 @@ var common_default2 = {
     cancel: "Cancelar",
     cancelling: "Cancelando\u2026",
     cancelSuccess: "Cancelaci\xF3n solicitada",
-    cancelError: "No se pudo cancelar"
+    cancelError: "No se pudo cancelar",
+    step: {
+      loading: "Leyendo empleados, turnos y reglas",
+      "translating-rules": "Preparando las reglas para la IA",
+      proposing: "La IA est\xE1 armando la semana",
+      verifying: "Revisando que cumpla las reglas y las pol\xEDticas",
+      repairing: "Corrigiendo lo que no cumpl\xEDa (intento {{attempt}} de {{total}})",
+      persisting: "Guardando los turnos"
+    }
   },
   scheduleToast: {
     successTitle: "Horario generado",
@@ -425,5 +441,5 @@ var SUPPORTED_LANGUAGES = ["en", "es"];
 var FALLBACK_LANGUAGE = "en";
 
 export { FALLBACK_LANGUAGE, SUPPORTED_LANGUAGES, sharedResources };
-//# sourceMappingURL=chunk-PPBXRKAT.js.map
-//# sourceMappingURL=chunk-PPBXRKAT.js.map
+//# sourceMappingURL=chunk-B4UL2PZS.js.map
+//# sourceMappingURL=chunk-B4UL2PZS.js.map

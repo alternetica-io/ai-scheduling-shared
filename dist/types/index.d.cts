@@ -485,4 +485,35 @@ interface WorkingTimePolicyView {
     };
 }
 
-export { type AbsenceReport, type AnnulDayOffRequestPayload, type AnnulDayOffRequestResult, type ApprovalShiftRef, type CompanyPolicy, type CompanySkill, type CreateAbsenceReportPayload, type CreateCompanyPolicyPayload, type CreateCompanyPolicyResult, type CreateCompanySkillPayload, type CreateDayOffRequestPayload, type CreateEmployeePayload, type CreateIncidentPayload, type CreateSemanticRulePayload, type CreateSemanticRuleResult, type CreateShiftMembershipPayload, type CreateShiftSwapRequestPayload, type DayOffRequest, type DayOffRequestStatus, type Employee, type FairnessHistoryRow, type Incident, type IncidentStatus, type IncidentType, type PolicyScope, type PolicyScopeType, type PolicySeverity, type PolicySource, type ReleasedShiftRef, type RulePriority, type RuleType, type SemanticRule, type SemanticRuleListItem, type SemanticRuleOrigin, type SemanticRuleSuggestion, type ShiftMembership, type ShiftMembershipFilter, type ShiftSwapKind, type ShiftSwapRequest, type ShiftSwapRequestStatus, type UpdateCompanyPolicyPayload, type UpdateEmployeePayload, type UpdateSemanticRuleMetadataPayload, type UpdateSemanticRuleTextPayload, type WorkingTimePolicyOverrides, type WorkingTimePolicyView, formatShiftRef };
+/**
+ * En qué paso va una generación de horario (orch #50). Lo emite el backend
+ * por el socket (`ScheduleGenerationProgress`) y lo traduce cada cliente.
+ * Misma forma que `GenerationStep` del orquestador.
+ */
+type GenerationStep = {
+    kind: 'loading';
+} | {
+    kind: 'translating-rules';
+} | {
+    kind: 'proposing';
+    attempt: number;
+    totalAttempts: number;
+} | {
+    kind: 'verifying';
+    attempt: number;
+    totalAttempts: number;
+} | {
+    kind: 'repairing';
+    attempt: number;
+    totalAttempts: number;
+} | {
+    kind: 'persisting';
+};
+interface ScheduleGenerationProgressEvent {
+    companyId: string;
+    weekStart: string;
+    jobId: string;
+    step: GenerationStep;
+}
+
+export { type AbsenceReport, type AnnulDayOffRequestPayload, type AnnulDayOffRequestResult, type ApprovalShiftRef, type CompanyPolicy, type CompanySkill, type CreateAbsenceReportPayload, type CreateCompanyPolicyPayload, type CreateCompanyPolicyResult, type CreateCompanySkillPayload, type CreateDayOffRequestPayload, type CreateEmployeePayload, type CreateIncidentPayload, type CreateSemanticRulePayload, type CreateSemanticRuleResult, type CreateShiftMembershipPayload, type CreateShiftSwapRequestPayload, type DayOffRequest, type DayOffRequestStatus, type Employee, type FairnessHistoryRow, type GenerationStep, type Incident, type IncidentStatus, type IncidentType, type PolicyScope, type PolicyScopeType, type PolicySeverity, type PolicySource, type ReleasedShiftRef, type RulePriority, type RuleType, type ScheduleGenerationProgressEvent, type SemanticRule, type SemanticRuleListItem, type SemanticRuleOrigin, type SemanticRuleSuggestion, type ShiftMembership, type ShiftMembershipFilter, type ShiftSwapKind, type ShiftSwapRequest, type ShiftSwapRequestStatus, type UpdateCompanyPolicyPayload, type UpdateEmployeePayload, type UpdateSemanticRuleMetadataPayload, type UpdateSemanticRuleTextPayload, type WorkingTimePolicyOverrides, type WorkingTimePolicyView, formatShiftRef };

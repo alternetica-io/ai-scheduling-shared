@@ -138,6 +138,14 @@ declare const sharedResources: {
                 cancelling: string;
                 cancelSuccess: string;
                 cancelError: string;
+                step: {
+                    loading: string;
+                    "translating-rules": string;
+                    proposing: string;
+                    verifying: string;
+                    repairing: string;
+                    persisting: string;
+                };
             };
             scheduleToast: {
                 successTitle: string;
@@ -345,6 +353,14 @@ declare const sharedResources: {
                 cancelling: string;
                 cancelSuccess: string;
                 cancelError: string;
+                step: {
+                    loading: string;
+                    "translating-rules": string;
+                    proposing: string;
+                    verifying: string;
+                    repairing: string;
+                    persisting: string;
+                };
             };
             scheduleToast: {
                 successTitle: string;

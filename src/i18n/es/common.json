@@ -129,7 +129,15 @@
     "cancel": "Cancelar",
     "cancelling": "Cancelando…",
     "cancelSuccess": "Cancelación solicitada",
-    "cancelError": "No se pudo cancelar"
+    "cancelError": "No se pudo cancelar",
+    "step": {
+      "loading": "Leyendo empleados, turnos y reglas",
+      "translating-rules": "Preparando las reglas para la IA",
+      "proposing": "La IA está armando la semana",
+      "verifying": "Revisando que cumpla las reglas y las políticas",
+      "repairing": "Corrigiendo lo que no cumplía (intento {{attempt}} de {{total}})",
+      "persisting": "Guardando los turnos"
+    }
   },
   "scheduleToast": {
     "successTitle": "Horario generado",

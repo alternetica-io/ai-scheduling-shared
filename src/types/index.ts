@@ -6,3 +6,4 @@ export * from './fairness';
 export * from './semantic-rule';
 export * from './shift-membership';
 export * from './working-time-policy';
+export * from './generation';
