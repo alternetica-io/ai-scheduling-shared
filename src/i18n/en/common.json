@@ -143,7 +143,13 @@
     "successTitle": "Schedule generated",
     "successBody": "The week of {{weekStart}} is ready. The grid has been refreshed.",
     "failTitle": "We couldn't generate the schedule",
-    "failBody": "Generation failed for the week of {{weekStart}}. Review your rules and try again."
+    "failBody": "Generation failed for the week of {{weekStart}}. Review your rules and try again.",
+    "warningsTitle_one": "Schedule generated, with {{count}} warning",
+    "warningsTitle_other": "Schedule generated, with {{count}} warnings",
+    "warningsBody": "The week of {{weekStart}} is ready. Check the warnings in the generation history.",
+    "basicTitle": "Schedule generated with the basic engine",
+    "basicBody": "The AI did not give a valid proposal for the week of {{weekStart}}. Rules written in natural language may not all be applied.",
+    "viewWeek": "View the week"
   },
   "llmJobs": {
     "banner": {

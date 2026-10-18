@@ -144,7 +144,13 @@ var common_default = {
     successTitle: "Schedule generated",
     successBody: "The week of {{weekStart}} is ready. The grid has been refreshed.",
     failTitle: "We couldn't generate the schedule",
-    failBody: "Generation failed for the week of {{weekStart}}. Review your rules and try again."
+    failBody: "Generation failed for the week of {{weekStart}}. Review your rules and try again.",
+    warningsTitle_one: "Schedule generated, with {{count}} warning",
+    warningsTitle_other: "Schedule generated, with {{count}} warnings",
+    warningsBody: "The week of {{weekStart}} is ready. Check the warnings in the generation history.",
+    basicTitle: "Schedule generated with the basic engine",
+    basicBody: "The AI did not give a valid proposal for the week of {{weekStart}}. Rules written in natural language may not all be applied.",
+    viewWeek: "View the week"
   },
   llmJobs: {
     banner: {
@@ -361,7 +367,13 @@ var common_default2 = {
     successTitle: "Horario generado",
     successBody: "La semana del {{weekStart}} est\xE1 lista. La grilla se actualiz\xF3.",
     failTitle: "No pudimos generar el horario",
-    failBody: "Fall\xF3 la generaci\xF3n para la semana del {{weekStart}}. Revis\xE1 las reglas y volv\xE9 a intentarlo."
+    failBody: "Fall\xF3 la generaci\xF3n para la semana del {{weekStart}}. Revis\xE1 las reglas y volv\xE9 a intentarlo.",
+    warningsTitle_one: "Horario generado, con {{count}} aviso",
+    warningsTitle_other: "Horario generado, con {{count}} avisos",
+    warningsBody: "La semana del {{weekStart}} est\xE1 lista. Revisa los avisos en el historial de la generaci\xF3n.",
+    basicTitle: "Horario generado con el motor b\xE1sico",
+    basicBody: "La IA no dio una propuesta v\xE1lida para la semana del {{weekStart}}. Las reglas escritas en lenguaje natural pueden no estar todas aplicadas.",
+    viewWeek: "Ver la semana"
   },
   llmJobs: {
     banner: {
@@ -441,5 +453,5 @@ var SUPPORTED_LANGUAGES = ["en", "es"];
 var FALLBACK_LANGUAGE = "en";
 
 export { FALLBACK_LANGUAGE, SUPPORTED_LANGUAGES, sharedResources };
-//# sourceMappingURL=chunk-B4UL2PZS.js.map
-//# sourceMappingURL=chunk-B4UL2PZS.js.map
+//# sourceMappingURL=chunk-I64SKYKO.js.map
+//# sourceMappingURL=chunk-I64SKYKO.js.map

@@ -143,7 +143,13 @@
     "successTitle": "Horario generado",
     "successBody": "La semana del {{weekStart}} está lista. La grilla se actualizó.",
     "failTitle": "No pudimos generar el horario",
-    "failBody": "Falló la generación para la semana del {{weekStart}}. Revisá las reglas y volvé a intentarlo."
+    "failBody": "Falló la generación para la semana del {{weekStart}}. Revisá las reglas y volvé a intentarlo.",
+    "warningsTitle_one": "Horario generado, con {{count}} aviso",
+    "warningsTitle_other": "Horario generado, con {{count}} avisos",
+    "warningsBody": "La semana del {{weekStart}} está lista. Revisa los avisos en el historial de la generación.",
+    "basicTitle": "Horario generado con el motor básico",
+    "basicBody": "La IA no dio una propuesta válida para la semana del {{weekStart}}. Las reglas escritas en lenguaje natural pueden no estar todas aplicadas.",
+    "viewWeek": "Ver la semana"
   },
   "llmJobs": {
     "banner": {

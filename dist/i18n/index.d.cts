@@ -152,6 +152,12 @@ declare const sharedResources: {
                 successBody: string;
                 failTitle: string;
                 failBody: string;
+                warningsTitle_one: string;
+                warningsTitle_other: string;
+                warningsBody: string;
+                basicTitle: string;
+                basicBody: string;
+                viewWeek: string;
             };
             llmJobs: {
                 banner: {
@@ -367,6 +373,12 @@ declare const sharedResources: {
                 successBody: string;
                 failTitle: string;
                 failBody: string;
+                warningsTitle_one: string;
+                warningsTitle_other: string;
+                warningsBody: string;
+                basicTitle: string;
+                basicBody: string;
+                viewWeek: string;
             };
             llmJobs: {
                 banner: {
