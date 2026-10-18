@@ -157,6 +157,7 @@ declare const sharedResources: {
                 warningsBody: string;
                 basicTitle: string;
                 basicBody: string;
+                basicBodyTimeout: string;
                 viewWeek: string;
             };
             llmJobs: {
@@ -378,6 +379,7 @@ declare const sharedResources: {
                 warningsBody: string;
                 basicTitle: string;
                 basicBody: string;
+                basicBodyTimeout: string;
                 viewWeek: string;
             };
             llmJobs: {

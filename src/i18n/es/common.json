@@ -149,6 +149,7 @@
     "warningsBody": "La semana del {{weekStart}} está lista. Revisa los avisos en el historial de la generación.",
     "basicTitle": "Horario generado con el motor básico",
     "basicBody": "La IA no dio una propuesta válida para la semana del {{weekStart}}. Las reglas escritas en lenguaje natural pueden no estar todas aplicadas.",
+    "basicBodyTimeout": "La IA no respondió a tiempo para la semana del {{weekStart}}. Las reglas escritas en lenguaje natural pueden no estar todas aplicadas.",
     "viewWeek": "Ver la semana"
   },
   "llmJobs": {

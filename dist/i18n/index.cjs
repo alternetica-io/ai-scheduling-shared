@@ -152,6 +152,7 @@ var common_default = {
     warningsBody: "The week of {{weekStart}} is ready. Check the warnings in the generation history.",
     basicTitle: "Schedule generated with the basic engine",
     basicBody: "The AI did not give a valid proposal for the week of {{weekStart}}. Rules written in natural language may not all be applied.",
+    basicBodyTimeout: "The AI did not answer in time for the week of {{weekStart}}. Rules written in natural language may not all be applied.",
     viewWeek: "View the week"
   },
   llmJobs: {
@@ -375,6 +376,7 @@ var common_default2 = {
     warningsBody: "La semana del {{weekStart}} est\xE1 lista. Revisa los avisos en el historial de la generaci\xF3n.",
     basicTitle: "Horario generado con el motor b\xE1sico",
     basicBody: "La IA no dio una propuesta v\xE1lida para la semana del {{weekStart}}. Las reglas escritas en lenguaje natural pueden no estar todas aplicadas.",
+    basicBodyTimeout: "La IA no respondi\xF3 a tiempo para la semana del {{weekStart}}. Las reglas escritas en lenguaje natural pueden no estar todas aplicadas.",
     viewWeek: "Ver la semana"
   },
   llmJobs: {
