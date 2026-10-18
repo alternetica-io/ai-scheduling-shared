@@ -185,7 +185,9 @@ interface CreateAbsenceReportPayload {
     /** YYYY-MM-DD. Default backend = startDate. */
     endDate?: string;
 }
-type DayOffRequestStatus = 'pending' | 'approved' | 'rejected';
+type DayOffRequestStatus = 'pending' | 'approved' | 'rejected'
+/** Aprobado y después anulado por el manager, con motivo (orch #111). */
+ | 'annulled';
 interface DayOffRequest {
     id: string;
     companyId: string;
@@ -197,6 +199,23 @@ interface DayOffRequest {
     createdAt: string;
     /** Turno que el empleado pierde ese día, o null = sin turno. Backend enriquecido. */
     shift?: ApprovalShiftRef | null;
+}
+/** POST /day-off-requests/:id/annul (orch #111). */
+interface AnnulDayOffRequestPayload {
+    /** Obligatorio: se le avisa al empleado. */
+    reason: string;
+}
+/** Un turno que liberó la solicitud al aprobarse: al anularla no vuelve solo. */
+interface ReleasedShiftRef {
+    employeeId: string | null;
+    date: string;
+    templateId: string;
+    templateName: string | null;
+    startTime: string;
+    endTime: string;
+}
+interface AnnulDayOffRequestResult {
+    releasedShifts: ReleasedShiftRef[];
 }
 interface CreateDayOffRequestPayload {
     employeeId: string;
@@ -466,4 +485,4 @@ interface WorkingTimePolicyView {
     };
 }
 
-export { type AbsenceReport, type ApprovalShiftRef, type CompanyPolicy, type CompanySkill, type CreateAbsenceReportPayload, type CreateCompanyPolicyPayload, type CreateCompanyPolicyResult, type CreateCompanySkillPayload, type CreateDayOffRequestPayload, type CreateEmployeePayload, type CreateIncidentPayload, type CreateSemanticRulePayload, type CreateSemanticRuleResult, type CreateShiftMembershipPayload, type CreateShiftSwapRequestPayload, type DayOffRequest, type DayOffRequestStatus, type Employee, type FairnessHistoryRow, type Incident, type IncidentStatus, type IncidentType, type PolicyScope, type PolicyScopeType, type PolicySeverity, type PolicySource, type RulePriority, type RuleType, type SemanticRule, type SemanticRuleListItem, type SemanticRuleOrigin, type SemanticRuleSuggestion, type ShiftMembership, type ShiftMembershipFilter, type ShiftSwapKind, type ShiftSwapRequest, type ShiftSwapRequestStatus, type UpdateCompanyPolicyPayload, type UpdateEmployeePayload, type UpdateSemanticRuleMetadataPayload, type UpdateSemanticRuleTextPayload, type WorkingTimePolicyOverrides, type WorkingTimePolicyView, formatShiftRef };
+export { type AbsenceReport, type AnnulDayOffRequestPayload, type AnnulDayOffRequestResult, type ApprovalShiftRef, type CompanyPolicy, type CompanySkill, type CreateAbsenceReportPayload, type CreateCompanyPolicyPayload, type CreateCompanyPolicyResult, type CreateCompanySkillPayload, type CreateDayOffRequestPayload, type CreateEmployeePayload, type CreateIncidentPayload, type CreateSemanticRulePayload, type CreateSemanticRuleResult, type CreateShiftMembershipPayload, type CreateShiftSwapRequestPayload, type DayOffRequest, type DayOffRequestStatus, type Employee, type FairnessHistoryRow, type Incident, type IncidentStatus, type IncidentType, type PolicyScope, type PolicyScopeType, type PolicySeverity, type PolicySource, type ReleasedShiftRef, type RulePriority, type RuleType, type SemanticRule, type SemanticRuleListItem, type SemanticRuleOrigin, type SemanticRuleSuggestion, type ShiftMembership, type ShiftMembershipFilter, type ShiftSwapKind, type ShiftSwapRequest, type ShiftSwapRequestStatus, type UpdateCompanyPolicyPayload, type UpdateEmployeePayload, type UpdateSemanticRuleMetadataPayload, type UpdateSemanticRuleTextPayload, type WorkingTimePolicyOverrides, type WorkingTimePolicyView, formatShiftRef };

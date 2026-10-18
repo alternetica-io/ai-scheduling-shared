@@ -168,7 +168,12 @@ export interface CreateAbsenceReportPayload {
 
 // ─── DayOffRequest ────────────────────────────────────────────────────────────
 
-export type DayOffRequestStatus = 'pending' | 'approved' | 'rejected';
+export type DayOffRequestStatus =
+  | 'pending'
+  | 'approved'
+  | 'rejected'
+  /** Aprobado y después anulado por el manager, con motivo (orch #111). */
+  | 'annulled';
 
 export interface DayOffRequest {
   id: string;
@@ -181,6 +186,26 @@ export interface DayOffRequest {
   createdAt: string;
   /** Turno que el empleado pierde ese día, o null = sin turno. Backend enriquecido. */
   shift?: ApprovalShiftRef | null;
+}
+
+/** POST /day-off-requests/:id/annul (orch #111). */
+export interface AnnulDayOffRequestPayload {
+  /** Obligatorio: se le avisa al empleado. */
+  reason: string;
+}
+
+/** Un turno que liberó la solicitud al aprobarse: al anularla no vuelve solo. */
+export interface ReleasedShiftRef {
+  employeeId: string | null;
+  date: string;
+  templateId: string;
+  templateName: string | null;
+  startTime: string;
+  endTime: string;
+}
+
+export interface AnnulDayOffRequestResult {
+  releasedShifts: ReleasedShiftRef[];
 }
 
 export interface CreateDayOffRequestPayload {
