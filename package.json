@@ -48,7 +48,8 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "typecheck": "tsc --noEmit",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "test": "vitest run"
   },
   "peerDependencies": {
     "axios": ">=1.6",
@@ -59,6 +60,7 @@
     "axios": "^1.16.1",
     "tsup": "^8.3.5",
     "typescript": "^5.7.2",
+    "vitest": "4.1.6",
     "zod": "^4.4.2"
   },
   "packageManager": "pnpm@11.1.2"
