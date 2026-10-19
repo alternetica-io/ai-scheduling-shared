@@ -120,6 +120,12 @@ function shiftTimesDiffer(t) {
   const w = workedInterval(t);
   return p.start !== w.start || p.end !== w.end;
 }
+function shiftTimesToShow(t, display) {
+  return {
+    scheduled: scheduledInterval(t),
+    real: display === "both" && shiftTimesDiffer(t) ? workedInterval(t) : null
+  };
+}
 var LIBRARY_TEXT = [
   /request failed with status code/i,
   /^network error$/i,
@@ -1103,6 +1109,7 @@ exports.scheduledInterval = scheduledInterval;
 exports.sendMessageInputSchema = sendMessageInputSchema;
 exports.sharedResources = sharedResources;
 exports.shiftTimesDiffer = shiftTimesDiffer;
+exports.shiftTimesToShow = shiftTimesToShow;
 exports.tagDomainSchema = tagDomainSchema;
 exports.todayInZone = todayInZone;
 exports.wallClockToInstantIso = wallClockToInstantIso;

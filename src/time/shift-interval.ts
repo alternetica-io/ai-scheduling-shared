@@ -83,3 +83,28 @@ export function shiftTimesDiffer(t: ShiftTimes): boolean {
   const w = workedInterval(t);
   return p.start !== w.start || p.end !== w.end;
 }
+
+/** Qué horas de un turno elige ver la empresa (front #20). */
+export type ShiftTimeDisplay = 'both' | 'planned';
+
+/**
+ * Las horas de un turno que hay que mostrar (front #20).
+ *
+ * - `scheduled` siempre: es lo que se le asignó a la persona.
+ * - `real` solo si la empresa ve las dos **y** un fichaje aprobado movió el
+ *   horario. Si no lo movió, las dos son el mismo valor, y repetir la misma
+ *   hora dos veces es peor que mostrar una.
+ *
+ * Una sola regla para la web y el móvil: la diferencia entre programado y
+ * real ya se confundió dos veces leyendo la misma fila (front #2, móvil #11).
+ */
+export function shiftTimesToShow(
+  t: ShiftTimes,
+  display: ShiftTimeDisplay,
+): { scheduled: Interval; real: Interval | null } {
+  return {
+    scheduled: scheduledInterval(t),
+    real:
+      display === 'both' && shiftTimesDiffer(t) ? workedInterval(t) : null,
+  };
+}

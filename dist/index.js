@@ -100,12 +100,18 @@ function shiftTimesDiffer(t) {
   const w = workedInterval(t);
   return p.start !== w.start || p.end !== w.end;
 }
+function shiftTimesToShow(t, display) {
+  return {
+    scheduled: scheduledInterval(t),
+    real: display === "both" && shiftTimesDiffer(t) ? workedInterval(t) : null
+  };
+}
 
 // src/auth/mfa.ts
 function needsMfaChallenge(aal) {
   return aal.nextLevel === "aal2" && aal.currentLevel === "aal1";
 }
 
-export { addDaysToDate, instantToWallClock, needsMfaChallenge, scheduledInterval, shiftTimesDiffer, todayInZone, wallClockToInstantIso, wallClockToInstantMs, wallMinutesInZone, weekStartInZone, weekStartOfDate, workedInterval };
+export { addDaysToDate, instantToWallClock, needsMfaChallenge, scheduledInterval, shiftTimesDiffer, shiftTimesToShow, todayInZone, wallClockToInstantIso, wallClockToInstantMs, wallMinutesInZone, weekStartInZone, weekStartOfDate, workedInterval };
 //# sourceMappingURL=index.js.map
 //# sourceMappingURL=index.js.map
