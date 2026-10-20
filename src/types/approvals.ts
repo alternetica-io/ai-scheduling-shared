@@ -173,7 +173,9 @@ export type DayOffRequestStatus =
   | 'approved'
   | 'rejected'
   /** Aprobado y después anulado por el manager, con motivo (orch #111). */
-  | 'annulled';
+  | 'annulled'
+  /** Pendiente cuyo día empezó sin que nadie la decidiera (orch #126). */
+  | 'expired';
 
 export interface DayOffRequest {
   id: string;
