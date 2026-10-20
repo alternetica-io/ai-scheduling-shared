@@ -201,5 +201,25 @@
       "update": "Updated",
       "delete": "Deleted"
     }
+  },
+  "resolutionExplained": {
+    "fromSchedule": "Your {{punch}} clock-in counted from {{counted}}, the scheduled time, by your supervisor's decision.",
+    "toSchedule": "Your {{punch}} clock-out counted until {{counted}}, the scheduled time, by your supervisor's decision.",
+    "asWorkedIn": "Your {{punch}} clock-in counted from that time, by your supervisor's decision.",
+    "asWorkedOut": "Your {{punch}} clock-out counted until that time, by your supervisor's decision.",
+    "overtimeBefore_one": "The minute before your clock-in is paid as overtime, by your supervisor's decision.",
+    "overtimeBefore_other": "The {{count}} minutes before your clock-in are paid as overtime, by your supervisor's decision.",
+    "overtimeAfter_one": "The minute after your clock-out is paid as overtime, by your supervisor's decision.",
+    "overtimeAfter_other": "The {{count}} minutes after your clock-out are paid as overtime, by your supervisor's decision.",
+    "acceptedLateIn": "Your {{punch}} arrival counted as you recorded it, by your supervisor's decision.",
+    "acceptedEarlyOut": "Your {{punch}} clock-out counted as you recorded it, by your supervisor's decision.",
+    "excusedIn": "Your {{punch}} arrival was excused: it counted from {{counted}}, the scheduled time, by your supervisor's decision.",
+    "excusedOut": "Your {{punch}} clock-out was excused: it counted until {{counted}}, the scheduled time, by your supervisor's decision.",
+    "breakAllowed_one": "The extra minute of your break is paid, by your supervisor's decision.",
+    "breakAllowed_other": "The {{count}} extra minutes of your break are paid, by your supervisor's decision.",
+    "breakExcessDeducted": "The extra time of your break is not paid, by your supervisor's decision.",
+    "breakPaidAsWorked": "Your break counted as you took it, by your supervisor's decision.",
+    "breakPlannedDeducted_one": "1 minute of the planned break you didn't take was deducted, by your supervisor's decision.",
+    "breakPlannedDeducted_other": "{{count}} minutes of the planned break you didn't take were deducted, by your supervisor's decision."
   }
 }

@@ -792,6 +792,26 @@ var common_default = {
       update: "Updated",
       delete: "Deleted"
     }
+  },
+  resolutionExplained: {
+    fromSchedule: "Your {{punch}} clock-in counted from {{counted}}, the scheduled time, by your supervisor's decision.",
+    toSchedule: "Your {{punch}} clock-out counted until {{counted}}, the scheduled time, by your supervisor's decision.",
+    asWorkedIn: "Your {{punch}} clock-in counted from that time, by your supervisor's decision.",
+    asWorkedOut: "Your {{punch}} clock-out counted until that time, by your supervisor's decision.",
+    overtimeBefore_one: "The minute before your clock-in is paid as overtime, by your supervisor's decision.",
+    overtimeBefore_other: "The {{count}} minutes before your clock-in are paid as overtime, by your supervisor's decision.",
+    overtimeAfter_one: "The minute after your clock-out is paid as overtime, by your supervisor's decision.",
+    overtimeAfter_other: "The {{count}} minutes after your clock-out are paid as overtime, by your supervisor's decision.",
+    acceptedLateIn: "Your {{punch}} arrival counted as you recorded it, by your supervisor's decision.",
+    acceptedEarlyOut: "Your {{punch}} clock-out counted as you recorded it, by your supervisor's decision.",
+    excusedIn: "Your {{punch}} arrival was excused: it counted from {{counted}}, the scheduled time, by your supervisor's decision.",
+    excusedOut: "Your {{punch}} clock-out was excused: it counted until {{counted}}, the scheduled time, by your supervisor's decision.",
+    breakAllowed_one: "The extra minute of your break is paid, by your supervisor's decision.",
+    breakAllowed_other: "The {{count}} extra minutes of your break are paid, by your supervisor's decision.",
+    breakExcessDeducted: "The extra time of your break is not paid, by your supervisor's decision.",
+    breakPaidAsWorked: "Your break counted as you took it, by your supervisor's decision.",
+    breakPlannedDeducted_one: "1 minute of the planned break you didn't take was deducted, by your supervisor's decision.",
+    breakPlannedDeducted_other: "{{count}} minutes of the planned break you didn't take were deducted, by your supervisor's decision."
   }
 };
 
@@ -1020,6 +1040,26 @@ var common_default2 = {
       update: "Actualizado",
       delete: "Eliminado"
     }
+  },
+  resolutionExplained: {
+    fromSchedule: "Tu entrada de las {{punch}} se cont\xF3 desde las {{counted}}, la hora programada, por decisi\xF3n de tu supervisor.",
+    toSchedule: "Tu salida de las {{punch}} se cont\xF3 hasta las {{counted}}, la hora programada, por decisi\xF3n de tu supervisor.",
+    asWorkedIn: "Tu entrada de las {{punch}} se cont\xF3 desde esa hora, por decisi\xF3n de tu supervisor.",
+    asWorkedOut: "Tu salida de las {{punch}} se cont\xF3 hasta esa hora, por decisi\xF3n de tu supervisor.",
+    overtimeBefore_one: "El minuto antes de tu entrada se paga como hora extra, por decisi\xF3n de tu supervisor.",
+    overtimeBefore_other: "Los {{count}} minutos antes de tu entrada se pagan como hora extra, por decisi\xF3n de tu supervisor.",
+    overtimeAfter_one: "El minuto despu\xE9s de tu salida se paga como hora extra, por decisi\xF3n de tu supervisor.",
+    overtimeAfter_other: "Los {{count}} minutos despu\xE9s de tu salida se pagan como hora extra, por decisi\xF3n de tu supervisor.",
+    acceptedLateIn: "Tu llegada de las {{punch}} se cont\xF3 tal como la registraste, por decisi\xF3n de tu supervisor.",
+    acceptedEarlyOut: "Tu salida de las {{punch}} se cont\xF3 tal como la registraste, por decisi\xF3n de tu supervisor.",
+    excusedIn: "Tu llegada de las {{punch}} se justific\xF3: se cont\xF3 desde las {{counted}}, la hora programada, por decisi\xF3n de tu supervisor.",
+    excusedOut: "Tu salida de las {{punch}} se justific\xF3: se cont\xF3 hasta las {{counted}}, la hora programada, por decisi\xF3n de tu supervisor.",
+    breakAllowed_one: "El minuto de m\xE1s de tu descanso se paga, por decisi\xF3n de tu supervisor.",
+    breakAllowed_other: "Los {{count}} minutos de m\xE1s de tu descanso se pagan, por decisi\xF3n de tu supervisor.",
+    breakExcessDeducted: "El tiempo de m\xE1s de tu descanso no se paga, por decisi\xF3n de tu supervisor.",
+    breakPaidAsWorked: "Tu descanso se cont\xF3 tal como lo tomaste, por decisi\xF3n de tu supervisor.",
+    breakPlannedDeducted_one: "Se descont\xF3 1 minuto del descanso planificado que no tomaste, por decisi\xF3n de tu supervisor.",
+    breakPlannedDeducted_other: "Se descontaron {{count}} minutos del descanso planificado que no tomaste, por decisi\xF3n de tu supervisor."
   }
 };
 
@@ -1057,6 +1097,57 @@ function needsMfaChallenge(aal) {
   return aal.nextLevel === "aal2" && aal.currentLevel === "aal1";
 }
 
+// src/attendance/resolution-explanation.ts
+function explainResolution(note, formatTime) {
+  const k = (key) => `resolutionExplained.${key}`;
+  const entrada = note.punchType === "in";
+  const punch = formatTime(note.punchAt);
+  const counted = note.countedAt ? formatTime(note.countedAt) : null;
+  const comoSeRegistro = () => ({
+    key: k(entrada ? "asWorkedIn" : "asWorkedOut"),
+    values: { punch }
+  });
+  switch (note.action) {
+    case "count_from_schedule":
+      return counted ? { key: k("fromSchedule"), values: { punch, counted } } : comoSeRegistro();
+    case "count_to_schedule":
+      return counted ? { key: k("toSchedule"), values: { punch, counted } } : comoSeRegistro();
+    case "count_as_worked":
+      return comoSeRegistro();
+    case "count_as_overtime":
+      return {
+        key: k(entrada ? "overtimeBefore" : "overtimeAfter"),
+        values: { count: note.overtimeMinutes }
+      };
+    case "accept_as_is":
+      return {
+        key: k(entrada ? "acceptedLateIn" : "acceptedEarlyOut"),
+        values: { punch }
+      };
+    case "excuse_to_schedule":
+      return counted ? {
+        key: k(entrada ? "excusedIn" : "excusedOut"),
+        values: { punch, counted }
+      } : comoSeRegistro();
+    case "allow":
+      return {
+        key: k("breakAllowed"),
+        values: { count: Math.abs(note.breakAdjustMinutes) }
+      };
+    case "deduct_excess":
+      return { key: k("breakExcessDeducted"), values: {} };
+    case "pay_as_worked":
+      return { key: k("breakPaidAsWorked"), values: {} };
+    case "deduct_planned":
+      return {
+        key: k("breakPlannedDeducted"),
+        values: { count: Math.abs(note.breakAdjustMinutes) }
+      };
+    default:
+      return null;
+  }
+}
+
 exports.CHAT_ALLOWED_ATTACHMENT_TYPES = CHAT_ALLOWED_ATTACHMENT_TYPES;
 exports.CHAT_ALLOWED_FILE_TYPES = CHAT_ALLOWED_FILE_TYPES;
 exports.CHAT_ALLOWED_IMAGE_TYPES = CHAT_ALLOWED_IMAGE_TYPES;
@@ -1089,6 +1180,7 @@ exports.createRoomInputSchema = createRoomInputSchema;
 exports.dayNoteSchema = dayNoteSchema;
 exports.dayNotesConflict = dayNotesConflict;
 exports.describeApiError = describeApiError;
+exports.explainResolution = explainResolution;
 exports.formatShiftRef = formatShiftRef;
 exports.geoLocationSchema = geoLocationSchema;
 exports.instantToWallClock = instantToWallClock;

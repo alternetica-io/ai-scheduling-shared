@@ -210,6 +210,26 @@ declare const sharedResources: {
                     delete: string;
                 };
             };
+            resolutionExplained: {
+                fromSchedule: string;
+                toSchedule: string;
+                asWorkedIn: string;
+                asWorkedOut: string;
+                overtimeBefore_one: string;
+                overtimeBefore_other: string;
+                overtimeAfter_one: string;
+                overtimeAfter_other: string;
+                acceptedLateIn: string;
+                acceptedEarlyOut: string;
+                excusedIn: string;
+                excusedOut: string;
+                breakAllowed_one: string;
+                breakAllowed_other: string;
+                breakExcessDeducted: string;
+                breakPaidAsWorked: string;
+                breakPlannedDeducted_one: string;
+                breakPlannedDeducted_other: string;
+            };
         };
         readonly errors: {
             EMPLOYEE_PHONE_DUPLICATE: string;
@@ -435,6 +455,26 @@ declare const sharedResources: {
                     update: string;
                     delete: string;
                 };
+            };
+            resolutionExplained: {
+                fromSchedule: string;
+                toSchedule: string;
+                asWorkedIn: string;
+                asWorkedOut: string;
+                overtimeBefore_one: string;
+                overtimeBefore_other: string;
+                overtimeAfter_one: string;
+                overtimeAfter_other: string;
+                acceptedLateIn: string;
+                acceptedEarlyOut: string;
+                excusedIn: string;
+                excusedOut: string;
+                breakAllowed_one: string;
+                breakAllowed_other: string;
+                breakExcessDeducted: string;
+                breakPaidAsWorked: string;
+                breakPlannedDeducted_one: string;
+                breakPlannedDeducted_other: string;
             };
         };
         readonly errors: {

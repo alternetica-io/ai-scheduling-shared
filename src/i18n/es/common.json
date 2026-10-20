@@ -201,5 +201,25 @@
       "update": "Actualizado",
       "delete": "Eliminado"
     }
+  },
+  "resolutionExplained": {
+    "fromSchedule": "Tu entrada de las {{punch}} se contó desde las {{counted}}, la hora programada, por decisión de tu supervisor.",
+    "toSchedule": "Tu salida de las {{punch}} se contó hasta las {{counted}}, la hora programada, por decisión de tu supervisor.",
+    "asWorkedIn": "Tu entrada de las {{punch}} se contó desde esa hora, por decisión de tu supervisor.",
+    "asWorkedOut": "Tu salida de las {{punch}} se contó hasta esa hora, por decisión de tu supervisor.",
+    "overtimeBefore_one": "El minuto antes de tu entrada se paga como hora extra, por decisión de tu supervisor.",
+    "overtimeBefore_other": "Los {{count}} minutos antes de tu entrada se pagan como hora extra, por decisión de tu supervisor.",
+    "overtimeAfter_one": "El minuto después de tu salida se paga como hora extra, por decisión de tu supervisor.",
+    "overtimeAfter_other": "Los {{count}} minutos después de tu salida se pagan como hora extra, por decisión de tu supervisor.",
+    "acceptedLateIn": "Tu llegada de las {{punch}} se contó tal como la registraste, por decisión de tu supervisor.",
+    "acceptedEarlyOut": "Tu salida de las {{punch}} se contó tal como la registraste, por decisión de tu supervisor.",
+    "excusedIn": "Tu llegada de las {{punch}} se justificó: se contó desde las {{counted}}, la hora programada, por decisión de tu supervisor.",
+    "excusedOut": "Tu salida de las {{punch}} se justificó: se contó hasta las {{counted}}, la hora programada, por decisión de tu supervisor.",
+    "breakAllowed_one": "El minuto de más de tu descanso se paga, por decisión de tu supervisor.",
+    "breakAllowed_other": "Los {{count}} minutos de más de tu descanso se pagan, por decisión de tu supervisor.",
+    "breakExcessDeducted": "El tiempo de más de tu descanso no se paga, por decisión de tu supervisor.",
+    "breakPaidAsWorked": "Tu descanso se contó tal como lo tomaste, por decisión de tu supervisor.",
+    "breakPlannedDeducted_one": "Se descontó 1 minuto del descanso planificado que no tomaste, por decisión de tu supervisor.",
+    "breakPlannedDeducted_other": "Se descontaron {{count}} minutos del descanso planificado que no tomaste, por decisión de tu supervisor."
   }
 }

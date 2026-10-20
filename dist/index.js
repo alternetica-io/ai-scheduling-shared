@@ -2,7 +2,7 @@ export { formatShiftRef } from './chunk-3YD7PTMN.js';
 export { createApiClient } from './chunk-ALEQ5QUT.js';
 export { describeApiError, isLibraryText } from './chunk-NHQWMKQ3.js';
 export { CHAT_ALLOWED_ATTACHMENT_TYPES, CHAT_ALLOWED_FILE_TYPES, CHAT_ALLOWED_IMAGE_TYPES, CHAT_MAX_ATTACHMENT_BYTES, CHAT_QUICK_REACTIONS, attachmentKindForMime, botOptionSchema, botPayloadSchema, botSkippedSchema, chatContactSchema, chatMemberSchema, chatMessageCreatedEventSchema, chatMessageSchema, chatMessageUpdatedEventSchema, chatReadEventSchema, chatReadSchema, chatRoomSchema, chatTypingEventSchema, clockEventSchema, clockEventTypeSchema, clockEventsSchema, clockGpsSchema, clockValidationStatusSchema, createClockEventInputSchema, createRoomInputSchema, dayNoteSchema, dayNotesConflict, geoLocationSchema, myLocationsSchema, myProfileSchema, parseChatMessages, parseDayNotes, reactionInputSchema, registerDeviceInputSchema, requestDecisionSchema, requestKindSchema, scheduleAssignmentBreakSchema, scheduleAssignmentSchema, scheduleAssignmentsSchema, sendMessageInputSchema, tagDomainSchema, workforceTagSchema, workforceTagsSchema } from './chunk-LNRC46UP.js';
-export { FALLBACK_LANGUAGE, SUPPORTED_LANGUAGES, sharedResources } from './chunk-SPNOEO3A.js';
+export { FALLBACK_LANGUAGE, SUPPORTED_LANGUAGES, sharedResources } from './chunk-R3DQX4XP.js';
 
 // src/time/zone.ts
 var pad = (n) => String(n).padStart(2, "0");
@@ -112,6 +112,57 @@ function needsMfaChallenge(aal) {
   return aal.nextLevel === "aal2" && aal.currentLevel === "aal1";
 }
 
-export { addDaysToDate, instantToWallClock, needsMfaChallenge, scheduledInterval, shiftTimesDiffer, shiftTimesToShow, todayInZone, wallClockToInstantIso, wallClockToInstantMs, wallMinutesInZone, weekStartInZone, weekStartOfDate, workedInterval };
+// src/attendance/resolution-explanation.ts
+function explainResolution(note, formatTime) {
+  const k = (key) => `resolutionExplained.${key}`;
+  const entrada = note.punchType === "in";
+  const punch = formatTime(note.punchAt);
+  const counted = note.countedAt ? formatTime(note.countedAt) : null;
+  const comoSeRegistro = () => ({
+    key: k(entrada ? "asWorkedIn" : "asWorkedOut"),
+    values: { punch }
+  });
+  switch (note.action) {
+    case "count_from_schedule":
+      return counted ? { key: k("fromSchedule"), values: { punch, counted } } : comoSeRegistro();
+    case "count_to_schedule":
+      return counted ? { key: k("toSchedule"), values: { punch, counted } } : comoSeRegistro();
+    case "count_as_worked":
+      return comoSeRegistro();
+    case "count_as_overtime":
+      return {
+        key: k(entrada ? "overtimeBefore" : "overtimeAfter"),
+        values: { count: note.overtimeMinutes }
+      };
+    case "accept_as_is":
+      return {
+        key: k(entrada ? "acceptedLateIn" : "acceptedEarlyOut"),
+        values: { punch }
+      };
+    case "excuse_to_schedule":
+      return counted ? {
+        key: k(entrada ? "excusedIn" : "excusedOut"),
+        values: { punch, counted }
+      } : comoSeRegistro();
+    case "allow":
+      return {
+        key: k("breakAllowed"),
+        values: { count: Math.abs(note.breakAdjustMinutes) }
+      };
+    case "deduct_excess":
+      return { key: k("breakExcessDeducted"), values: {} };
+    case "pay_as_worked":
+      return { key: k("breakPaidAsWorked"), values: {} };
+    case "deduct_planned":
+      return {
+        key: k("breakPlannedDeducted"),
+        values: { count: Math.abs(note.breakAdjustMinutes) }
+      };
+    default:
+      return null;
+  }
+}
+
+export { addDaysToDate, explainResolution, instantToWallClock, needsMfaChallenge, scheduledInterval, shiftTimesDiffer, shiftTimesToShow, todayInZone, wallClockToInstantIso, wallClockToInstantMs, wallMinutesInZone, weekStartInZone, weekStartOfDate, workedInterval };
 //# sourceMappingURL=index.js.map
 //# sourceMappingURL=index.js.map
