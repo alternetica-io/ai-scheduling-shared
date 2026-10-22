@@ -841,7 +841,7 @@ var common_default2 = {
   app: {
     title: "Planificador IA",
     scenario: "Resumen Escenario 6",
-    managerView: "Vista de Gestor"
+    managerView: "Vista de Supervisor"
   },
   languageSwitcher: {
     toggleTo: "Cambiar a {{lang}}"
@@ -880,32 +880,32 @@ var common_default2 = {
     active_other: "Prueba gratis \xB7 {{count}} d\xEDas restantes",
     endingSoon_one: "La prueba termina ma\xF1ana",
     endingSoon_other: "La prueba termina en {{count}} d\xEDas",
-    expired: "Tu prueba termin\xF3. Suscribite para seguir usando la app.",
-    canceled: "Suscripci\xF3n cancelada. Renov\xE1 para continuar.",
+    expired: "Tu prueba termin\xF3. Suscr\xEDbete para seguir usando la app.",
+    canceled: "Suscripci\xF3n cancelada. Renueva para continuar.",
     cta: "Actualizar"
   },
   billingEnforcer: {
     expiredTitle: "Prueba expirada",
-    expiredBody: "Tu prueba gratuita termin\xF3. Eleg\xED un plan para seguir usando la app.",
+    expiredBody: "Tu prueba gratuita termin\xF3. Elige un plan para seguir usando la app.",
     canceledTitle: "Suscripci\xF3n cancelada",
-    canceledBody: "Tu suscripci\xF3n fue cancelada. Volv\xE9 a suscribirte para seguir usando la app.",
+    canceledBody: "Tu suscripci\xF3n fue cancelada. Vuelve a suscribirte para seguir usando la app.",
     cta: "Elegir plan",
     logout: "Cerrar sesi\xF3n"
   },
   billing: {
     tierPicker: {
-      title: "Eleg\xED tu plan",
-      subtitle: "Te vamos a redirigir a Stripe para completar el pago. Pod\xE9s cambiar o cancelar cuando quieras desde tu configuraci\xF3n de billing.",
+      title: "Elige tu plan",
+      subtitle: "Te vamos a redirigir a Stripe para completar el pago. Puedes cambiar o cancelar cuando quieras desde la configuraci\xF3n de facturaci\xF3n.",
       select: "Elegir este plan",
       redirecting: "Redirigiendo a Stripe\u2026",
-      trust: "Checkout seguro por Stripe \xB7 Cancel\xE1s cuando quieras"
+      trust: "Pago seguro con Stripe \xB7 Cancelas cuando quieras"
     },
     portal: {
       openLabel: "Administrar suscripci\xF3n",
-      redirecting: "Abriendo portal de billing\u2026"
+      redirecting: "Abriendo el portal de facturaci\xF3n\u2026"
     },
     errors: {
-      noCustomer: "Complet\xE1 un checkout primero para administrar la suscripci\xF3n."
+      noCustomer: "Completa un pago primero para administrar la suscripci\xF3n."
     }
   },
   actions: {
@@ -955,8 +955,8 @@ var common_default2 = {
     range: "{{from}}\u2013{{to}} de {{total}}"
   },
   managerFilter: {
-    label: "Manager",
-    all: "Todos los managers",
+    label: "Supervisor",
+    all: "Todos los supervisores",
     valueScopedSuffix: "(sus departamentos + sin asignar)"
   },
   scheduleJobBanner: {
@@ -986,7 +986,7 @@ var common_default2 = {
     successTitle: "Horario generado",
     successBody: "La semana del {{weekStart}} est\xE1 lista. La grilla se actualiz\xF3.",
     failTitle: "No pudimos generar el horario",
-    failBody: "Fall\xF3 la generaci\xF3n para la semana del {{weekStart}}. Revis\xE1 las reglas y volv\xE9 a intentarlo.",
+    failBody: "Fall\xF3 la generaci\xF3n para la semana del {{weekStart}}. Revisa las reglas y vuelve a intentarlo.",
     warningsTitle_one: "Horario generado, con {{count}} aviso",
     warningsTitle_other: "Horario generado, con {{count}} avisos",
     warningsBody: "La semana del {{weekStart}} est\xE1 lista. Revisa los avisos en el historial de la generaci\xF3n.",
@@ -1008,27 +1008,27 @@ var common_default2 = {
       successTitle: "Regla creada",
       successBody: "La nueva regla sem\xE1ntica fue agregada.",
       failTitle: "No se pudo crear la regla",
-      failBody: "Fall\xF3 el procesamiento con IA. Intent\xE1 de nuevo."
+      failBody: "Fall\xF3 el procesamiento con IA. Intenta de nuevo."
     },
     update_rule_text: {
       label: "Actualizando regla",
       successTitle: "Regla actualizada",
       successBody: "La regla fue re-procesada.",
       failTitle: "No se pudo actualizar la regla",
-      failBody: "Fall\xF3 el procesamiento con IA. Intent\xE1 de nuevo."
+      failBody: "Fall\xF3 el procesamiento con IA. Intenta de nuevo."
     },
     create_policy: {
       successTitle: "Pol\xEDtica creada",
       successBody: "La pol\xEDtica ya est\xE1 activa y se aplicar\xE1 la pr\xF3xima vez que generes un horario.",
       failTitle: "No se pudo crear la pol\xEDtica",
-      failBody: "Intent\xE1 de nuevo o revis\xE1 el texto de la pol\xEDtica."
+      failBody: "Intenta de nuevo o revisa el texto de la pol\xEDtica."
     },
     imports_extract: {
       label: "Extrayendo datos del archivo",
       successTitle: "Datos extra\xEDdos",
-      successBody: "Listo. Revis\xE1 la preview y confirm\xE1 la importaci\xF3n.",
+      successBody: "Listo. Revisa la vista previa y confirma la importaci\xF3n.",
       failTitle: "No se pudieron extraer los datos",
-      failBody: "El modelo de visi\xF3n fall\xF3. Prob\xE1 con otro archivo o revis\xE1 la integraci\xF3n de IA."
+      failBody: "El modelo de visi\xF3n fall\xF3. Prueba con otro archivo o revisa la integraci\xF3n de IA."
     }
   },
   history: {
@@ -1067,15 +1067,15 @@ var common_default2 = {
 var errors_default2 = {
   EMPLOYEE_PHONE_DUPLICATE: "Ya existe un empleado con ese n\xFAmero de tel\xE9fono.",
   EMPLOYEE_EXTERNAL_ID_DUPLICATE: "Ya existe un empleado con ese ID externo.",
-  MEMBERSHIP_DUPLICATE: "Ya existe un v\xEDnculo para ese empleado, template y fecha de inicio.",
-  SKILL_DUPLICATE: "Esa skill ya est\xE1 en el cat\xE1logo del tenant.",
-  POLICY_INTERPRETER_DUPLICATE: "Ya existe una pol\xEDtica activa para ese patr\xF3n. Edit\xE1 o desactiv\xE1 la existente primero.",
+  MEMBERSHIP_DUPLICATE: "Ya existe un v\xEDnculo para ese empleado, plantilla y fecha de inicio.",
+  SKILL_DUPLICATE: "Esa habilidad ya est\xE1 en el cat\xE1logo de la empresa.",
+  POLICY_INTERPRETER_DUPLICATE: "Ya existe una pol\xEDtica activa para ese patr\xF3n. Edita o desactiva la existente primero.",
   UNIQUE_VIOLATION: "Ya existe un registro con esos datos.",
   NOT_NULL_VIOLATION: "Falta un dato obligatorio. Revisa el formulario.",
   FOREIGN_KEY_VIOLATION: "La operaci\xF3n referencia un registro que ya no existe.",
   CHECK_VIOLATION: "Los datos enviados no cumplen una regla de validaci\xF3n.",
-  INTERNAL_ERROR: "Ocurri\xF3 un error inesperado. Prob\xE1 de nuevo o contact\xE1 al soporte.",
-  IMPORT_ALREADY_COMMITTED: "Esta empresa ya tiene una importaci\xF3n reciente. Revert\xED la anterior o esper\xE1 hasta que expire la ventana de revert (7 d\xEDas). Mir\xE1 Settings \u2192 Importar datos \u2192 Importaciones recientes.",
+  INTERNAL_ERROR: "Ocurri\xF3 un error inesperado. Prueba de nuevo o contacta al soporte.",
+  IMPORT_ALREADY_COMMITTED: "Esta empresa ya tiene una importaci\xF3n reciente. Revierte la anterior o espera hasta que expire la ventana de revert (7 d\xEDas). Mira Settings \u2192 Importar datos \u2192 Importaciones recientes.",
   UNKNOWN: "Algo sali\xF3 mal.",
   NETWORK: "Sin conexi\xF3n. Revisa tu internet e intenta de nuevo.",
   RATE_LIMITED: "Demasiadas solicitudes. Espera unos segundos e intenta de nuevo.",

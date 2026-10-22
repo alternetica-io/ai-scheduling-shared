@@ -2,7 +2,7 @@
   "app": {
     "title": "Planificador IA",
     "scenario": "Resumen Escenario 6",
-    "managerView": "Vista de Gestor"
+    "managerView": "Vista de Supervisor"
   },
   "languageSwitcher": {
     "toggleTo": "Cambiar a {{lang}}"
@@ -41,32 +41,32 @@
     "active_other": "Prueba gratis · {{count}} días restantes",
     "endingSoon_one": "La prueba termina mañana",
     "endingSoon_other": "La prueba termina en {{count}} días",
-    "expired": "Tu prueba terminó. Suscribite para seguir usando la app.",
-    "canceled": "Suscripción cancelada. Renová para continuar.",
+    "expired": "Tu prueba terminó. Suscríbete para seguir usando la app.",
+    "canceled": "Suscripción cancelada. Renueva para continuar.",
     "cta": "Actualizar"
   },
   "billingEnforcer": {
     "expiredTitle": "Prueba expirada",
-    "expiredBody": "Tu prueba gratuita terminó. Elegí un plan para seguir usando la app.",
+    "expiredBody": "Tu prueba gratuita terminó. Elige un plan para seguir usando la app.",
     "canceledTitle": "Suscripción cancelada",
-    "canceledBody": "Tu suscripción fue cancelada. Volvé a suscribirte para seguir usando la app.",
+    "canceledBody": "Tu suscripción fue cancelada. Vuelve a suscribirte para seguir usando la app.",
     "cta": "Elegir plan",
     "logout": "Cerrar sesión"
   },
   "billing": {
     "tierPicker": {
-      "title": "Elegí tu plan",
-      "subtitle": "Te vamos a redirigir a Stripe para completar el pago. Podés cambiar o cancelar cuando quieras desde tu configuración de billing.",
+      "title": "Elige tu plan",
+      "subtitle": "Te vamos a redirigir a Stripe para completar el pago. Puedes cambiar o cancelar cuando quieras desde la configuración de facturación.",
       "select": "Elegir este plan",
       "redirecting": "Redirigiendo a Stripe…",
-      "trust": "Checkout seguro por Stripe · Cancelás cuando quieras"
+      "trust": "Pago seguro con Stripe · Cancelas cuando quieras"
     },
     "portal": {
       "openLabel": "Administrar suscripción",
-      "redirecting": "Abriendo portal de billing…"
+      "redirecting": "Abriendo el portal de facturación…"
     },
     "errors": {
-      "noCustomer": "Completá un checkout primero para administrar la suscripción."
+      "noCustomer": "Completa un pago primero para administrar la suscripción."
     }
   },
   "actions": {
@@ -116,8 +116,8 @@
     "range": "{{from}}–{{to}} de {{total}}"
   },
   "managerFilter": {
-    "label": "Manager",
-    "all": "Todos los managers",
+    "label": "Supervisor",
+    "all": "Todos los supervisores",
     "valueScopedSuffix": "(sus departamentos + sin asignar)"
   },
   "scheduleJobBanner": {
@@ -147,7 +147,7 @@
     "successTitle": "Horario generado",
     "successBody": "La semana del {{weekStart}} está lista. La grilla se actualizó.",
     "failTitle": "No pudimos generar el horario",
-    "failBody": "Falló la generación para la semana del {{weekStart}}. Revisá las reglas y volvé a intentarlo.",
+    "failBody": "Falló la generación para la semana del {{weekStart}}. Revisa las reglas y vuelve a intentarlo.",
     "warningsTitle_one": "Horario generado, con {{count}} aviso",
     "warningsTitle_other": "Horario generado, con {{count}} avisos",
     "warningsBody": "La semana del {{weekStart}} está lista. Revisa los avisos en el historial de la generación.",
@@ -169,27 +169,27 @@
       "successTitle": "Regla creada",
       "successBody": "La nueva regla semántica fue agregada.",
       "failTitle": "No se pudo crear la regla",
-      "failBody": "Falló el procesamiento con IA. Intentá de nuevo."
+      "failBody": "Falló el procesamiento con IA. Intenta de nuevo."
     },
     "update_rule_text": {
       "label": "Actualizando regla",
       "successTitle": "Regla actualizada",
       "successBody": "La regla fue re-procesada.",
       "failTitle": "No se pudo actualizar la regla",
-      "failBody": "Falló el procesamiento con IA. Intentá de nuevo."
+      "failBody": "Falló el procesamiento con IA. Intenta de nuevo."
     },
     "create_policy": {
       "successTitle": "Política creada",
       "successBody": "La política ya está activa y se aplicará la próxima vez que generes un horario.",
       "failTitle": "No se pudo crear la política",
-      "failBody": "Intentá de nuevo o revisá el texto de la política."
+      "failBody": "Intenta de nuevo o revisa el texto de la política."
     },
     "imports_extract": {
       "label": "Extrayendo datos del archivo",
       "successTitle": "Datos extraídos",
-      "successBody": "Listo. Revisá la preview y confirmá la importación.",
+      "successBody": "Listo. Revisa la vista previa y confirma la importación.",
       "failTitle": "No se pudieron extraer los datos",
-      "failBody": "El modelo de visión falló. Probá con otro archivo o revisá la integración de IA."
+      "failBody": "El modelo de visión falló. Prueba con otro archivo o revisa la integración de IA."
     }
   },
   "history": {
